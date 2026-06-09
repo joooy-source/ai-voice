@@ -3,10 +3,24 @@ import { useReveal, useInView } from '../../hooks/useScrollAnimations';
 import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon } from './icons';
 import './CoachSection.css';
 
-const BASE = import.meta.env.BASE_URL;
-// 영상은 1개만 넣으면 됩니다 → public/demo/coach.mp4
-// 각 탭의 start(초)만 실제 영상의 챕터 시작 시간으로 맞춰주세요. (자를 필요 없음)
-const VIDEO_SRC = `${BASE}demo/coach.mp4`;
+// 영상 소스 — HLS(.m3u8) 또는 mp4 URL, 혹은 public/demo/coach.mp4
+const VIDEO_SRC = 'https://s-agent-static.op.gg/videos/intro/index.m3u8';
+
+// hls.js 를 CDN 에서 1회 로드 (Chrome/FF 등 HLS 네이티브 미지원 브라우저용)
+function loadHls() {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+  if (window.Hls) return Promise.resolve(window.Hls);
+  if (window.__hlsPromise) return window.__hlsPromise;
+  window.__hlsPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js';
+    s.async = true;
+    s.onload = () => resolve(window.Hls);
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return window.__hlsPromise;
+}
 
 const TABS = [
   {
@@ -43,7 +57,35 @@ export default function CoachSection() {
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
 
-  // 영상이 있을 때: 실제 재생시간으로 챕터/게이지 동기화
+  // 소스 연결 (HLS는 hls.js, Safari/일반 mp4는 직접)
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return undefined;
+    let hls;
+    const isHls = VIDEO_SRC.endsWith('.m3u8');
+    if (!isHls) {
+      v.src = VIDEO_SRC;
+    } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
+      v.src = VIDEO_SRC; // Safari 네이티브 HLS
+    } else {
+      loadHls()
+        .then((Hls) => {
+          if (Hls && Hls.isSupported()) {
+            hls = new Hls({ enableWorker: true });
+            hls.loadSource(VIDEO_SRC);
+            hls.attachMedia(v);
+          } else {
+            v.src = VIDEO_SRC;
+          }
+        })
+        .catch(() => setHasVideo(false));
+    }
+    return () => {
+      if (hls) hls.destroy();
+    };
+  }, []);
+
+  // 실제 재생시간으로 챕터/게이지 동기화
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return undefined;
@@ -132,7 +174,6 @@ export default function CoachSection() {
             loop
             playsInline
             preload="metadata"
-            src={VIDEO_SRC}
           />
 
           <div className="coach-nowplaying">
