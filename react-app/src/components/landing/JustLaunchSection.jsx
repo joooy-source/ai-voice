@@ -2,26 +2,9 @@ import { useReveal } from '../../hooks/useScrollAnimations';
 import { DownloadIcon } from './icons';
 import './JustLaunchSection.css';
 
-// 배너 좌/우 음파(소리 치듯) 막대 — 다운로드 유도 배너라 눈에 띄게
-const WAVE = Array.from({ length: 22 }, (_, i) => {
-  const t = i / 22;
-  const h = 14 + Math.abs(Math.sin(t * Math.PI * 3) * 0.7 + Math.sin(t * Math.PI * 7) * 0.3) * 110;
-  return { h, delay: (i % 11) * 0.09 };
-});
-
-function Wave({ side }) {
-  return (
-    <div className={`jl-wave jl-wave--${side}`} aria-hidden>
-      {WAVE.map((b, i) => (
-        <span
-          key={i}
-          className="jl-wave-bar"
-          style={{ height: `${b.h}px`, animationDelay: `${b.delay}s` }}
-        />
-      ))}
-    </div>
-  );
-}
+// 매끄럽게 흐르는 음파 — 막대들이 연속 위상 지연으로 하나의 파동처럼 움직인다
+const BAR_COUNT = 72;
+const BARS = Array.from({ length: BAR_COUNT });
 
 export default function JustLaunchSection() {
   const ref = useReveal();
@@ -29,8 +12,15 @@ export default function JustLaunchSection() {
     <section className="justlaunch section" ref={ref}>
       <div className="jl-banner reveal">
         <div className="jl-glow" aria-hidden />
-        <Wave side="left" />
-        <Wave side="right" />
+        <div className="jl-wave" aria-hidden>
+          {BARS.map((_, i) => (
+            <span
+              key={i}
+              className="jl-wave-bar"
+              style={{ animationDelay: `${(-i * 0.055).toFixed(3)}s` }}
+            />
+          ))}
+        </div>
         <div className="jl-agent">
           <span className="jl-agent-icon" aria-hidden />
           <span className="jl-agent-text">Agent by</span>
