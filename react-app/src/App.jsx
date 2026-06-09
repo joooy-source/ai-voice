@@ -10,13 +10,12 @@ import FaqSection from './components/landing/FaqSection';
 import FinalCtaSection from './components/landing/FinalCtaSection';
 import Footer from './components/landing/Footer';
 import ScrollToTop from './components/landing/ScrollToTop';
-import { useHeroSnap, useLinearButtons } from './hooks/useScrollAnimations';
+import { useHeroSnap } from './hooks/useScrollAnimations';
 import './App.css';
 
 function App() {
   // Hero → 다음 섹션 구간만 자석 스냅 (나머지는 네이티브 스크롤)
   useHeroSnap({ debounce: 90 });
-  useLinearButtons();
   return (
     <div className="app">
       <Nav />
