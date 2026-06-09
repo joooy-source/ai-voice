@@ -168,10 +168,8 @@ body {
   isolation: isolate;
   border: none;
   color: #fff;
-  /* fill(검정) + 상단 화이트/퍼플 글로우(blob·blur) */
-  background:
-    radial-gradient(75% 160% at 50% -25%, rgba(255, 255, 255, 0.18) 0%, rgba(175, 83, 255, 0.12) 35%, rgba(0, 0, 0, 0) 62%),
-    #050506;
+  /* fill 없음(투명) — 레퍼처럼 안쪽 투명, 움직이는 글로우 테두리만 */
+  background: transparent;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4), 0 0 28px -6px var(--bl-glow);
   transition: transform 0.2s var(--ease);
   animation: blGlow 4s linear infinite;
