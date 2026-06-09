@@ -1,13 +1,12 @@
 .app {
-  max-width: 520px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 40px;
-}
-
-.app-sections {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  animation: slideUp 0.5s ease;
+}
+
+/* 마퀴 섹션(03)을 페이지 흐름에 맞춰 가운데 정렬 */
+.app .marquee-section {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
 }

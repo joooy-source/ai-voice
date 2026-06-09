@@ -1,0 +1,48 @@
+.justlaunch { display: flex; justify-content: center; }
+.jl-banner {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  min-height: 420px;
+  border-radius: 28px;
+  background: #0b0913;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  padding: 64px 40px;
+}
+.jl-glow {
+  position: absolute;
+  bottom: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 940px;
+  height: 520px;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(95, 50, 230, 0.4), transparent 70%);
+  animation: glowPulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+.jl-agent { position: relative; display: flex; align-items: center; gap: 8px; }
+.jl-agent-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 30%, #b9a9ff, var(--primary));
+  box-shadow: 0 0 24px rgba(110, 79, 255, 0.5);
+}
+.jl-agent-text { font-size: 22px; font-weight: 300; color: #fff; }
+.jl-agent-logo { font-size: 22px; font-weight: 700; color: #fff; }
+.jl-head { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.jl-title { font-size: 52px; line-height: 60px; font-weight: 700; letter-spacing: -0.52px; }
+.jl-sub { font-size: 24px; line-height: 32px; color: var(--text-2); }
+.jl-actions { position: relative; display: flex; gap: 12px; }
+
+@media (max-width: 900px) {
+  .jl-title { font-size: 32px; line-height: 40px; }
+  .jl-sub { font-size: 18px; }
+  .jl-actions { flex-direction: column; width: 100%; }
+}

@@ -1,0 +1,182 @@
+.coach {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.coach-grid {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* 플레이어 */
+.coach-player {
+  position: relative;
+  width: 620px;
+  height: 536px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #08080d;
+}
+.coach-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 영상 없을 때의 배경 모션 */
+.coach-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 45%, rgba(95, 50, 230, 0.25), transparent 60%);
+}
+.coach-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #b9a9ff 45%, var(--primary) 100%);
+  box-shadow: 0 0 0 0 rgba(110, 79, 255, 0.5);
+}
+.coach-orb.is-playing {
+  animation: orbPulse 2.4s ease-in-out infinite;
+}
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(110, 79, 255, 0.45); }
+  50% { transform: scale(1.08); box-shadow: 0 0 60px 18px rgba(110, 79, 255, 0.18); }
+}
+
+.coach-nowplaying {
+  position: absolute;
+  left: 19px;
+  bottom: 19px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  padding: 9px 16px 9px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}
+.coach-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38d39f;
+  box-shadow: 0 0 8px #38d39f;
+  animation: glowPulse 1.6s ease-in-out infinite;
+}
+
+.coach-controls {
+  position: absolute;
+  right: 19px;
+  bottom: 19px;
+  display: flex;
+  gap: 8px;
+}
+.coach-ctrl {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.coach-ctrl:hover { background: var(--primary); transform: translateY(-2px); }
+
+/* 탭 패널 */
+.coach-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.coach-tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.2s var(--ease);
+}
+.coach-tab:hover { transform: translateX(4px); border-color: var(--border-2); }
+.coach-tab.is-active {
+  border-color: var(--primary);
+  background: rgba(42, 35, 83, 0.4);
+}
+.coach-tab-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+.coach-tab-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-2);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.coach-tab.is-active .coach-tab-dot {
+  background: var(--primary-400);
+  box-shadow: 0 0 10px var(--primary-400);
+}
+.coach-tab-desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-4);
+  /* 비활성 탭은 설명을 접어 컴팩트하게 */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+.coach-tab.is-active .coach-tab-desc {
+  max-height: 160px;
+  opacity: 1;
+}
+
+/* 게이지 바 (재생 진행도) */
+.coach-gauge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.coach-gauge-fill {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(95, 50, 230, 0.8);
+}
+
+@media (max-width: 900px) {
+  .coach-grid { flex-direction: column; }
+  .coach-player { width: 100%; height: 300px; }
+}
