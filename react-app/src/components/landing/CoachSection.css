@@ -1,7 +1,9 @@
-.coach {
+/* 02·05 통일: 좌우 120px / 상하 80px (콘텐츠 1200px, 디자인 기준) */
+section.coach {
   display: flex;
   flex-direction: column;
   gap: 48px;
+  padding: 80px 120px;
 }
 
 .coach-grid {
