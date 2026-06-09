@@ -143,7 +143,15 @@ body {
 }
 
 /* ===== Linear 버튼 (Framer 컴포넌트 재현) =====
-   검은 알약 + 하단에서 빛나는 보라 그라데이션 테두리 + 상단 글로우 */
+   검은 알약 + 색이 변하며 회전하는 그라데이션 테두리 + 상단 글로우 */
+@property --bl-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes blSpin {
+  to { --bl-angle: 360deg; }
+}
 .btn-linear {
   --bl-accent: #af53ff;
   position: relative;
@@ -158,7 +166,7 @@ body {
   transition: transform 0.2s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
 }
 .btn-linear > * { position: relative; z-index: 1; }
-/* 그라데이션 테두리(stroke) — 하단 중앙이 보라로 빛남 */
+/* 그라데이션 테두리(stroke) — 색이 변하며 빙글 회전 */
 .btn-linear::before {
   content: '';
   position: absolute;
@@ -167,13 +175,21 @@ body {
   padding: 1.5px;
   pointer-events: none;
   background:
-    radial-gradient(42% 78% at 50% 114%, var(--bl-accent) 0%, rgba(175, 83, 255, 0) 70%),
-    rgba(255, 255, 255, 0.12);
+    conic-gradient(
+      from var(--bl-angle),
+      rgba(175, 83, 255, 0) 0deg,
+      #af53ff 50deg,
+      #ffffff 90deg,
+      #6e4fff 130deg,
+      rgba(175, 83, 255, 0) 180deg,
+      rgba(175, 83, 255, 0) 360deg
+    ),
+    rgba(255, 255, 255, 0.1);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-  transition: background 0.25s var(--ease);
+  animation: blSpin 3.5s linear infinite;
 }
 .btn-linear:hover {
   transform: translateY(-1px);
@@ -182,12 +198,11 @@ body {
     #050506;
   box-shadow: 0 12px 32px rgba(175, 83, 255, 0.28), 0 6px 22px rgba(0, 0, 0, 0.4);
 }
-.btn-linear:hover::before {
-  background:
-    radial-gradient(58% 98% at 50% 114%, #c884ff 0%, rgba(175, 83, 255, 0) 72%),
-    rgba(255, 255, 255, 0.18);
-}
+.btn-linear:hover::before { animation-duration: 1.6s; }
 .btn-linear:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .btn-linear::before { animation: none; }
+}
 
 /* ===== Reveal (스크롤 시 떠오르는 패럴랙스) =====
    관찰 대상(섹션 루트)에 .is-visible 이 붙으면 내부 .reveal 요소들이 나타난다. */
