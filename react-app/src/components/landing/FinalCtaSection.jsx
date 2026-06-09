@@ -6,8 +6,7 @@ export default function FinalCtaSection() {
   const ref = useReveal();
   return (
     <section className="finalcta" ref={ref}>
-      <div className="fc-glow fc-glow--left" aria-hidden />
-      <div className="fc-glow fc-glow--right" aria-hidden />
+      <div className="fc-overlay" aria-hidden />
       <div className="fc-content reveal">
         <h2 className="fc-title grad-text">
           Experience a richer gaming journey

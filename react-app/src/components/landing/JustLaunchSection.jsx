@@ -2,19 +2,21 @@ import { useReveal } from '../../hooks/useScrollAnimations';
 import { DownloadIcon } from './icons';
 import './JustLaunchSection.css';
 
+// Figma 로고 에셋 (임시 URL · 약 7일)
+const LOGO = 'https://www.figma.com/api/mcp/asset/cbf1a823-895a-457c-9e3e-ca3f00cb4e6f';
+
 export default function JustLaunchSection() {
   const ref = useReveal();
   return (
     <section className="justlaunch section" ref={ref}>
       <div className="jl-banner reveal">
-        {/* 천천히 흐르며 번지는 오로라 */}
-        <div className="jl-aurora" aria-hidden>
-          <span className="jl-blob jl-blob-1" />
-          <span className="jl-blob jl-blob-2" />
-          <span className="jl-blob jl-blob-3" />
-        </div>
+        {/* 좌우에서 퍼지는 동심원 링 */}
+        <div className="jl-rings jl-rings--left" aria-hidden />
+        <div className="jl-rings jl-rings--right" aria-hidden />
+        <div className="jl-glow" aria-hidden />
+
         <div className="jl-agent">
-          <span className="jl-agent-icon" aria-hidden />
+          <img className="jl-agent-icon" src={LOGO} alt="" />
           <span className="jl-agent-text">Agent by</span>
           <span className="jl-agent-logo">OP.GG</span>
         </div>

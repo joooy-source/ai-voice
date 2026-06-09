@@ -34,7 +34,7 @@ export default function FaqSection() {
               If you have any further questions, please contact us via the &apos;Contact Us&apos; button below.
             </p>
           </div>
-          <button type="button" className="btn btn-primary faq-contact">Contact Us</button>
+          <button type="button" className="btn btn-ghost faq-contact">Contact Us</button>
         </div>
 
         <div className="faq-list">
