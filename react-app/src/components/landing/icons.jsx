@@ -9,6 +9,10 @@ export const ArrowDownIcon = (p) => (
   <svg {...base} {...p}><path d="M12 5v14" /><path d="m6 13 6 6 6-6" /></svg>
 );
 
+export const ArrowUpIcon = (p) => (
+  <svg {...base} {...p}><path d="M12 19V5" /><path d="m6 11 6-6 6 6" /></svg>
+);
+
 export const PlayIcon = (p) => (
   <svg {...base} fill="currentColor" stroke="none" {...p}><path d="M8 5v14l11-7z" /></svg>
 );
