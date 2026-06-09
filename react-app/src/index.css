@@ -173,7 +173,7 @@ body {
     radial-gradient(75% 160% at 50% -25%, rgba(255, 255, 255, 0.18) 0%, rgba(175, 83, 255, 0.12) 35%, rgba(0, 0, 0, 0) 62%),
     #050506;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4), 0 0 28px -6px var(--bl-glow);
-  transition: transform 0.2s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+  transition: transform 0.2s var(--ease);
   animation: blGlow 4s linear infinite;
 }
 .btn-linear > * { position: relative; z-index: 1; }
@@ -196,13 +196,8 @@ body {
 }
 .btn-linear:hover {
   transform: translateY(-1px);
-  /* 호버: 안쪽을 보라 그라데이션으로 채움 */
-  background:
-    radial-gradient(80% 160% at 50% -20%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 55%),
-    linear-gradient(180deg, #8b5cff 0%, #5b30e0 100%);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 40px -4px var(--bl-glow);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.5), 0 0 40px -4px var(--bl-glow);
 }
-.btn-linear:hover, .btn-linear:hover::before { animation-duration: 2s; }
 .btn-linear:active { transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .btn-linear, .btn-linear::before { animation: none; }
