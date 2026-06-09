@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { DownloadIcon, ArrowDownIcon } from './icons';
 import './Hero.css';
 
-const SRC = '/hero-orb.mp4';
+const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
 const FADE = 0.7; // 루프 지점 크로스페이드 길이(초)
 
 export default function Hero() {
