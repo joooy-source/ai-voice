@@ -41,7 +41,7 @@ const TABS = [
   {
     title: 'Build Coaching',
     desc: "Recommends the item path best suited for survival or damage, adapting to the current game state and the enemy champions you're up against.",
-    start: 64,
+    start: 64.5,
   },
 ];
 
