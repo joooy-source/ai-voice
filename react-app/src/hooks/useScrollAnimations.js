@@ -105,6 +105,41 @@ export function useScrollProgress() {
   return [ref, progress];
 }
 
+/**
+ * Hero가 sticky로 덮이는 구간(스냅 지점이 없는 영역)에서 스크롤이 멈추면
+ * 가까운 쪽(Hero 전체 / 다음 섹션 전체)으로 자동 정렬해 "반쯤 걸림"을 방지한다.
+ */
+export function useHeroSnap({ navHeight = 60, debounce = 140 } = {}) {
+  useEffect(() => {
+    if (prefersReduced()) return undefined;
+    let timer = 0;
+    let snapping = false;
+    const onScroll = () => {
+      if (snapping) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const below = document.querySelector('.below-hero');
+        if (!below) return;
+        const target = below.offsetTop - navHeight; // 다음 섹션이 정렬되는 스크롤 위치
+        const y = window.scrollY;
+        if (y > 8 && y < target - 8) {
+          const dest = y < target / 2 ? 0 : target;
+          snapping = true;
+          window.scrollTo({ top: dest, behavior: 'smooth' });
+          setTimeout(() => {
+            snapping = false;
+          }, 600);
+        }
+      }, debounce);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timer);
+    };
+  }, [navHeight, debounce]);
+}
+
 /** 페이지 스크롤 시 true가 되어 nav 배경 처리를 제어한다. */
 export function useScrolled(offset = 20) {
   const [scrolled, setScrolled] = useState(false);

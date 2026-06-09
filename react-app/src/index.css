@@ -33,8 +33,7 @@ html {
   scroll-padding-top: 60px; /* sticky nav 보정 */
 }
 
-/* 스냅 대상 = 각 섹션 시작점 */
-.hero,
+/* 스냅 대상 = 각 섹션 시작점 (Hero 덮임 구간은 JS로 별도 스냅) */
 .section,
 .marquee-section,
 .pbp,

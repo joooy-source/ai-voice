@@ -9,9 +9,11 @@ import JustLaunchSection from './components/landing/JustLaunchSection';
 import PremiumSection from './components/landing/PremiumSection';
 import FaqSection from './components/landing/FaqSection';
 import FinalCtaSection from './components/landing/FinalCtaSection';
+import { useHeroSnap } from './hooks/useScrollAnimations';
 import './App.css';
 
 function App() {
+  useHeroSnap();
   return (
     <div className="app">
       <Nav />
