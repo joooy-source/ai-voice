@@ -19,15 +19,60 @@ const COLUMNS = [
 const SOCIALS = [
   {
     label: 'YouTube',
-    path: 'M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3z',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <rect width="24" height="24" rx="6" fill="#FF0000" />
+        <path d="M10 8.3v7.4l6.2-3.7z" fill="#fff" />
+      </svg>
+    ),
   },
-  { label: 'X', path: 'M4 3h3.5l4 5.5L16 3h3l-6 8 6.5 10H16l-4.5-6.3L6 21H3l6.7-9z' },
+  {
+    label: 'X',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <rect width="24" height="24" rx="6" fill="#000" />
+        <path d="M7 7l10 10M17 7L7 17" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
   {
     label: 'Instagram',
-    path: 'M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5zm3.3 15A3.3 3.3 0 0 1 17 20.3H7A3.3 3.3 0 0 1 3.7 17V7A3.3 3.3 0 0 1 7 3.7h10A3.3 3.3 0 0 1 20.3 7zm-2.8-9.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <defs>
+          <linearGradient id="ig-grad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#FEDA75" />
+            <stop offset="0.45" stopColor="#FA7E1E" />
+            <stop offset="0.75" stopColor="#D62976" />
+            <stop offset="1" stopColor="#962FBF" />
+          </linearGradient>
+        </defs>
+        <rect width="24" height="24" rx="6" fill="url(#ig-grad)" />
+        <rect x="6.3" y="6.3" width="11.4" height="11.4" rx="3.4" fill="none" stroke="#fff" strokeWidth="1.6" />
+        <circle cx="12" cy="12" r="2.9" fill="none" stroke="#fff" strokeWidth="1.6" />
+        <circle cx="15.7" cy="8.3" r="1" fill="#fff" />
+      </svg>
+    ),
   },
-  { label: 'Facebook', path: 'M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z' },
-  { label: 'Overwolf', path: 'M12 2 3 7v6c0 4.5 3.8 8.5 9 9 5.2-.5 9-4.5 9-9V7zm0 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6z' },
+  {
+    label: 'Facebook',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <rect width="24" height="24" rx="6" fill="#1877F2" />
+        <path d="M14.6 12.5h1.7l.33-2.2h-2.03V8.86c0-.6.22-1.06 1.1-1.06h1.02V5.84c-.5-.06-1.05-.1-1.6-.1-1.78 0-3.02 1.07-3.02 3v1.56H10v2.2h1.9V19h2.7z" fill="#fff" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Overwolf',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <rect width="24" height="24" rx="6" fill="#1b1d2b" />
+        <path d="M12 5.5l5 3v4c0 3-2.2 5.4-5 6-2.8-.6-5-3-5-6v-4z" fill="none" stroke="#6e4fff" strokeWidth="1.6" strokeLinejoin="round" />
+        <circle cx="12" cy="11.5" r="1.7" fill="#6e4fff" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Footer() {
