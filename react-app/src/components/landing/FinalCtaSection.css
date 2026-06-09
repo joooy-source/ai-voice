@@ -1,32 +1,63 @@
 .finalcta {
   position: relative;
-  /* 화면 전체 폭으로 배경 풀 채움 */
   width: 100%;
   min-height: 480px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* 블루/퍼플 브랜드 그라데이션이 뒤에서 움직임 */
-  background: linear-gradient(
-    125deg,
-    #07071a 0%,
-    #161a66 22%,
-    #3a23b5 42%,
-    #6e4fff 55%,
-    #22308f 72%,
-    #07071a 100%
-  );
-  background-size: 300% 300%;
-  animation: ctaGradient 20s ease-in-out infinite;
+  background: var(--bg); /* 다크 배경 */
 }
 
-/* 텍스트 대비용 부드러운 비네팅 */
-.fc-overlay {
+.fc-orbs {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 75% 85% at 50% 50%, transparent 30%, rgba(6, 6, 8, 0.5) 100%);
+  filter: blur(80px);
+}
+.fc-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+.fc-orb-1 {
+  width: 620px;
+  height: 620px;
+  left: 6%;
+  top: -18%;
+  background: radial-gradient(circle, rgba(95, 50, 230, 0.55), transparent 70%);
+  animation: fcFloat1 17s ease-in-out infinite;
+}
+.fc-orb-2 {
+  width: 560px;
+  height: 560px;
+  right: 4%;
+  bottom: -22%;
+  background: radial-gradient(circle, rgba(56, 90, 240, 0.5), transparent 70%);
+  animation: fcFloat2 21s ease-in-out infinite;
+}
+.fc-orb-3 {
+  width: 480px;
+  height: 480px;
+  left: 50%;
+  top: 40%;
+  margin-left: -240px;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.4), transparent 70%);
+  animation: fcFloat3 14s ease-in-out infinite;
+}
+
+/* 호흡(스케일·투명도) + 부드러운 부유(이동) */
+@keyframes fcFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+  50% { transform: translate(60px, 40px) scale(1.18); opacity: 0.85; }
+}
+@keyframes fcFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1.05); opacity: 0.5; }
+  50% { transform: translate(-70px, -30px) scale(1); opacity: 0.8; }
+}
+@keyframes fcFloat3 {
+  0%, 100% { transform: translate(-30px, 0) scale(0.95); opacity: 0.4; }
+  50% { transform: translate(40px, -40px) scale(1.2); opacity: 0.7; }
 }
 
 .fc-content {
@@ -48,13 +79,8 @@
 }
 .fc-actions { display: flex; gap: 12px; }
 
-@keyframes ctaGradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .finalcta { animation: none; }
+  .fc-orb { animation: none !important; }
 }
 
 @media (max-width: 900px) {
