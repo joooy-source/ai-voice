@@ -15,48 +15,57 @@
   gap: 64px;
   padding: 64px 40px;
 }
-.jl-glow {
-  position: absolute;
-  bottom: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 940px;
-  height: 520px;
-  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(95, 50, 230, 0.4), transparent 70%);
-  animation: glowPulse 7s ease-in-out infinite;
-  pointer-events: none;
-}
-/* 매끄럽게 흐르는 음파 — 전체 폭에 깔리고 중앙(텍스트 뒤)은 마스크로 비움 */
-.jl-wave {
+/* 오로라 — 부드러운 빛 덩어리가 천천히 흐르며 번진다 */
+.jl-aurora {
   position: absolute;
   inset: 0;
   z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 32px;
+  overflow: hidden;
   pointer-events: none;
-  opacity: 0.6;
-  /* 중앙은 비우고 좌우 가장자리에서 흐르게 */
-  -webkit-mask-image: radial-gradient(ellipse 58% 92% at 50% 50%, transparent 0%, transparent 34%, #000 72%);
-  mask-image: radial-gradient(ellipse 58% 92% at 50% 50%, transparent 0%, transparent 34%, #000 72%);
+  filter: blur(48px);
 }
-.jl-wave-bar {
-  flex: 1 0 auto;
-  width: 4px;
-  max-width: 4px;
-  height: 132px;
-  border-radius: 2px;
-  background: linear-gradient(180deg, #9a7dff, var(--primary));
-  box-shadow: 0 0 14px rgba(110, 79, 255, 0.45);
-  transform: scaleY(0.16);
-  transform-origin: center;
-  animation: jlWave 1.9s ease-in-out infinite;
+.jl-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  will-change: transform;
 }
-@keyframes jlWave {
-  0%, 100% { transform: scaleY(0.16); }
-  50% { transform: scaleY(1); }
+.jl-blob-1 {
+  width: 620px;
+  height: 460px;
+  left: -120px;
+  bottom: -160px;
+  background: radial-gradient(circle at 50% 50%, rgba(120, 80, 255, 0.55), transparent 68%);
+  animation: jlDrift1 22s ease-in-out infinite alternate;
+}
+.jl-blob-2 {
+  width: 560px;
+  height: 420px;
+  right: -120px;
+  top: -140px;
+  background: radial-gradient(circle at 50% 50%, rgba(95, 50, 230, 0.5), transparent 68%);
+  animation: jlDrift2 27s ease-in-out infinite alternate;
+}
+.jl-blob-3 {
+  width: 720px;
+  height: 360px;
+  left: 50%;
+  bottom: -200px;
+  margin-left: -360px;
+  background: radial-gradient(circle at 50% 50%, rgba(150, 110, 255, 0.4), transparent 70%);
+  animation: jlDrift3 19s ease-in-out infinite alternate;
+}
+@keyframes jlDrift1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(180px, -60px) scale(1.18); }
+}
+@keyframes jlDrift2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-160px, 70px) scale(1); }
+}
+@keyframes jlDrift3 {
+  0% { transform: translate(-40px, 0) scale(1); }
+  100% { transform: translate(60px, -50px) scale(1.22); }
 }
 
 .jl-agent { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; }

@@ -2,24 +2,16 @@ import { useReveal } from '../../hooks/useScrollAnimations';
 import { DownloadIcon } from './icons';
 import './JustLaunchSection.css';
 
-// 매끄럽게 흐르는 음파 — 막대들이 연속 위상 지연으로 하나의 파동처럼 움직인다
-const BAR_COUNT = 72;
-const BARS = Array.from({ length: BAR_COUNT });
-
 export default function JustLaunchSection() {
   const ref = useReveal();
   return (
     <section className="justlaunch section" ref={ref}>
       <div className="jl-banner reveal">
-        <div className="jl-glow" aria-hidden />
-        <div className="jl-wave" aria-hidden>
-          {BARS.map((_, i) => (
-            <span
-              key={i}
-              className="jl-wave-bar"
-              style={{ animationDelay: `${(-i * 0.055).toFixed(3)}s` }}
-            />
-          ))}
+        {/* 천천히 흐르며 번지는 오로라 */}
+        <div className="jl-aurora" aria-hidden>
+          <span className="jl-blob jl-blob-1" />
+          <span className="jl-blob jl-blob-2" />
+          <span className="jl-blob jl-blob-3" />
         </div>
         <div className="jl-agent">
           <span className="jl-agent-icon" aria-hidden />
