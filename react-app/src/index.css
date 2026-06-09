@@ -196,9 +196,10 @@ body {
 }
 .btn-linear:hover {
   transform: translateY(-1px);
+  /* 호버: 안쪽을 보라 그라데이션으로 채움 */
   background:
-    radial-gradient(75% 170% at 50% -25%, rgba(255, 255, 255, 0.26) 0%, rgba(175, 83, 255, 0.18) 38%, rgba(0, 0, 0, 0) 64%),
-    #050506;
+    radial-gradient(80% 160% at 50% -20%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, #8b5cff 0%, #5b30e0 100%);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 40px -4px var(--bl-glow);
 }
 .btn-linear:hover, .btn-linear:hover::before { animation-duration: 2s; }
