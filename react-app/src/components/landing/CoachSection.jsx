@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useReveal, useInView } from '../../hooks/useScrollAnimations';
-import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon } from './icons';
+import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon, MaximizeIcon, PipIcon } from './icons';
 import './CoachSection.css';
 
 // 영상 소스 — HLS(.m3u8) 또는 mp4 URL, 혹은 public/demo/coach.mp4
@@ -51,11 +51,39 @@ export default function CoachSection() {
   const ref = useReveal();
   const [gridRef, inView] = useInView();
   const videoRef = useRef(null);
+  const playerRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true); // 디폴트 음소거
+  const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
+
+  // 볼륨 반영
+  useEffect(() => {
+    const v = videoRef.current;
+    if (v) v.volume = volume;
+  }, [volume]);
+
+  const toggleFullscreen = () => {
+    const el = playerRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else el.requestFullscreen?.();
+  };
+  const togglePip = async () => {
+    const v = videoRef.current;
+    if (!v) return;
+    try {
+      if (document.pictureInPictureElement) await document.exitPictureInPicture();
+      else await v.requestPictureInPicture?.();
+    } catch { /* 미지원/거부 시 무시 */ }
+  };
+  const onVolume = (e) => {
+    const val = Number(e.target.value);
+    setVolume(val);
+    if (val > 0 && isMuted) setIsMuted(false);
+  };
 
   // 소스 연결 (HLS는 hls.js, Safari/일반 mp4는 직접)
   useEffect(() => {
@@ -167,7 +195,7 @@ export default function CoachSection() {
 
       <div className="coach-grid reveal" ref={gridRef}>
         {/* 단일 영상 — 탭 클릭 시 해당 챕터로 seek */}
-        <div className="coach-player">
+        <div className="coach-player" ref={playerRef}>
           <video
             ref={videoRef}
             className="coach-video"
@@ -192,13 +220,33 @@ export default function CoachSection() {
             >
               {isPlaying ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
             </button>
-            <button
-              type="button"
-              className="coach-ctrl"
-              onClick={() => setIsMuted((m) => !m)}
-              aria-label={isMuted ? 'Unmute' : 'Mute'}
-            >
-              {isMuted ? <MuteIcon width={18} height={18} /> : <VolumeIcon width={18} height={18} />}
+            <div className="coach-vol">
+              <button
+                type="button"
+                className="coach-ctrl"
+                onClick={() => setIsMuted((m) => !m)}
+                aria-label={isMuted ? 'Unmute' : 'Mute'}
+              >
+                {isMuted ? <MuteIcon width={18} height={18} /> : <VolumeIcon width={18} height={18} />}
+              </button>
+              {!isMuted && (
+                <input
+                  type="range"
+                  className="coach-slider"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={volume}
+                  onChange={onVolume}
+                  aria-label="Volume"
+                />
+              )}
+            </div>
+            <button type="button" className="coach-ctrl" onClick={togglePip} aria-label="Picture in picture (16:9)">
+              <PipIcon width={18} height={18} />
+            </button>
+            <button type="button" className="coach-ctrl" onClick={toggleFullscreen} aria-label="Fullscreen">
+              <MaximizeIcon width={18} height={18} />
             </button>
           </div>
         </div>

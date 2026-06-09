@@ -24,25 +24,20 @@ export const PauseIcon = (p) => (
   <svg {...base} fill="currentColor" stroke="none" {...p}><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
 );
 
-const SPEAKER = 'M13 4.2 7.6 8.5H4a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h3.6L13 19.8a1 1 0 0 0 1.6-.78V4.98A1 1 0 0 0 13 4.2Z';
-
 export const VolumeIcon = (p) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden {...p}>
-    <path d={SPEAKER} />
-  </svg>
+  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" /></svg>
 );
 
 export const MuteIcon = (p) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden {...p}>
-    <defs>
-      <mask id="mute-slash">
-        <rect x="0" y="0" width="24" height="24" fill="#fff" />
-        <line x1="3.2" y1="3.2" x2="20.8" y2="20.8" stroke="#000" strokeWidth="3.6" strokeLinecap="round" />
-      </mask>
-    </defs>
-    <path d={SPEAKER} mask="url(#mute-slash)" />
-    <line x1="3.2" y1="3.2" x2="20.8" y2="20.8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>
+  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /><path d="m23 9-6 6" /><path d="m17 9 6 6" /></svg>
+);
+
+export const MaximizeIcon = (p) => (
+  <svg {...base} {...p}><path d="M8 3H5a2 2 0 0 0-2 2v3" /><path d="M21 8V5a2 2 0 0 0-2-2h-3" /><path d="M3 16v3a2 2 0 0 0 2 2h3" /><path d="M16 21h3a2 2 0 0 0 2-2v-3" /></svg>
+);
+
+export const PipIcon = (p) => (
+  <svg {...base} {...p}><rect x="3" y="5" width="18" height="14" rx="2" /><rect x="12" y="11" width="7" height="5" rx="1" /></svg>
 );
 
 export const ChatIcon = (p) => (
