@@ -78,12 +78,12 @@
   flex-shrink: 0;
 }
 .footer-social {
-  color: var(--text-4);
   display: inline-flex;
-  transition: color 0.2s var(--ease), transform 0.2s var(--ease);
+  opacity: 0.92;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
 }
 .footer-social:hover {
-  color: #fff;
+  opacity: 1;
   transform: translateY(-2px);
 }
 
