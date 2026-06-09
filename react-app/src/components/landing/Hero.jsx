@@ -98,7 +98,7 @@ export default function Hero() {
           Your AI partner brings the fun and the info your play needs — at once.
         </p>
         <div className="hero-actions">
-          <button type="button" className="btn btn-motion">
+          <button type="button" className="btn btn-motion download-cta">
             <DownloadIcon /> Download Desktop App
           </button>
         </div>

@@ -195,3 +195,9 @@ body {
   .section-title { font-size: 32px; line-height: 40px; }
   .section-sub { font-size: 16px; line-height: 24px; }
 }
+
+/* 모바일: 다운로드 버튼 모두 숨김 */
+@media (max-width: 600px) {
+  .download-cta { display: none !important; }
+  .section-title { font-size: 28px; line-height: 36px; }
+}
