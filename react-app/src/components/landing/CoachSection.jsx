@@ -97,10 +97,6 @@ export default function CoachSection() {
             key={active}
             src={TABS[active].video}
           />
-          {/* 영상이 없을 때 보이는 플레이스홀더 (자동 재생되는 듯한 모션) */}
-          <div className="coach-screen" aria-hidden>
-            <span className={`coach-orb ${isPlaying ? 'is-playing' : ''}`} />
-          </div>
 
           <div className="coach-nowplaying">
             <span className="coach-dot" />
