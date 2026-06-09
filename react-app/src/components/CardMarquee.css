@@ -1,0 +1,119 @@
+.marquee-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 64px 0;
+  /* 좁은 .app 컨테이너를 벗어나 화면 전체 폭으로 펼친다 */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.marquee-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.marquee-title {
+  font-size: 44px;
+  line-height: 52px;
+  letter-spacing: -0.44px;
+  font-weight: 600;
+  background: linear-gradient(170deg, #ffffff 25%, #939db8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.marquee-subtitle {
+  font-size: 18px;
+  line-height: 26px;
+  color: #b7b7c9;
+  max-width: 560px;
+}
+
+.marquee-cta {
+  border: 1px solid #424254;
+  background: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 16px 24px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.marquee-cta:hover {
+  border-color: #6a6a82;
+  background: #ffffff0d;
+}
+
+.marquee-viewport {
+  width: 100%;
+  /* 양쪽 가장자리를 부드럽게 페이드 아웃 */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-card {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.marquee-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes marqueeScroll {
+  /* 카드 목록이 2번 반복되므로 절반(-50%)만 이동하면 자연스럽게 이어진다.
+     gap 보정을 위해 16px만큼 추가 이동한다. */
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 8px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-viewport {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .marquee-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .marquee-subtitle {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .marquee-card {
+    width: 150px;
+    height: 195px;
+  }
+}

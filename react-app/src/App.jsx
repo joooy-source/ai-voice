@@ -14,6 +14,7 @@ import ProgressBar from './components/ProgressBar';
 import CalendarGrid from './components/CalendarGrid';
 import MilestoneRewards from './components/MilestoneRewards';
 import CheckInButton from './components/CheckInButton';
+import CardMarquee from './components/CardMarquee';
 import './App.css';
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
         />
         <MilestoneRewards totalCheckIns={totalCheckIns} />
       </div>
+      <CardMarquee />
     </div>
   );
 }
