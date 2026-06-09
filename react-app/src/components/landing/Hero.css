@@ -14,20 +14,17 @@
     var(--bg);
 }
 
-/* 배경 영상 (2개 크로스페이드) — contain으로 구체를 작게, 가장자리는 페더로 배경에 녹임 */
+/* 배경 영상 (2개 크로스페이드) — cover로 화면을 꽉 채워 좌우 레터박스/경계를 원천 차단 */
 .hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   z-index: 0;
   opacity: 0;
   transition: opacity 0.7s linear;
-  /* 영상 가장자리를 부드럽게 페이드 → 레터박스 경계 제거 */
-  -webkit-mask-image: radial-gradient(ellipse 60% 66% at 50% 50%, #000 48%, transparent 88%);
-  mask-image: radial-gradient(ellipse 60% 66% at 50% 50%, #000 48%, transparent 88%);
 }
 .hero-video.is-front {
   opacity: 1;
