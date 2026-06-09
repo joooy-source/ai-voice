@@ -215,6 +215,21 @@ export function useInView({ threshold = 0.15 } = {}) {
   return [ref, inView];
 }
 
+/** .btn-linear 버튼에 커서 위치를 CSS 변수(--mx/--my)로 전달 — 스포트라이트 추적용 */
+export function useLinearButtons() {
+  useEffect(() => {
+    const onMove = (e) => {
+      const btn = e.target.closest && e.target.closest('.btn-linear');
+      if (!btn) return;
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      btn.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
+    document.addEventListener('pointermove', onMove, { passive: true });
+    return () => document.removeEventListener('pointermove', onMove);
+  }, []);
+}
+
 /** 페이지 스크롤 시 true가 되어 nav 배경 처리를 제어한다. */
 export function useScrolled(offset = 20) {
   const [scrolled, setScrolled] = useState(false);
