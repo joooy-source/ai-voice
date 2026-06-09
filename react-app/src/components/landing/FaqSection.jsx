@@ -19,7 +19,7 @@ const FAQS = [
 
 export default function FaqSection() {
   const ref = useReveal();
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(-1);
   return (
     <section className="faq section" ref={ref}>
       <div className="faq-grid reveal">
