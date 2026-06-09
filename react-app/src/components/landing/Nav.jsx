@@ -18,7 +18,7 @@ export default function Nav() {
           </div>
         </div>
         <button type="button" className="nav-cta btn-linear download-cta">
-          <DownloadIcon width={20} height={20} /> Download Desktop App
+          <DownloadIcon width={16} height={16} /> Download Desktop App
         </button>
       </div>
     </nav>

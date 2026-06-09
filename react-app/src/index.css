@@ -197,16 +197,15 @@ body {
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.5), 0 0 40px -4px var(--bl-glow);
 }
 .btn-linear:active { transform: translateY(0); }
-/* 호버 시 다운로드 아이콘 통통 */
-.btn-linear svg { transition: transform 0.2s var(--ease); }
-.btn-linear:hover svg { animation: dlBounce 0.65s ease-in-out infinite; }
+/* 호버 시 화살표만 통통 (바닥 — 은 고정) */
+.btn-linear:hover .dl-arrow { animation: dlBounce 0.65s ease-in-out infinite; }
 @keyframes dlBounce {
   0%, 100% { transform: translateY(0); }
   40% { transform: translateY(-3px); }
   70% { transform: translateY(-1px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn-linear:hover svg { animation: none; }
+  .btn-linear:hover .dl-arrow { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn-linear, .btn-linear::before { animation: none; }

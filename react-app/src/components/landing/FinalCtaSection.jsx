@@ -19,7 +19,7 @@ export default function FinalCtaSection() {
           with your AI Voice Partner.
         </h2>
         <div className="fc-actions">
-          <button type="button" className="btn btn-linear download-cta"><DownloadIcon /> Download Desktop App</button>
+          <button type="button" className="btn btn-primary download-cta"><DownloadIcon /> Download Desktop App</button>
           <button type="button" className="btn btn-ghost">Browse all voices</button>
         </div>
       </div>

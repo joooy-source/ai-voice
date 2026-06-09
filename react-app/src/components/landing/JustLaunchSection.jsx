@@ -26,7 +26,7 @@ export default function JustLaunchSection() {
           <p className="jl-sub">Get the desktop app, pick a voice, and play.</p>
         </div>
         <div className="jl-actions">
-          <button type="button" className="btn btn-linear download-cta"><DownloadIcon /> Download Desktop App</button>
+          <button type="button" className="btn btn-primary download-cta"><DownloadIcon /> Download Desktop App</button>
         </div>
       </div>
     </section>
