@@ -1,7 +1,7 @@
 .pbp {
   position: relative;
-  /* 스크롤 스크럽을 위한 충분한 높이 */
-  height: 320vh;
+  /* 스크롤 스크럽을 위한 높이 (과한 여백 줄임) */
+  height: 240vh;
   width: 100%;
 }
 .pbp-bg {
