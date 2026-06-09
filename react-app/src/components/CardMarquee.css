@@ -77,7 +77,7 @@
   flex: 0 0 auto;
   width: 200px;
   height: 260px;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s var(--ease, ease);
@@ -97,7 +97,7 @@
 .marquee-card-overlay {
   position: absolute;
   inset: 0;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -163,11 +163,11 @@
 }
 .marquee-card-link {
   font-size: 14px;
-  color: #8b6bff;
+  color: #c0a5ff;
 }
 .marquee-card-arrow {
   flex-shrink: 0;
-  color: #8b6bff;
+  color: #c0a5ff;
   display: inline-flex;
 }
 

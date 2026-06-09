@@ -2,7 +2,7 @@
   position: relative;
   /* 화면 전체 폭 */
   width: 100%;
-  min-height: calc(100dvh - 60px);
+  min-height: calc(100dvh - 72px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@
 }
 
 @media (max-width: 900px) {
-  .hero { min-height: calc(100dvh - 60px); }
+  .hero { min-height: calc(100dvh - 72px); }
   .hero-title { font-size: 38px; line-height: 46px; letter-spacing: -1px; }
   .hero-sub { font-size: 15px; }
 }
