@@ -1,10 +1,8 @@
 .hero {
   position: relative;
+  /* 화면 전체 폭 (양옆 경계 제거) */
   width: 100%;
-  /* 풀스크린: nav(60px) 제외한 화면 전체 높이 */
   min-height: calc(100dvh - 60px);
-  max-width: var(--maxw);
-  margin: 0 auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -12,7 +10,7 @@
   justify-content: center;
 }
 
-/* 배경 영상 */
+/* 배경 영상 (2개 크로스페이드) */
 .hero-video {
   position: absolute;
   inset: 0;
@@ -21,17 +19,20 @@
   object-fit: cover;
   object-position: center;
   z-index: 0;
+  opacity: 0;
+  transition: opacity 0.7s linear;
+}
+.hero-video.is-front {
+  opacity: 1;
 }
 
-/* 블랙 딤 — 텍스트 가독성 */
+/* 배경 딤 약 40% */
 .hero-dim {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 60% at 50% 55%, rgba(6, 6, 8, 0.35), rgba(6, 6, 8, 0.7) 100%),
-    linear-gradient(180deg, rgba(6, 6, 8, 0.55) 0%, rgba(6, 6, 8, 0.3) 45%, rgba(6, 6, 8, 0.85) 100%);
+  background: rgba(6, 6, 8, 0.4);
 }
 
 /* content */
@@ -45,19 +46,34 @@
   text-align: center;
   padding: 0 24px;
 }
+
+/* 타이틀: 그라데이션 + 반짝이는 sheen 이동 */
 .hero-title {
   font-size: 64px;
   line-height: 72px;
   font-weight: 700;
   letter-spacing: -1.5px;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
-  animation: heroUp 0.8s var(--ease) both;
+  background-image: linear-gradient(
+    110deg,
+    #c4cbe0 0%,
+    #ffffff 38%,
+    #ffffff 50%,
+    #c4cbe0 62%,
+    #aab2cc 100%
+  );
+  background-size: 220% auto;
+  background-position: 200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.5));
+  animation: heroUp 0.8s var(--ease) both, titleSheen 5.5s ease-in-out 0.8s infinite;
 }
 .hero-sub {
   font-size: 18px;
   line-height: 26px;
   color: var(--text-2);
-  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.55);
   animation: heroUp 0.8s var(--ease) 0.12s both;
 }
 .hero-actions {
@@ -81,8 +97,18 @@
   to { opacity: 1; transform: none; }
 }
 
+/* 밝은 띠가 좌→우로 지나가며 반짝 */
+@keyframes titleSheen {
+  0% { background-position: 200% center; }
+  60%, 100% { background-position: -60% center; }
+}
+
 @media (max-width: 900px) {
   .hero { min-height: calc(100dvh - 60px); }
   .hero-title { font-size: 38px; line-height: 46px; letter-spacing: -1px; }
   .hero-sub { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title { animation: none; background-position: 50% center; }
 }
