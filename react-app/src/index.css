@@ -28,17 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  /* 섹션마다 멈추도록 스냅 (긴 섹션은 갇히지 않게 proximity) */
-  scroll-snap-type: y proximity;
-  scroll-padding-top: 72px; /* sticky nav 보정 */
-}
-
-/* 스냅 대상 = 각 섹션 시작점 (Hero 덮임 구간은 JS로 별도 스냅) */
-.section,
-.marquee-section,
-.pbp,
-.finalcta {
-  scroll-snap-align: start;
+  scroll-padding-top: 72px; /* 앵커 이동 시 sticky nav 보정 */
 }
 
 body {
