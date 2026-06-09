@@ -144,13 +144,15 @@ body {
 
 /* ===== Linear 버튼 (Framer 컴포넌트 재현) =====
    검은 알약 + 색이 변하며 회전하는 그라데이션 테두리 + 상단 글로우 */
-@property --bl-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-@keyframes blSpin {
-  to { --bl-angle: 360deg; }
+@property --bl-x { syntax: '<length-percentage>'; initial-value: 30%; inherits: false; }
+@property --bl-y { syntax: '<length-percentage>'; initial-value: 100%; inherits: false; }
+@property --bl-c { syntax: '<color>'; initial-value: #0188ff; inherits: false; }
+@keyframes blMove {
+  0%   { --bl-x: 30%;  --bl-y: 100%; --bl-c: #0188ff; }
+  25%  { --bl-x: 100%; --bl-y: 45%;  --bl-c: #6e4fff; }
+  50%  { --bl-x: 68%;  --bl-y: 0%;   --bl-c: #af53ff; }
+  75%  { --bl-x: 0%;   --bl-y: 55%;  --bl-c: #19b8ff; }
+  100% { --bl-x: 30%;  --bl-y: 100%; --bl-c: #0188ff; }
 }
 .btn-linear {
   --bl-accent: #af53ff;
@@ -175,21 +177,13 @@ body {
   padding: 1.5px;
   pointer-events: none;
   background:
-    conic-gradient(
-      from var(--bl-angle),
-      rgba(175, 83, 255, 0) 0deg,
-      #af53ff 50deg,
-      #ffffff 90deg,
-      #6e4fff 130deg,
-      rgba(175, 83, 255, 0) 180deg,
-      rgba(175, 83, 255, 0) 360deg
-    ),
-    rgba(255, 255, 255, 0.1);
+    radial-gradient(25% 50% at var(--bl-x) var(--bl-y), var(--bl-c) 0%, rgba(134, 158, 208, 0) 100%),
+    rgba(255, 255, 255, 0.08);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-  animation: blSpin 3.5s linear infinite;
+  animation: blMove 4s linear infinite;
 }
 .btn-linear:hover {
   transform: translateY(-1px);
