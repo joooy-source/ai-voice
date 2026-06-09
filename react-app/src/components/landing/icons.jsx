@@ -25,11 +25,11 @@ export const PauseIcon = (p) => (
 );
 
 export const VolumeIcon = (p) => (
-  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" /></svg>
+  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /></svg>
 );
 
 export const MuteIcon = (p) => (
-  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /><path d="m23 9-6 6" /><path d="m17 9 6 6" /></svg>
+  <svg {...base} {...p}><path d="M11 5 6 9H3v6h3l5 4z" /><path d="m3 3 18 18" /></svg>
 );
 
 export const ChatIcon = (p) => (
