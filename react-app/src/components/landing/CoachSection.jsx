@@ -91,15 +91,23 @@ export default function CoachSection() {
     if (!v) return undefined;
     const onTime = () => {
       const t = v.currentTime;
-      const dur = v.duration || 0;
-      let idx = 0;
-      for (let i = 0; i < TABS.length; i++) {
-        if (t + 0.05 >= TABS[i].start) idx = i;
+      const dur = v.duration;
+      const n = TABS.length;
+      if (dur && isFinite(dur) && dur > 0) {
+        // 영상 길이를 탭 수만큼 균등 분할 → 탭과 항상 일치
+        const seg = dur / n;
+        const idx = Math.min(n - 1, Math.floor(t / seg));
+        setActive(idx);
+        setProgress(Math.min(Math.max((t - idx * seg) / seg, 0), 1));
+      } else {
+        // 길이를 모를 때(폴백): 고정 start 사용
+        let idx = 0;
+        for (let i = 0; i < n; i++) if (t + 0.05 >= TABS[i].start) idx = i;
+        setActive(idx);
+        const start = TABS[idx].start;
+        const end = idx + 1 < n ? TABS[idx + 1].start : start + CLIP_SECONDS;
+        setProgress(end > start ? Math.min(Math.max((t - start) / (end - start), 0), 1) : 0);
       }
-      setActive(idx);
-      const start = TABS[idx].start;
-      const end = idx + 1 < TABS.length ? TABS[idx + 1].start : (dur || start + CLIP_SECONDS);
-      setProgress(end > start ? Math.min(Math.max((t - start) / (end - start), 0), 1) : 0);
     };
     const onReady = () => setHasVideo(true);
     const onError = () => setHasVideo(false);
@@ -151,7 +159,8 @@ export default function CoachSection() {
     setIsPlaying(true);
     const v = videoRef.current;
     if (v && hasVideo) {
-      v.currentTime = TABS[i].start;
+      const dur = v.duration;
+      v.currentTime = dur && isFinite(dur) && dur > 0 ? (dur * i) / TABS.length : TABS[i].start;
       v.play().catch(() => {});
     }
   };
