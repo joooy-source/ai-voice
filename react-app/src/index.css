@@ -115,13 +115,15 @@ body {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* ===== Reveal (스크롤 시 떠오르는 패럴랙스) ===== */
+/* ===== Reveal (스크롤 시 떠오르는 패럴랙스) =====
+   관찰 대상(섹션 루트)에 .is-visible 이 붙으면 내부 .reveal 요소들이 나타난다. */
 .reveal {
   opacity: 0;
   transform: translateY(48px);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
   will-change: opacity, transform;
 }
+.is-visible .reveal,
 .reveal.is-visible {
   opacity: 1;
   transform: none;
@@ -134,6 +136,7 @@ body {
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
   transition-delay: calc(var(--i, 0) * 90ms);
 }
+.is-visible .reveal-group > *,
 .reveal-group.is-visible > * {
   opacity: 1;
   transform: none;
