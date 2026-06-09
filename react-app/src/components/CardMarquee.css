@@ -23,7 +23,7 @@
   font-size: 44px;
   line-height: 52px;
   letter-spacing: -0.44px;
-  font-weight: 600;
+  font-weight: 500;
   background: linear-gradient(170deg, #ffffff 25%, #939db8 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -34,7 +34,6 @@
   font-size: 18px;
   line-height: 26px;
   color: #b7b7c9;
-  max-width: 560px;
 }
 
 .marquee-cta {
