@@ -1,10 +1,10 @@
-/* 일반 섹션(페이지 내 자동재생) — 스크롤 스크럽 제거, 상하 패딩 축소 */
+/* 02·05 통일: 좌우 120px / 상하 80px (콘텐츠 1200px, 디자인 기준) */
 section.pbp {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 48px;
-  padding: 72px 120px;
+  padding: 80px 120px;
   overflow: hidden;
 }
 .pbp-bg {
