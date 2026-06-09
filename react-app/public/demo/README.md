@@ -1,12 +1,12 @@
-# Demo videos (Coach section)
+# Coach section video (02)
 
-The Coach section (`02 Coach`) renders a muted, autoplaying `<video>` with
-play/pause and mute controls. Drop the matching files here to make them play:
+The Coach section uses a **single** video and seeks to a chapter timestamp
+when each tab is clicked (no need to cut the video into pieces).
 
-- `lane-coaching.mp4`
-- `real-time-alerts.mp4`
-- `combat-analysis.mp4`
-- `build-coaching.mp4`
+- Put one file here: `coach.mp4`
 
-Until then, an animated placeholder screen is shown and the feature gauge
-still advances on a timer, so the interaction works without the assets.
+Then set each tab's `start` (in seconds) in
+`src/components/landing/CoachSection.jsx` to match the chapter start times in
+your video. Defaults are 0 / 8 / 16 / 24s — edit to fit.
+
+Until a file is present, the section falls back to a timer-driven gauge.
