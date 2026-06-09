@@ -92,36 +92,34 @@ export default function Hero() {
           <br />
           for more fun in every game
         </h1>
-
-        <button
-          type="button"
-          className={`hero-sound ${playing ? 'is-playing' : ''}`}
-          onClick={toggleSound}
-          aria-label={playing ? 'Stop AI voice' : 'Play title in AI voice'}
-        >
-          {playing ? (
-            <span className="hero-sound-bars" aria-hidden>
-              <i /><i /><i /><i />
-            </span>
-          ) : (
-            <VolumeIcon width={20} height={20} />
-          )}
-          <span className="hero-sound-label">Hear it in AI voice</span>
-        </button>
-        <audio ref={audioRef} src={AUDIO} preload="none" onEnded={() => setPlaying(false)} />
-
         <p className="hero-sub">
           Get real-time answers in your favorite creator&apos;s voice.
           <br />
           Your AI partner brings the fun and the info your play needs — at once.
         </p>
         <div className="hero-actions">
-          <button type="button" className="btn btn-primary">
+          <button type="button" className="btn btn-motion">
             <DownloadIcon /> Download Desktop App
           </button>
-          <button type="button" className="btn btn-ghost">Browse all voices</button>
         </div>
       </div>
+
+      {/* 우측 하단 사운드 버튼 (아이콘만) */}
+      <button
+        type="button"
+        className={`hero-sound ${playing ? 'is-playing' : ''}`}
+        onClick={toggleSound}
+        aria-label={playing ? 'Stop AI voice' : 'Play title in AI voice'}
+      >
+        {playing ? (
+          <span className="hero-sound-bars" aria-hidden>
+            <i /><i /><i /><i />
+          </span>
+        ) : (
+          <VolumeIcon width={22} height={22} />
+        )}
+      </button>
+      <audio ref={audioRef} src={AUDIO} preload="none" onEnded={() => setPlaying(false)} />
 
       <a className="hero-scroll" href="#coach" aria-label="Scroll down">
         <ArrowDownIcon />
