@@ -21,7 +21,7 @@ const VOICE_CARDS = [
 
 function PlayIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
       <path d="M8 5v14l11-7z" />
     </svg>
   );

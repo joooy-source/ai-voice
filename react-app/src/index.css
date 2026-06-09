@@ -144,25 +144,12 @@ body {
 .btn-motion:active {
   transform: translateY(0);
 }
-.btn-motion::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
-  transform: translateX(-130%);
-  transition: transform 0.6s var(--ease);
-  pointer-events: none;
-}
-.btn-motion:hover::after {
-  transform: translateX(130%);
-}
 @keyframes btnGradient {
   0% { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn-motion { animation: none; }
-  .btn-motion::after { display: none; }
 }
 
 /* ===== Reveal (스크롤 시 떠오르는 패럴랙스) =====

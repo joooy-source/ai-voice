@@ -110,31 +110,28 @@
   opacity: 1;
 }
 
-/* 가운데 재생 버튼 */
+/* 가운데 재생 버튼 (디자인: 48px 원형, 반투명) */
 .marquee-card-play {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  width: 56px;
-  height: 56px;
+  transform: translate(-50%, -50%) scale(0.92);
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   color: #fff;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(6px);
-  padding-left: 3px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding-left: 2px;
   opacity: 0;
-  transition: transform 0.3s var(--ease, ease), opacity 0.3s ease, background 0.2s ease;
+  /* backdrop-filter 제거 → 호버 시 깜빡임 방지 */
+  transition: transform 0.3s var(--ease, ease), opacity 0.3s ease;
 }
 .marquee-card:hover .marquee-card-play {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
-}
-.marquee-card-play:hover {
-  background: rgba(255, 255, 255, 0.28);
 }
 
 /* 하단 텍스트 + 화살표 */
