@@ -108,7 +108,9 @@ section.pbp {
 }
 .pbp-rail {
   position: absolute;
-  top: 0; bottom: 0;
+  /* 첫·마지막 노드 중심까지만 (아래 꼬다리 제거) */
+  top: 26px;
+  bottom: 26px;
   width: 1px;
   background: var(--border);
 }
@@ -131,11 +133,17 @@ section.pbp {
 .pbp-node:hover { transform: scale(1.06); color: var(--text-2); }
 .pbp-node.is-done { border-color: var(--primary); color: var(--text-2); }
 .pbp-node.is-active {
-  border-color: transparent;
+  border-color: var(--primary-400);
   color: var(--primary-400);
-  transform: scale(1.06);
 }
-.pbp-ring { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+/* 64px 글로우 타이머 링 (디자인) */
+.pbp-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(110, 79, 255, 0.7));
+}
 .pbp-node-time { position: relative; }
 
 .pbp-list { display: flex; flex-direction: column; gap: 28px; flex: 1; padding: 6px 0; }

@@ -16,12 +16,13 @@ const CALLOUTS = [
 const WAVE = [10, 20, 32, 16, 40, 24, 12, 34, 20, 28, 14, 38, 22, 16, 30, 12, 26, 18, 34, 14, 24, 10, 30, 18, 38, 16];
 
 const CLIP_SECONDS = 6; // 콜아웃당 재생 시간 (링이 차는 시간)
-const RING_R = 24;
+const RING_R = 30; // 64px 링 (디자인)
 const RING_C = 2 * Math.PI * RING_R;
 
 export default function PlayByPlaySection() {
   const ref = useReveal();
-  const [bodyRef, inView] = useInView();
+  // 섹션이 충분히 보일 때만 타이머 시작 (도착 전 미리 재생 방지)
+  const [bodyRef, inView] = useInView({ threshold: 0.45 });
   const audioRef = useRef(null);
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -126,19 +127,19 @@ export default function PlayByPlaySection() {
                 aria-label={`${c.label} ${c.time}`}
               >
                 {i === active && (
-                  <svg className="pbp-ring" width="56" height="56" viewBox="0 0 56 56" aria-hidden>
-                    <circle cx="28" cy="28" r={RING_R} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="2" />
+                  <svg className="pbp-ring" width="64" height="64" viewBox="0 0 64 64" aria-hidden>
+                    <circle cx="32" cy="32" r={RING_R} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
                     <circle
-                      cx="28"
-                      cy="28"
+                      cx="32"
+                      cy="32"
                       r={RING_R}
                       fill="none"
                       stroke="var(--primary-400)"
-                      strokeWidth="2"
+                      strokeWidth="3"
                       strokeLinecap="round"
                       strokeDasharray={RING_C}
                       strokeDashoffset={RING_C * (1 - progress)}
-                      transform="rotate(-90 28 28)"
+                      transform="rotate(-90 32 32)"
                     />
                   </svg>
                 )}
