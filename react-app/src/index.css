@@ -142,6 +142,44 @@ body {
   .btn-motion { animation: none; }
 }
 
+/* ===== Linear 스타일 버튼 (커서 추적 스포트라이트 + 내부 하이라이트) ===== */
+.btn-linear {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  color: #fff;
+  background: linear-gradient(180deg, #7a5cff 0%, #5a2fe0 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 6px 18px rgba(95, 50, 230, 0.35);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.btn-linear:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 10px 30px rgba(95, 50, 230, 0.55);
+}
+.btn-linear:active { transform: translateY(0); }
+.btn-linear > * { position: relative; z-index: 1; }
+.btn-linear::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    130px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.btn-linear:hover::before { opacity: 1; }
+
 /* ===== Reveal (스크롤 시 떠오르는 패럴랙스) =====
    관찰 대상(섹션 루트)에 .is-visible 이 붙으면 내부 .reveal 요소들이 나타난다. */
 .reveal {

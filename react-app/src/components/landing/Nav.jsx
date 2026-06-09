@@ -17,7 +17,7 @@ export default function Nav() {
             <a className="nav-link" href="#marquee">Store</a>
           </div>
         </div>
-        <button type="button" className="nav-cta btn-motion download-cta">
+        <button type="button" className="nav-cta btn-linear download-cta">
           <DownloadIcon width={20} height={20} /> Download Desktop App
         </button>
       </div>
