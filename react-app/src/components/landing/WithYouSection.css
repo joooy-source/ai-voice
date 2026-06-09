@@ -1,9 +1,9 @@
 .withyou {
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  padding-left: 200px;
-  padding-right: 200px;
+  gap: 40px;
+  /* 상하 패딩 축소 (기존 .section 의 100px → 64px) */
+  padding: 64px 200px;
 }
 .withyou-cards {
   display: flex;

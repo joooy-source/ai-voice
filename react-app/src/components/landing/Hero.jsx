@@ -1,14 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
-import { DownloadIcon, ArrowDownIcon } from './icons';
+import { DownloadIcon, ArrowDownIcon, VolumeIcon } from './icons';
 import './Hero.css';
 
 const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
+// 타이틀을 AI Voice로 재생할 오디오 — public/voice/ai-voice.mp3 에 넣으면 동작
+const AUDIO = `${import.meta.env.BASE_URL}voice/ai-voice.mp3`;
 const FADE = 0.7; // 루프 지점 크로스페이드 길이(초)
 
 export default function Hero() {
   const aRef = useRef(null);
   const bRef = useRef(null);
+  const audioRef = useRef(null);
   const [front, setFront] = useState('a');
+  const [playing, setPlaying] = useState(false);
+
+  const toggleSound = () => {
+    const el = audioRef.current;
+    const next = !playing;
+    setPlaying(next);
+    if (!el) return;
+    if (next) {
+      el.currentTime = 0;
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  };
 
   // 영상 2개를 번갈아 재생하며 루프 이음새를 크로스페이드로 가린다 → 자연스러운 무한루프
   useEffect(() => {
@@ -75,6 +92,24 @@ export default function Hero() {
           <br />
           for more fun in every game
         </h1>
+
+        <button
+          type="button"
+          className={`hero-sound ${playing ? 'is-playing' : ''}`}
+          onClick={toggleSound}
+          aria-label={playing ? 'Stop AI voice' : 'Play title in AI voice'}
+        >
+          {playing ? (
+            <span className="hero-sound-bars" aria-hidden>
+              <i /><i /><i /><i />
+            </span>
+          ) : (
+            <VolumeIcon width={20} height={20} />
+          )}
+          <span className="hero-sound-label">Hear it in AI voice</span>
+        </button>
+        <audio ref={audioRef} src={AUDIO} preload="none" onEnded={() => setPlaying(false)} />
+
         <p className="hero-sub">
           Get real-time answers in your favorite creator&apos;s voice.
           <br />

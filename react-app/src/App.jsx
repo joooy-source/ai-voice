@@ -6,7 +6,6 @@ import WithYouSection from './components/landing/WithYouSection';
 import PlayByPlaySection from './components/landing/PlayByPlaySection';
 import MoreThanVoiceSection from './components/landing/MoreThanVoiceSection';
 import JustLaunchSection from './components/landing/JustLaunchSection';
-import PremiumSection from './components/landing/PremiumSection';
 import FaqSection from './components/landing/FaqSection';
 import FinalCtaSection from './components/landing/FinalCtaSection';
 import { useHeroSnap } from './hooks/useScrollAnimations';
@@ -28,7 +27,6 @@ function App() {
         <PlayByPlaySection />
         <MoreThanVoiceSection />
         <JustLaunchSection />
-        <PremiumSection />
         <FaqSection />
         <FinalCtaSection />
       </div>
