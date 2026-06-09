@@ -198,6 +198,23 @@ export function useSmoothScroll({ lerp = 0.09 } = {}) {
   }, [lerp]);
 }
 
+/** 요소가 화면에 보이는 동안만 true. (보일 때만 타이머/애니메이션을 돌려 성능 확보) */
+export function useInView({ threshold = 0.15 } = {}) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
+
 /** 페이지 스크롤 시 true가 되어 nav 배경 처리를 제어한다. */
 export function useScrolled(offset = 20) {
   const [scrolled, setScrolled] = useState(false);
