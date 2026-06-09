@@ -149,15 +149,6 @@
   font-size: 14px;
   line-height: 20px;
   color: var(--text-4);
-  /* 비활성 탭은 설명을 접어 컴팩트하게 */
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s var(--ease), opacity 0.3s var(--ease);
-}
-.coach-tab.is-active .coach-tab-desc {
-  max-height: 160px;
-  opacity: 1;
 }
 
 /* 게이지 바 (재생 진행도) */

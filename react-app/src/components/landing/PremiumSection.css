@@ -33,6 +33,7 @@
 .premium-card:hover { transform: translateY(-6px); border-color: var(--primary); }
 .premium-icon {
   display: inline-flex;
+  align-self: flex-start;
   padding: 10px;
   border-radius: 12px;
   background: var(--primary-soft);
