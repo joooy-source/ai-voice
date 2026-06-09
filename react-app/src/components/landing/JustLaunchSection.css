@@ -1,0 +1,90 @@
+.justlaunch { display: flex; justify-content: center; }
+.jl-banner {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  min-height: 420px;
+  border-radius: 28px;
+  background: #0b0913;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  padding: 64px 40px;
+}
+/* 오로라 — 부드러운 빛 덩어리가 천천히 흐르며 번진다 */
+.jl-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  filter: blur(48px);
+}
+.jl-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.jl-blob-1 {
+  width: 620px;
+  height: 460px;
+  left: -120px;
+  bottom: -160px;
+  background: radial-gradient(circle at 50% 50%, rgba(120, 80, 255, 0.55), transparent 68%);
+  animation: jlDrift1 22s ease-in-out infinite alternate;
+}
+.jl-blob-2 {
+  width: 560px;
+  height: 420px;
+  right: -120px;
+  top: -140px;
+  background: radial-gradient(circle at 50% 50%, rgba(95, 50, 230, 0.5), transparent 68%);
+  animation: jlDrift2 27s ease-in-out infinite alternate;
+}
+.jl-blob-3 {
+  width: 720px;
+  height: 360px;
+  left: 50%;
+  bottom: -200px;
+  margin-left: -360px;
+  background: radial-gradient(circle at 50% 50%, rgba(150, 110, 255, 0.4), transparent 70%);
+  animation: jlDrift3 19s ease-in-out infinite alternate;
+}
+@keyframes jlDrift1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(180px, -60px) scale(1.18); }
+}
+@keyframes jlDrift2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-160px, 70px) scale(1); }
+}
+@keyframes jlDrift3 {
+  0% { transform: translate(-40px, 0) scale(1); }
+  100% { transform: translate(60px, -50px) scale(1.22); }
+}
+
+.jl-agent { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; }
+.jl-agent-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 30%, #b9a9ff, var(--primary));
+  box-shadow: 0 0 24px rgba(110, 79, 255, 0.5);
+}
+.jl-agent-text { font-size: 22px; font-weight: 300; color: #fff; }
+.jl-agent-logo { font-size: 22px; font-weight: 700; color: #fff; }
+.jl-head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.jl-title { font-size: 52px; line-height: 60px; font-weight: 700; letter-spacing: -0.52px; }
+.jl-sub { font-size: 24px; line-height: 32px; color: var(--text-2); }
+.jl-actions { position: relative; z-index: 1; display: flex; gap: 12px; }
+
+@media (max-width: 900px) {
+  .jl-title { font-size: 32px; line-height: 40px; }
+  .jl-sub { font-size: 18px; }
+  .jl-actions { flex-direction: column; width: 100%; }
+}

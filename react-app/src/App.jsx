@@ -1,75 +1,36 @@
-import { useState, useEffect } from 'react';
-import { initEventData, saveEventData } from './utils/storage';
-import {
-  getTodayStr,
-  getTodayIndex,
-  calculateStreak,
-  getDaysRemaining,
-  addDays,
-} from './utils/dateUtils';
-import { EVENT_DURATION } from './utils/constants';
-import EventBanner from './components/EventBanner';
-import StatsBar from './components/StatsBar';
-import ProgressBar from './components/ProgressBar';
-import CalendarGrid from './components/CalendarGrid';
-import MilestoneRewards from './components/MilestoneRewards';
-import CheckInButton from './components/CheckInButton';
+import Nav from './components/landing/Nav';
+import Hero from './components/landing/Hero';
+import CoachSection from './components/landing/CoachSection';
+import CardMarquee from './components/CardMarquee';
+import WithYouSection from './components/landing/WithYouSection';
+import PlayByPlaySection from './components/landing/PlayByPlaySection';
+import MoreThanVoiceSection from './components/landing/MoreThanVoiceSection';
+import JustLaunchSection from './components/landing/JustLaunchSection';
+import PremiumSection from './components/landing/PremiumSection';
+import FaqSection from './components/landing/FaqSection';
+import FinalCtaSection from './components/landing/FinalCtaSection';
+import { useHeroSnap } from './hooks/useScrollAnimations';
 import './App.css';
 
 function App() {
-  const [eventData, setEventData] = useState(null);
-  const [justCheckedDay, setJustCheckedDay] = useState(null);
-
-  useEffect(() => {
-    const data = initEventData();
-    setEventData(data);
-  }, []);
-
-  if (!eventData) return null;
-
-  const { eventStartDate, checkedDates } = eventData;
-  const today = getTodayStr();
-  const todayIndex = getTodayIndex(eventStartDate);
-  const isTodayChecked = checkedDates.includes(today);
-  const isEventEnded = todayIndex >= EVENT_DURATION;
-  const streak = calculateStreak(eventStartDate, checkedDates);
-  const totalCheckIns = checkedDates.length;
-  const daysRemaining = getDaysRemaining(eventStartDate);
-
-  const handleCheckIn = () => {
-    if (isTodayChecked || isEventEnded) return;
-    if (todayIndex < 0) return;
-
-    const newCheckedDates = [...checkedDates, today];
-    const newData = { ...eventData, checkedDates: newCheckedDates };
-    saveEventData(newData);
-    setEventData(newData);
-
-    setJustCheckedDay(todayIndex + 1);
-    setTimeout(() => setJustCheckedDay(null), 800);
-  };
-
+  useHeroSnap();
   return (
     <div className="app">
-      <EventBanner eventStartDate={eventStartDate} />
-      <div className="app-sections">
-        <StatsBar
-          streak={streak}
-          totalCheckIns={totalCheckIns}
-          daysRemaining={daysRemaining}
-        />
-        <ProgressBar totalCheckIns={totalCheckIns} />
-        <CalendarGrid
-          eventStartDate={eventStartDate}
-          checkedDates={checkedDates}
-          justCheckedDay={justCheckedDay}
-        />
-        <CheckInButton
-          onCheckIn={handleCheckIn}
-          isTodayChecked={isTodayChecked}
-          isEventEnded={isEventEnded}
-        />
-        <MilestoneRewards totalCheckIns={totalCheckIns} />
+      <Nav />
+      <Hero />
+      {/* Hero 위로 슉 올라와 덮는 콘텐츠 (parallax reveal-over) */}
+      <div className="below-hero">
+        <CoachSection />
+        <div id="marquee">
+          <CardMarquee />
+        </div>
+        <WithYouSection />
+        <PlayByPlaySection />
+        <MoreThanVoiceSection />
+        <JustLaunchSection />
+        <PremiumSection />
+        <FaqSection />
+        <FinalCtaSection />
       </div>
     </div>
   );
