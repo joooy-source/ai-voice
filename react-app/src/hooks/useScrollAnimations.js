@@ -9,7 +9,7 @@ const prefersReduced = () =>
  * 요소가 뷰포트에 들어오면 `is-visible` 클래스를 붙여 reveal 애니메이션을 트리거한다.
  * 자식의 stagger 지연은 CSS `--i` 변수로 제어한다.
  */
-export function useReveal({ threshold = 0.15, rootMargin = '0px 0px -10% 0px', once = true } = {}) {
+export function useReveal({ threshold = 0.12, rootMargin = '0px 0px -12% 0px', once = false } = {}) {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current;

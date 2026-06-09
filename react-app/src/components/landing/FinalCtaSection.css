@@ -21,11 +21,24 @@
   left: -350px;
   top: 50px;
   background: radial-gradient(circle at 50% 50%, rgba(95, 50, 230, 0.28), transparent 65%);
+  animation: fcDriftLeft 20s ease-in-out infinite alternate;
 }
 .fc-glow--right {
   right: -350px;
   top: 0;
   background: radial-gradient(circle at 50% 50%, rgba(110, 79, 255, 0.22), transparent 65%);
+  animation: fcDriftRight 24s ease-in-out infinite alternate;
+}
+
+@keyframes fcDriftLeft {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(120px, 40px) scale(1.12); }
+  100% { transform: translate(60px, -30px) scale(1.05); }
+}
+@keyframes fcDriftRight {
+  0%   { transform: translate(0, 0) scale(1.05); }
+  50%  { transform: translate(-100px, -40px) scale(1); }
+  100% { transform: translate(-50px, 30px) scale(1.15); }
 }
 .fc-content {
   position: relative;

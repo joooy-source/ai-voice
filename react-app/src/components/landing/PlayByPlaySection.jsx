@@ -54,7 +54,6 @@ export default function PlayByPlaySection() {
                 />
               ))}
             </div>
-            <p className="pbp-hint">Scroll → call-outs play in sequence · player stays pinned</p>
           </div>
 
           {/* 우측: 타임라인 + 콜아웃 리스트 */}

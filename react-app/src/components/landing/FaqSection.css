@@ -24,10 +24,10 @@
 }
 .faq-chevron {
   flex-shrink: 0;
-  color: var(--text-2);
-  transition: transform 0.3s var(--ease), color 0.3s var(--ease);
+  color: var(--text-4);
+  transition: transform 0.3s var(--ease);
 }
-.faq-item.is-open .faq-chevron { transform: rotate(180deg); color: var(--primary-400); }
+.faq-item.is-open .faq-chevron { transform: rotate(180deg); }
 .faq-a-wrap {
   display: grid;
   grid-template-rows: 0fr;
