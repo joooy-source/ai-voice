@@ -64,7 +64,7 @@
 .jl-agent { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; }
 .jl-agent-icon { width: 40px; height: 40px; object-fit: contain; display: block; }
 .jl-agent-text { font-size: 22px; font-weight: 300; color: #fff; }
-.jl-agent-logo { font-size: 22px; font-weight: 700; color: #fff; }
+.jl-agent-logo { height: 22px; width: auto; display: block; object-fit: contain; }
 
 .jl-head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 .jl-title { font-size: 52px; line-height: 60px; font-weight: 700; letter-spacing: -0.52px; }

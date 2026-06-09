@@ -6,7 +6,12 @@ export default function FinalCtaSection() {
   const ref = useReveal();
   return (
     <section className="finalcta" ref={ref}>
-      <div className="fc-overlay" aria-hidden />
+      {/* 다크 배경 위로 부드럽게 호흡하며 떠다니는 그라데이션 원 */}
+      <div className="fc-orbs" aria-hidden>
+        <span className="fc-orb fc-orb-1" />
+        <span className="fc-orb fc-orb-2" />
+        <span className="fc-orb fc-orb-3" />
+      </div>
       <div className="fc-content reveal">
         <h2 className="fc-title grad-text">
           Experience a richer gaming journey

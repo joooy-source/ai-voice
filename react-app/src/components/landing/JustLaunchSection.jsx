@@ -3,7 +3,8 @@ import { DownloadIcon } from './icons';
 import './JustLaunchSection.css';
 
 // Figma 로고 에셋 (임시 URL · 약 7일)
-const LOGO = 'https://www.figma.com/api/mcp/asset/cbf1a823-895a-457c-9e3e-ca3f00cb4e6f';
+const AGENT_ICON = 'https://www.figma.com/api/mcp/asset/74d4d220-b4e3-42ab-828c-6e1cad80a882';
+const OPGG_LOGO = 'https://www.figma.com/api/mcp/asset/8a6a569b-9c35-4a1e-8276-55722b745c8b';
 
 export default function JustLaunchSection() {
   const ref = useReveal();
@@ -16,9 +17,9 @@ export default function JustLaunchSection() {
         <div className="jl-glow" aria-hidden />
 
         <div className="jl-agent">
-          <img className="jl-agent-icon" src={LOGO} alt="" />
+          <img className="jl-agent-icon" src={AGENT_ICON} alt="" />
           <span className="jl-agent-text">Agent by</span>
-          <span className="jl-agent-logo">OP.GG</span>
+          <img className="jl-agent-logo" src={OPGG_LOGO} alt="OP.GG" />
         </div>
         <div className="jl-head">
           <h2 className="jl-title grad-text">Just launch your game and it begins</h2>
@@ -26,7 +27,6 @@ export default function JustLaunchSection() {
         </div>
         <div className="jl-actions">
           <button type="button" className="btn btn-primary"><DownloadIcon /> Download Desktop App</button>
-          <button type="button" className="btn btn-ghost">Browse all voices</button>
         </div>
       </div>
     </section>
