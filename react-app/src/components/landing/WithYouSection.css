@@ -23,8 +23,8 @@
 }
 .withyou-card:hover {
   transform: translateY(-6px);
-  border-color: var(--primary);
-  background: rgba(95, 50, 230, 0.06);
+  border-color: var(--border-2);
+  background: rgba(255, 255, 255, 0.06);
 }
 .withyou-icon {
   display: inline-flex;
