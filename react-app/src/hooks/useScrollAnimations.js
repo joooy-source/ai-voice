@@ -140,6 +140,64 @@ export function useHeroSnap({ navHeight = 72, debounce = 140 } = {}) {
   }, [navHeight, debounce]);
 }
 
+/**
+ * 관성(inertia) 스무스 스크롤 — 마우스 휠을 가로채 목표 위치로 부드럽게 lerp 이동한다.
+ * (op.gg/ai 같은 버터 느낌). 터치/리듀스드모션에서는 네이티브 스크롤을 그대로 둔다.
+ */
+export function useSmoothScroll({ lerp = 0.09 } = {}) {
+  useEffect(() => {
+    if (prefersReduced()) return undefined;
+    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return undefined;
+
+    let target = window.scrollY;
+    let current = target;
+    let raf = 0;
+    let running = false;
+
+    const maxScroll = () =>
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    const loop = () => {
+      current += (target - current) * lerp;
+      if (Math.abs(target - current) < 0.4) {
+        current = target;
+        window.scrollTo(0, current);
+        running = false;
+        return;
+      }
+      window.scrollTo(0, current);
+      raf = requestAnimationFrame(loop);
+    };
+
+    const onWheel = (e) => {
+      if (e.ctrlKey) return; // 핀치 줌은 통과
+      e.preventDefault();
+      const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      target = Math.min(Math.max(target + delta, 0), maxScroll());
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(loop);
+      }
+    };
+
+    // 휠 외(키보드·스크롤바·프로그램 스크롤)로 움직이면 목표를 동기화
+    const onScroll = () => {
+      if (!running) {
+        target = window.scrollY;
+        current = target;
+      }
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [lerp]);
+}
+
 /** 페이지 스크롤 시 true가 되어 nav 배경 처리를 제어한다. */
 export function useScrolled(offset = 20) {
   const [scrolled, setScrolled] = useState(false);
