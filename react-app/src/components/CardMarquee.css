@@ -73,11 +73,17 @@
 }
 
 .marquee-card {
+  position: relative;
   flex: 0 0 auto;
   width: 200px;
   height: 260px;
   border-radius: 20px;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease, ease);
+}
+.marquee-card:hover {
+  transform: translateY(-4px);
 }
 
 .marquee-card-img {
@@ -85,6 +91,84 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* 호버 오버레이 */
+.marquee-card-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(180deg, rgba(8, 8, 12, 0) 35%, rgba(8, 8, 12, 0.55) 70%, rgba(8, 8, 12, 0.9) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.marquee-card:hover .marquee-card-overlay {
+  opacity: 1;
+}
+
+/* 가운데 재생 버튼 */
+.marquee-card-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  padding-left: 3px;
+  opacity: 0;
+  transition: transform 0.3s var(--ease, ease), opacity 0.3s ease, background 0.2s ease;
+}
+.marquee-card:hover .marquee-card-play {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+.marquee-card-play:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* 하단 텍스트 + 화살표 */
+.marquee-card-bottom {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  transform: translateY(8px);
+  transition: transform 0.3s var(--ease, ease);
+}
+.marquee-card:hover .marquee-card-bottom {
+  transform: none;
+}
+.marquee-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.marquee-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.marquee-card-link {
+  font-size: 14px;
+  color: #8b6bff;
+}
+.marquee-card-arrow {
+  flex-shrink: 0;
+  color: #8b6bff;
+  display: inline-flex;
 }
 
 @keyframes marqueeScroll {
