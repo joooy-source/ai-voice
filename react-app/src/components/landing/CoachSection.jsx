@@ -3,27 +3,28 @@ import { useReveal } from '../../hooks/useScrollAnimations';
 import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon } from './icons';
 import './CoachSection.css';
 
+const BASE = import.meta.env.BASE_URL; // public/demo 에 영상을 넣으면 자동 재생
+
 const TABS = [
   {
     title: 'Lane Coaching',
     desc: 'Real-time advice on the laning tips that matter for your champion and role — last-hitting (CS), syncing skill combos with allies, managing mana, and preparing for the enemy jungler.',
-    // 사용자가 /public/demo 에 영상을 넣으면 자동 재생된다. (placeholder)
-    video: '/demo/lane-coaching.mp4',
+    video: `${BASE}demo/lane-coaching.mp4`,
   },
   {
     title: 'Real-Time Alerts',
     desc: 'Overlay and voice briefings on enemy power spikes (when they finish key items), enemy recalls, and spawn timers for major objectives like Dragon.',
-    video: '/demo/real-time-alerts.mp4',
+    video: `${BASE}demo/real-time-alerts.mp4`,
   },
   {
     title: 'Combat Analysis',
     desc: 'Reads the whole map and guides your direction — whether to group with your team or take vision to contest objectives like the Rift Herald.',
-    video: '/demo/combat-analysis.mp4',
+    video: `${BASE}demo/combat-analysis.mp4`,
   },
   {
     title: 'Build Coaching',
     desc: "Recommends the item path best suited for survival or damage, adapting to the current game state and the enemy champions you're up against.",
-    video: '/demo/build-coaching.mp4',
+    video: `${BASE}demo/build-coaching.mp4`,
   },
 ];
 
