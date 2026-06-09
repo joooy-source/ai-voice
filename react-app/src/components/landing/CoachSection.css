@@ -76,17 +76,23 @@ section.coach {
 }
 .coach-ctrl:hover { background: var(--primary); transform: translateY(-2px); }
 
-/* 볼륨 슬라이더 */
+/* 볼륨 슬라이더 박스 (좌우 패딩 대칭) */
 .coach-vol {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.35);
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 9999px;
-  padding-right: 4px;
 }
-.coach-vol .coach-ctrl { background: transparent; border: none; }
-.coach-vol .coach-ctrl:hover { background: rgba(255, 255, 255, 0.12); transform: none; }
+.coach-vol .coach-ctrl {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: none;
+}
+.coach-vol .coach-ctrl:hover { background: transparent; transform: none; color: var(--primary-400); }
 .coach-slider {
   width: 70px;
   height: 4px;
