@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useReveal } from '../../hooks/useScrollAnimations';
+import { useReveal, useInView } from '../../hooks/useScrollAnimations';
 import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon } from './icons';
 import './PlayByPlaySection.css';
 
@@ -21,6 +21,7 @@ const RING_C = 2 * Math.PI * RING_R;
 
 export default function PlayByPlaySection() {
   const ref = useReveal();
+  const [bodyRef, inView] = useInView();
   const audioRef = useRef(null);
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -29,7 +30,7 @@ export default function PlayByPlaySection() {
 
   // 원형 타이머 진행 + 자동 다음 (02 Coach 와 동일한 타이머 기반)
   useEffect(() => {
-    if (!playing) return undefined;
+    if (!playing || !inView) return undefined;
     let raf = 0;
     let start = null;
     const from = progress;
@@ -48,7 +49,7 @@ export default function PlayByPlaySection() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, active]);
+  }, [playing, active, inView]);
 
   // 실제 오디오가 있으면 함께 제어
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function PlayByPlaySection() {
         <p className="section-sub">Every call-out fires automatically, timed to the match.</p>
       </div>
 
-      <div className="pbp-body reveal">
+      <div className="pbp-body reveal" ref={bodyRef}>
         {/* 좌측: 플레이어 */}
         <div className="pbp-left">
           <div className="pbp-player">

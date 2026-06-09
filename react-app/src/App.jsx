@@ -8,12 +8,11 @@ import MoreThanVoiceSection from './components/landing/MoreThanVoiceSection';
 import JustLaunchSection from './components/landing/JustLaunchSection';
 import FaqSection from './components/landing/FaqSection';
 import FinalCtaSection from './components/landing/FinalCtaSection';
-import { useHeroSnap, useSmoothScroll } from './hooks/useScrollAnimations';
+import { useHeroSnap } from './hooks/useScrollAnimations';
 import './App.css';
 
 function App() {
-  // 관성 스무스 스크롤(버터 느낌) + Hero 구간 자석 스냅
-  useSmoothScroll();
+  // Hero → 다음 섹션 구간만 자석 스냅 (나머지는 네이티브 스크롤)
   useHeroSnap({ debounce: 90 });
   return (
     <div className="app">

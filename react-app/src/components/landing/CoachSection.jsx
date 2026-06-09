@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useReveal } from '../../hooks/useScrollAnimations';
+import { useReveal, useInView } from '../../hooks/useScrollAnimations';
 import { PlayIcon, PauseIcon, VolumeIcon, MuteIcon } from './icons';
 import './CoachSection.css';
 
@@ -32,6 +32,7 @@ const CLIP_SECONDS = 7; // 영상이 없을 때 게이지가 채워지는 시간
 
 export default function CoachSection() {
   const ref = useReveal();
+  const [gridRef, inView] = useInView();
   const videoRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -40,7 +41,7 @@ export default function CoachSection() {
 
   // 게이지 진행 + 자동 다음 탭 (영상이 없어도 동작하는 타이머 기반)
   useEffect(() => {
-    if (!isPlaying) return undefined;
+    if (!isPlaying || !inView) return undefined;
     let raf = 0;
     let start = null;
     const startedAt = progress; // 일시정지 후 이어서 재생
@@ -60,7 +61,7 @@ export default function CoachSection() {
     return () => cancelAnimationFrame(raf);
     // progress 를 의존성에서 제외: 재생 토글/탭 변경 때만 재시작
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, active]);
+  }, [isPlaying, active, inView]);
 
   // 실제 <video> 가 있으면 함께 제어
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function CoachSection() {
         <p className="section-sub">From lane coaching to real-time alerts, combat analysis, and build help.</p>
       </div>
 
-      <div className="coach-grid reveal">
+      <div className="coach-grid reveal" ref={gridRef}>
         {/* 영상 플레이어 */}
         <div className="coach-player">
           <video
