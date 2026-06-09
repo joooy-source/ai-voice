@@ -5,15 +5,15 @@ import './FaqSection.css';
 const FAQS = [
   {
     q: 'Q. Is the AI Voice feature safe regarding game policies?',
-    a: 'Yes. AI Voice runs as an overlay companion and never modifies game files or memory, so it stays within game policies.',
+    a: "A. Yes. OP.GG complies with Riot Games' policies. The feature is developed to operate within guidelines and does not directly interfere with gameplay, so you can use it with peace of mind.",
   },
   {
     q: 'Q. How are the voices in the AI Voice Store created?',
-    a: 'Voices are produced with the creator’s explicit consent through a licensed recording and synthesis process.',
+    a: 'A. We train our AI using actual voice data from collaborating streamers, pro gamers, and influencers to provide lively voices that closely mimic their real speech patterns.',
   },
   {
     q: 'Q. Can I register my own voice in the Voice Store?',
-    a: 'Creator submissions are opening soon. Verified creators will be able to register and monetize their own voices.',
+    a: "A. If you are interested in a Voice Partnership, please send us a proposal via the 'Contact Us' button.",
   },
 ];
 
