@@ -26,22 +26,22 @@ const TABS = [
   {
     title: 'Lane Coaching',
     desc: 'Real-time advice on the laning tips that matter for your champion and role — last-hitting (CS), syncing skill combos with allies, managing mana, and preparing for the enemy jungler.',
-    start: 0,
+    start: 7,
   },
   {
     title: 'Real-Time Alerts',
     desc: 'Overlay and voice briefings on enemy power spikes (when they finish key items), enemy recalls, and spawn timers for major objectives like Dragon.',
-    start: 8,
+    start: 23,
   },
   {
     title: 'Combat Analysis',
     desc: 'Reads the whole map and guides your direction — whether to group with your team or take vision to contest objectives like the Rift Herald.',
-    start: 16,
+    start: 41,
   },
   {
     title: 'Build Coaching',
     desc: "Recommends the item path best suited for survival or damage, adapting to the current game state and the enemy champions you're up against.",
-    start: 24,
+    start: 65,
   },
 ];
 
@@ -93,21 +93,15 @@ export default function CoachSection() {
       const t = v.currentTime;
       const dur = v.duration;
       const n = TABS.length;
-      if (dur && isFinite(dur) && dur > 0) {
-        // 영상 길이를 탭 수만큼 균등 분할 → 탭과 항상 일치
-        const seg = dur / n;
-        const idx = Math.min(n - 1, Math.floor(t / seg));
-        setActive(idx);
-        setProgress(Math.min(Math.max((t - idx * seg) / seg, 0), 1));
-      } else {
-        // 길이를 모를 때(폴백): 고정 start 사용
-        let idx = 0;
-        for (let i = 0; i < n; i++) if (t + 0.05 >= TABS[i].start) idx = i;
-        setActive(idx);
-        const start = TABS[idx].start;
-        const end = idx + 1 < n ? TABS[idx + 1].start : start + CLIP_SECONDS;
-        setProgress(end > start ? Math.min(Math.max((t - start) / (end - start), 0), 1) : 0);
-      }
+      // 현재 시간이 속한 챕터 (시작 전 0~7초는 첫 탭으로 간주)
+      let idx = 0;
+      for (let i = 0; i < n; i++) if (t + 0.05 >= TABS[i].start) idx = i;
+      setActive(idx);
+      const start = TABS[idx].start;
+      const end = idx + 1 < n
+        ? TABS[idx + 1].start
+        : (dur && isFinite(dur) ? dur : start + CLIP_SECONDS);
+      setProgress(end > start ? Math.min(Math.max((t - start) / (end - start), 0), 1) : 0);
     };
     const onReady = () => setHasVideo(true);
     const onError = () => setHasVideo(false);
@@ -159,8 +153,7 @@ export default function CoachSection() {
     setIsPlaying(true);
     const v = videoRef.current;
     if (v && hasVideo) {
-      const dur = v.duration;
-      v.currentTime = dur && isFinite(dur) && dur > 0 ? (dur * i) / TABS.length : TABS[i].start;
+      v.currentTime = TABS[i].start;
       v.play().catch(() => {});
     }
   };
