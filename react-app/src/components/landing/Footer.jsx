@@ -16,63 +16,104 @@ const COLUMNS = [
   { title: 'More', links: ['Business', 'Advertise'] },
 ];
 
+const YouTubeIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M18.2812 0C21.75 0 24 2.25 24 5.71875V18.2812C24 21.75 21.75 24 18.2812 24H5.71875C2.25 24 0 21.75 0 18.2812V5.71875C0 2.25 2.25 0 5.71875 0H18.2812Z" fill="#E42B28" />
+    <path d="M12.0052 17.9995H11.9945C11.9961 17.9995 11.9978 17.9985 11.9994 17.9985C12.0013 17.9985 12.0033 17.9995 12.0052 17.9995ZM11.9994 5.6665C14.5031 5.66667 17.6558 5.79133 18.3129 5.88818C19.4529 6.07286 20.0727 6.58381 20.4027 7.90967C20.5137 8.3559 20.6664 10.7986 20.6664 11.731V11.9351C20.6664 12.8672 20.5137 15.3094 20.4027 15.7563C20.0727 17.0822 19.4529 17.5931 18.3129 17.7778C17.6558 17.8747 14.5031 17.9984 11.9994 17.9985C9.49606 17.9983 6.34515 17.8747 5.68787 17.7778C4.5475 17.5932 3.92807 17.0824 3.59802 15.7563C3.48701 15.3098 3.33337 12.8672 3.33337 11.9351V11.731C3.33338 10.7986 3.48701 8.35568 3.59802 7.90967C3.92807 6.58371 4.54753 6.07279 5.68787 5.88818C6.34525 5.79135 9.49612 5.66671 11.9994 5.6665ZM10.2006 14.2759L14.8041 11.7466L10.2006 9.33447V14.2759Z" fill="white" />
+  </svg>
+);
+
+const XIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M18.2812 0C21.75 0 24 2.25 24 5.71875V18.2812C24 21.75 21.75 24 18.2812 24H5.71875C2.25 24 0 21.75 0 18.2812V5.71875C0 2.25 2.25 0 5.71875 0H18.2812Z" fill="#1E2022" />
+    <path d="M4.55642 5L10.3316 12.7218L4.52002 19H5.82807L10.9162 13.5032L15.0271 19H19.4782L13.3779 10.8439L18.7874 5H17.4793L12.7936 10.0623L9.00746 5H4.55642ZM6.47996 5.96341H8.52475L17.5544 18.0366H15.5096L6.47996 5.96341Z" fill="white" />
+  </svg>
+);
+
+const InstagramIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M18.2812 0C21.75 0 24 2.25 24 5.71875V18.2812C24 21.75 21.75 24 18.2812 24H5.71875C2.25 24 0 21.75 0 18.2812V5.71875C0 2.25 2.25 0 5.71875 0H18.2812Z" fill="url(#paint0_linear_28_629)" />
+    <mask id="mask0_28_629" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <path fillRule="evenodd" clipRule="evenodd" d="M18.2812 0C21.75 0 24 2.25 24 5.71875V18.2812C24 21.75 21.75 24 18.2812 24H5.71875C2.25 24 0 21.75 0 18.2812V5.71875C0 2.25 2.25 0 5.71875 0H18.2812Z" fill="white" />
+    </mask>
+    <g mask="url(#mask0_28_629)">
+      <circle cx="7.24219" cy="18.1875" r="16.9219" fill="url(#paint1_radial_28_629)" />
+    </g>
+    <g filter="url(#filter0_d_28_629)">
+      <rect x="3.98438" y="4.07812" width="16.0781" height="15.9844" rx="4.26562" stroke="white" strokeWidth="1.64062" />
+    </g>
+    <g filter="url(#filter1_d_28_629)">
+      <circle cx="12.0469" cy="12.1406" r="3.84375" stroke="white" strokeWidth="1.64062" />
+    </g>
+    <g filter="url(#filter2_d_28_629)">
+      <circle cx="16.7578" cy="7.35938" r="1.125" fill="white" />
+    </g>
+    <defs>
+      <filter id="filter0_d_28_629" x="2.16406" y="2.25781" width="19.7188" height="19.625" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset />
+        <feGaussianBlur stdDeviation="0.5" />
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.130633 0" />
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_28_629" />
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_28_629" result="shape" />
+      </filter>
+      <filter id="filter1_d_28_629" x="6.38281" y="6.47656" width="11.3281" height="11.3281" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset />
+        <feGaussianBlur stdDeviation="0.5" />
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.130633 0" />
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_28_629" />
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_28_629" result="shape" />
+      </filter>
+      <filter id="filter2_d_28_629" x="14.6328" y="5.23438" width="4.25" height="4.25" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+        <feOffset />
+        <feGaussianBlur stdDeviation="0.5" />
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.130633 0" />
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_28_629" />
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_28_629" result="shape" />
+      </filter>
+      <linearGradient id="paint0_linear_28_629" x1="-0.468511" y1="2.11914" x2="6.17978" y2="30.7512" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#4E60D3" />
+        <stop offset="0.148736" stopColor="#913BAF" />
+        <stop offset="0.315836" stopColor="#D52D88" />
+        <stop offset="0.493765" stopColor="#D72E85" />
+        <stop offset="0.81651" stopColor="#E6366D" />
+        <stop offset="1" stopColor="#F26D4F" />
+      </linearGradient>
+      <radialGradient id="paint1_radial_28_629" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(8.16347 24.0786) rotate(15.5573) scale(21.8308 20.5579)">
+        <stop stopColor="#FED980" />
+        <stop offset="0.372276" stopColor="#FCAE49" />
+        <stop offset="0.555546" stopColor="#F06745" />
+        <stop offset="1" stopColor="#E83D5C" stopOpacity="0.01" />
+      </radialGradient>
+    </defs>
+  </svg>
+);
+
+const FacebookIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 16H14V24H10V16H5V4H19V16Z" fill="white" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M24 12.144C24 5.51726 18.6268 0.144043 12 0.144043C5.37321 0.144043 0 5.51726 0 12.144C0 18.1333 4.3875 23.0978 10.125 23.9989V15.6139H7.07732V12.144H10.125V9.50029C10.125 6.49333 11.917 4.83101 14.6577 4.83101C15.9707 4.83101 17.3443 5.06565 17.3443 5.06565V8.01904H15.8304C14.3405 8.01904 13.8745 8.94369 13.8745 9.89404V12.144H17.2023L16.6709 15.6139H13.875V23.9999C19.6125 23.0994 24 18.1349 24 12.144Z" fill="#1877F2" />
+  </svg>
+);
+
+const OverwolfIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M18.2812 0C21.75 0 24 2.25 24 5.71875V18.2812C24 21.75 21.75 24 18.2812 24H5.71875C2.25 24 0 21.75 0 18.2812V5.71875C0 2.25 2.25 0 5.71875 0H18.2812Z" fill="#1E2022" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M19.3661 12.4304C19.7475 12.6612 20.0031 12.8159 19.9999 12.8159C19.6778 13.3152 19.0406 13.3544 19.0178 13.3526C19.1837 13.5634 19.4751 13.9404 19.5444 14.049C18.9099 14.353 18.0664 14.6441 17.7477 14.754C17.6617 14.7837 17.614 14.8002 17.6188 14.8002C17.6285 14.8002 16.4752 14.1403 14.4039 14.383C13.7246 13.3672 12.6626 12.6845 11.8183 12.6215C11.8183 12.6215 14.726 14.9279 14.3688 21.0011C13.3972 17.5867 11.0881 13.3608 6.40569 12.7575C7.17005 11.9879 8.14934 11.49 9.20282 11.3355C6.9437 10.4839 4 11.3592 4 11.3592C4 11.3592 4.58453 10.4693 5.88086 9.7282C6.76505 9.21771 7.72447 8.86302 8.7201 8.67857C8.7201 8.67857 7.84421 8.01046 4.80307 8.73517C5.97571 7.69132 7.4098 7.01607 8.93776 6.78835C8.94235 6.24681 9.06671 5.71363 9.30123 5.2301C9.53578 4.74657 9.87418 4.32567 10.2903 4C10.7284 4.97855 11.2359 5.92186 11.8086 6.82212C11.8101 6.82574 11.9813 6.90992 12.2488 7.04137C13.1249 7.47192 15.033 8.40968 15.386 8.68589C15.8878 9.08194 16.0164 9.8244 16.1029 10.3233C16.1087 10.3567 16.1143 10.389 16.1198 10.42C16.1282 10.4708 18.2682 11.7659 19.3661 12.4304ZM13.552 10.1225C13.5419 10.1254 13.5353 10.1272 13.5324 10.128C14.5496 10.9038 15.1508 10.8162 15.1508 10.8162C15.1508 10.8162 15.1455 10.0367 14.8823 9.93355C14.6108 9.82662 13.7025 10.0805 13.552 10.1225Z" fill="white" />
+  </svg>
+);
+
 const SOCIALS = [
-  {
-    label: 'YouTube',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <rect width="24" height="24" rx="6" fill="#FF0000" />
-        <path d="M10 8.3v7.4l6.2-3.7z" fill="#fff" />
-      </svg>
-    ),
-  },
-  {
-    label: 'X',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <rect width="24" height="24" rx="6" fill="#000" />
-        <path d="M7 7l10 10M17 7L7 17" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Instagram',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <defs>
-          <linearGradient id="ig-grad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#FEDA75" />
-            <stop offset="0.45" stopColor="#FA7E1E" />
-            <stop offset="0.75" stopColor="#D62976" />
-            <stop offset="1" stopColor="#962FBF" />
-          </linearGradient>
-        </defs>
-        <rect width="24" height="24" rx="6" fill="url(#ig-grad)" />
-        <rect x="6.3" y="6.3" width="11.4" height="11.4" rx="3.4" fill="none" stroke="#fff" strokeWidth="1.6" />
-        <circle cx="12" cy="12" r="2.9" fill="none" stroke="#fff" strokeWidth="1.6" />
-        <circle cx="15.7" cy="8.3" r="1" fill="#fff" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Facebook',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <rect width="24" height="24" rx="6" fill="#1877F2" />
-        <path d="M14.6 12.5h1.7l.33-2.2h-2.03V8.86c0-.6.22-1.06 1.1-1.06h1.02V5.84c-.5-.06-1.05-.1-1.6-.1-1.78 0-3.02 1.07-3.02 3v1.56H10v2.2h1.9V19h2.7z" fill="#fff" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Overwolf',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <rect width="24" height="24" rx="6" fill="#1b1d2b" />
-        <path d="M12 5.5l5 3v4c0 3-2.2 5.4-5 6-2.8-.6-5-3-5-6v-4z" fill="none" stroke="#6e4fff" strokeWidth="1.6" strokeLinejoin="round" />
-        <circle cx="12" cy="11.5" r="1.7" fill="#6e4fff" />
-      </svg>
-    ),
-  },
+  { label: 'YouTube', icon: YouTubeIcon },
+  { label: 'X', icon: XIcon },
+  { label: 'Instagram', icon: InstagramIcon },
+  { label: 'Facebook', icon: FacebookIcon },
+  { label: 'Overwolf', icon: OverwolfIcon },
 ];
 
 export default function Footer() {
@@ -106,9 +147,7 @@ export default function Footer() {
           <div className="footer-socials">
             {SOCIALS.map((s) => (
               <a key={s.label} href="#" aria-label={s.label} className="footer-social">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                  <path d={s.path} />
-                </svg>
+                {s.icon}
               </a>
             ))}
           </div>
