@@ -12,8 +12,8 @@ const CALLOUTS = [
   { time: '7:00', label: 'Threat spotted', text: "Enemy Xerath just finished Zhonya's — keep your distance until it's down." },
 ];
 
-// 짧은 막대 waveform
-const WAVE = [10, 20, 32, 16, 40, 24, 12, 34, 20, 28, 14, 38, 22, 16, 30, 12, 26, 18, 34, 14, 24, 10, 30, 18, 38, 16];
+// 작고 세련된 waveform
+const WAVE = [5, 8, 12, 6, 14, 9, 5, 13, 8, 11, 6, 15, 9, 6, 12, 5, 10, 7, 13, 6, 9, 5, 12, 7, 14, 6, 9, 5, 11, 7];
 
 const CLIP_SECONDS = 6; // 콜아웃당 재생 시간 (링이 차는 시간)
 const RING_R = 30; // 64px 링 (디자인)
@@ -85,13 +85,10 @@ export default function PlayByPlaySection() {
             <div className="pbp-player-glow" aria-hidden />
             <p className="pbp-player-time">{current.time}&nbsp;&nbsp;·&nbsp;&nbsp;{current.label}</p>
             <p className="pbp-player-text">{current.text}</p>
-            <div className="pbp-voice">
-              <VolumeIcon width={26} height={26} />
-              <div className={`pbp-wave ${playing ? 'is-playing' : ''}`}>
-                {WAVE.map((h, i) => (
-                  <span key={i} className="pbp-wave-bar" style={{ height: `${h}px`, animationDelay: `${(i % 8) * 0.08}s` }} />
-                ))}
-              </div>
+            <div className={`pbp-wave ${playing ? 'is-playing' : ''}`}>
+              {WAVE.map((h, i) => (
+                <span key={i} className="pbp-wave-bar" style={{ height: `${h}px`, animationDelay: `${(i % 8) * 0.08}s` }} />
+              ))}
             </div>
 
             <div className="pbp-controls">
