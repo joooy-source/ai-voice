@@ -4,18 +4,19 @@ import './CardMarquee.css';
 // 영구적으로 쓰려면 public/ 에 이미지를 받아 경로를 교체하세요.
 // name 은 이미지에 맞게 수정하세요 (호버 시 표시).
 const VOICE_CARDS = [
-  { src: 'https://www.figma.com/api/mcp/asset/3fca7fc4-a20d-4fc3-9398-669c40ada7cf', bg: '#242430', name: 'Doublelift' },
-  { src: 'https://www.figma.com/api/mcp/asset/0a1f255f-3958-42c4-9a4c-d6da21d2daf3', bg: '#2a2a34', name: 'Faker' },
-  { src: 'https://www.figma.com/api/mcp/asset/8643a42e-e4ee-4912-a865-0e255d61b02e', bg: '#26222e', name: 'Caps' },
-  { src: 'https://www.figma.com/api/mcp/asset/856fccb6-5708-4b05-aa75-2de5eb579d60', bg: '#2b2b36', name: 'Chovy' },
-  { src: 'https://www.figma.com/api/mcp/asset/0b8a8e5e-3c2b-4c28-aa12-b68f6eb7939e', bg: '#26222e', name: 'Keria' },
-  { src: 'https://www.figma.com/api/mcp/asset/b5523068-aaeb-461d-9de8-fb7e8c38d4a2', bg: '#2b2b36', name: 'Ruler' },
-  { src: 'https://www.figma.com/api/mcp/asset/fbdb08d6-65e1-4994-895e-f061f763d478', bg: '#1f1f27', name: 'Caps' },
-  { src: 'https://www.figma.com/api/mcp/asset/b9edbd1b-078a-4810-b4e3-a216a6037935', bg: '#242430', name: 'Zeus' },
-  { src: 'https://www.figma.com/api/mcp/asset/b7702eaa-a4e3-4b9b-b7e3-0fe1dfb4c3be', bg: '#2a2a34', name: 'Oner' },
-  { src: 'https://www.figma.com/api/mcp/asset/864f29ce-4c93-41b0-af15-5c8092c7a73e', bg: '#1f1f27', name: 'Gumayusi' },
-  { src: 'https://www.figma.com/api/mcp/asset/d1c9e655-d092-4405-9daf-7dde6009abd5', bg: '#2e2535', name: 'Knight' },
-  { src: 'https://www.figma.com/api/mcp/asset/955c6ede-5a00-42fe-b247-382a679d34eb', bg: '#2e2535', name: 'Bin' },
+  { src: 'https://www.figma.com/api/mcp/asset/58f2f870-3760-4136-b212-75b49d12af49', bg: '#242430', name: 'Zeus' },
+  { src: 'https://www.figma.com/api/mcp/asset/1ded3ce6-fd94-4961-8699-861b7f993332', bg: '#2a2a34', name: 'Oner' },
+  { src: 'https://www.figma.com/api/mcp/asset/326fb409-5d8e-4c56-8554-dbe3c7d14038', bg: '#26222e', name: 'Faker' },
+  { src: 'https://www.figma.com/api/mcp/asset/bcfc4a75-9cbe-4afc-9967-d31d249cf965', bg: '#2b2b36', name: 'Gumayusi' },
+  { src: 'https://www.figma.com/api/mcp/asset/6d419085-34a3-470b-8711-6ffc8e8683df', bg: '#26222e', name: 'Keria' },
+  { src: 'https://www.figma.com/api/mcp/asset/f588e805-c5af-47cc-949d-1f6e4e9e95ad', bg: '#2b2b36', name: 'Chovy' },
+  { src: 'https://www.figma.com/api/mcp/asset/003c300c-6fb7-4cf3-9d2f-872b2c63afa3', bg: '#1f1f27', name: 'Doublelift' },
+  { src: 'https://www.figma.com/api/mcp/asset/e1c52722-d915-4886-98fc-c906507b3e15', bg: '#1f1f27', name: 'Caps' },
+  { src: 'https://www.figma.com/api/mcp/asset/dc45b29c-1446-4672-bc54-faf12646b811', bg: '#242430', name: 'Ruler' },
+  { src: 'https://www.figma.com/api/mcp/asset/560fcc79-ff14-43ce-8122-f1b98b32a039', bg: '#2a2a34', name: 'Knight' },
+  { src: 'https://www.figma.com/api/mcp/asset/90169fa5-602b-49c7-b18d-89bcc2fb446d', bg: '#1f1f27', name: 'Bin' },
+  { src: 'https://www.figma.com/api/mcp/asset/c564d3f6-ba86-47f4-8eb4-e4b99ca3374a', bg: '#2e2535', name: 'ShowMaker' },
+  { src: 'https://www.figma.com/api/mcp/asset/1dfeae40-58ba-491f-8feb-a95769e93a06', bg: '#2e2535', name: 'Canyon' },
 ];
 
 function PlayIcon() {

@@ -14,43 +14,63 @@
 .nav-inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  height: 60px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.nav-left {
   display: flex;
   align-items: center;
   gap: 28px;
-  padding: 0 40px;
 }
 .nav-logo {
-  font-weight: 700;
-  font-size: 18px;
-  color: #fff;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .nav-link {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-3);
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  transition: color 0.2s ease;
-}
-.nav-link:hover { color: #fff; }
-.nav-link--active { color: #fff; }
-.nav-spacer { flex: 1; }
-.nav-cta {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  font-size: 13px;
-  font-weight: 500;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 999px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.nav-link--active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 다운로드 버튼 (모션은 .btn-motion 에서) */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 9999px;
   cursor: pointer;
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.nav-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(95, 50, 230, 0.4);
-}
+
 @media (max-width: 900px) {
-  .nav-inner { padding: 0 16px; gap: 16px; }
-  .nav-cta { font-size: 12px; padding: 8px 12px; }
+  .nav-inner { padding: 0 16px; gap: 12px; }
+  .nav-left { gap: 12px; }
+  .nav-cta { font-size: 13px; }
 }

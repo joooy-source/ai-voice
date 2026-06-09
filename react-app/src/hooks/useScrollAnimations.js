@@ -109,7 +109,7 @@ export function useScrollProgress() {
  * Hero가 sticky로 덮이는 구간(스냅 지점이 없는 영역)에서 스크롤이 멈추면
  * 가까운 쪽(Hero 전체 / 다음 섹션 전체)으로 자동 정렬해 "반쯤 걸림"을 방지한다.
  */
-export function useHeroSnap({ navHeight = 60, debounce = 140 } = {}) {
+export function useHeroSnap({ navHeight = 72, debounce = 140 } = {}) {
   useEffect(() => {
     if (prefersReduced()) return undefined;
     let timer = 0;
