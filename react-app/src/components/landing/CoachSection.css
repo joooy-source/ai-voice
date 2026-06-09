@@ -76,6 +76,43 @@ section.coach {
 }
 .coach-ctrl:hover { background: var(--primary); transform: translateY(-2px); }
 
+/* 볼륨 슬라이더 */
+.coach-vol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 9999px;
+  padding-right: 4px;
+}
+.coach-vol .coach-ctrl { background: transparent; border: none; }
+.coach-vol .coach-ctrl:hover { background: rgba(255, 255, 255, 0.12); transform: none; }
+.coach-slider {
+  width: 70px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.coach-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+.coach-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
 /* 탭 패널 — 플레이어(536px) 높이에 맞춰 카드 하단까지 정렬 */
 .coach-tabs {
   display: flex;
