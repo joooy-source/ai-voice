@@ -8,6 +8,7 @@ import MoreThanVoiceSection from './components/landing/MoreThanVoiceSection';
 import JustLaunchSection from './components/landing/JustLaunchSection';
 import FaqSection from './components/landing/FaqSection';
 import FinalCtaSection from './components/landing/FinalCtaSection';
+import ScrollToTop from './components/landing/ScrollToTop';
 import { useHeroSnap } from './hooks/useScrollAnimations';
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
         <FaqSection />
         <FinalCtaSection />
       </div>
+      <ScrollToTop />
     </div>
   );
 }
