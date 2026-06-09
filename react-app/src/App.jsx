@@ -16,17 +16,20 @@ function App() {
     <div className="app">
       <Nav />
       <Hero />
-      <CoachSection />
-      <div id="marquee">
-        <CardMarquee />
+      {/* Hero 위로 슉 올라와 덮는 콘텐츠 (parallax reveal-over) */}
+      <div className="below-hero">
+        <CoachSection />
+        <div id="marquee">
+          <CardMarquee />
+        </div>
+        <WithYouSection />
+        <PlayByPlaySection />
+        <MoreThanVoiceSection />
+        <JustLaunchSection />
+        <PremiumSection />
+        <FaqSection />
+        <FinalCtaSection />
       </div>
-      <WithYouSection />
-      <PlayByPlaySection />
-      <MoreThanVoiceSection />
-      <JustLaunchSection />
-      <PremiumSection />
-      <FaqSection />
-      <FinalCtaSection />
     </div>
   );
 }

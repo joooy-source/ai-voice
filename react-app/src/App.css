@@ -1,7 +1,25 @@
 .app {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+/* Hero를 고정시키고 아래 콘텐츠가 그 위로 올라오게 한다 */
+.app .hero {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
+
+/* 아래 섹션들: 불투명 배경으로 Hero를 덮으며 슉 올라옴 */
+.below-hero {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  box-shadow: 0 -32px 64px rgba(0, 0, 0, 0.55);
 }
 
 /* 마퀴 섹션(03)을 페이지 흐름에 맞춰 가운데 정렬 */
@@ -9,4 +27,8 @@
   width: 100%;
   max-width: var(--maxw);
   margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .hero { position: relative; }
 }
