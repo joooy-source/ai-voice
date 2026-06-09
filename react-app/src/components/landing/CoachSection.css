@@ -148,7 +148,8 @@ section.coach {
 }
 
 @media (max-width: 900px) {
+  section.coach { padding: 56px 24px; gap: 32px; }
   .coach-grid { flex-direction: column; }
-  .coach-player { width: 100%; height: 300px; }
+  .coach-player { width: 100%; height: 280px; }
   .coach-tabs { height: auto; }
 }
