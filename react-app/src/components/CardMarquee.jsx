@@ -1,3 +1,4 @@
+import { useReveal } from '../hooks/useScrollAnimations';
 import './CardMarquee.css';
 
 // 카드 이미지 — Figma 디자인의 임시 에셋 URL (약 7일간 유효).
@@ -39,19 +40,20 @@ function ArrowIcon() {
 export default function CardMarquee() {
   // 끊김 없는 무한 스크롤을 위해 카드 목록을 두 번 렌더링한다.
   const loop = [...VOICE_CARDS, ...VOICE_CARDS];
+  const ref = useReveal();
 
   return (
-    <section className="marquee-section">
-      <div className="marquee-heading">
+    <section className="marquee-section" ref={ref}>
+      <div className="marquee-heading reveal">
         <h2 className="marquee-title">Meet your AI voice partners</h2>
         <p className="marquee-subtitle">
           New voice partners are on the way. Browse the store to see what's available.
         </p>
       </div>
 
-      <button type="button" className="marquee-cta">Browse all voices</button>
+      <button type="button" className="marquee-cta reveal">Browse all voices</button>
 
-      <div className="marquee-viewport">
+      <div className="marquee-viewport reveal">
         <div className="marquee-track">
           {loop.map((card, i) => (
             <div

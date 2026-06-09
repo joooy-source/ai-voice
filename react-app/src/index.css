@@ -156,8 +156,8 @@ body {
    관찰 대상(섹션 루트)에 .is-visible 이 붙으면 내부 .reveal 요소들이 나타난다. */
 .reveal {
   opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translateY(44px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
   will-change: opacity, transform;
 }
 .is-visible .reveal,
@@ -169,9 +169,9 @@ body {
 /* 자식 stagger: 부모에 .reveal-group, 자식에 style="--i:n" */
 .reveal-group > * {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-  transition-delay: calc(var(--i, 0) * 90ms);
+  transform: translateY(36px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 .is-visible .reveal-group > *,
 .reveal-group.is-visible > * {
