@@ -76,23 +76,42 @@ section.coach {
 }
 .coach-ctrl:hover { background: var(--primary); transform: translateY(-2px); }
 
-/* 볼륨 슬라이더 박스 (좌우 패딩 대칭) */
+/* 볼륨 컨트롤: 닫힘=원형(다른 버튼과 동일), 열림=타원(슬라이더 포함) */
 .coach-vol {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 40px;
   height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.2s var(--ease), border-radius 0.2s var(--ease);
+}
+.coach-vol:not(.open):hover { background: var(--primary); }
+.coach-vol.open {
+  width: auto;
+  gap: 8px;
   padding: 0 14px;
-  background: rgba(0, 0, 0, 0.4);
   border-radius: 9999px;
+  justify-content: flex-start;
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.1);
 }
-.coach-vol .coach-ctrl {
-  width: 22px;
-  height: 22px;
-  background: transparent;
+.coach-vol-btn {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
   border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
 }
-.coach-vol .coach-ctrl:hover { background: transparent; transform: none; color: var(--primary-400); }
+.coach-vol.open .coach-vol-btn { width: 22px; height: 22px; }
+.coach-vol.open .coach-vol-btn:hover { color: var(--primary-400); }
 .coach-slider {
   width: 70px;
   height: 4px;
