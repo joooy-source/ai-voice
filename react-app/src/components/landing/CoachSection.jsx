@@ -220,10 +220,10 @@ export default function CoachSection() {
             >
               {isPlaying ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
             </button>
-            <div className="coach-vol">
+            <div className={`coach-vol ${isMuted ? '' : 'open'}`}>
               <button
                 type="button"
-                className="coach-ctrl"
+                className="coach-vol-btn"
                 onClick={() => setIsMuted((m) => !m)}
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
