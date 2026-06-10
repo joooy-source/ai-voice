@@ -3,18 +3,39 @@ import './Footer.css';
 const OPGG_LOGO = 'https://www.figma.com/api/mcp/asset/8a6a569b-9c35-4a1e-8276-55722b745c8b';
 
 const COLUMNS = [
-  { title: 'OP.GG', links: ['About', 'Company', 'Blog', 'Logo History'] },
+  { title: 'OP.GG', links: [{ label: 'About OP.GG' }, { label: 'Company' }, { label: 'Blog' }] },
   {
     title: 'Products',
     links: [
-      'League of Legends', 'Overwatch', 'PUBG', 'Clash Royale', 'Fortnite',
-      'Dota2 Autochess', 'Brawlstars', 'OP.GG Talk', 'OP.GG Play', 'IFI.GG',
+      { label: 'League of Legends', game: true },
+      { label: 'Teamfight Tactics', game: true },
+      { label: 'Valorant', game: true },
+      { label: 'Overwatch', game: true },
+      { label: 'PUBG', game: true },
     ],
   },
-  { title: 'Apps', links: ['OP.GG Android App', 'OP.GG iOS App', 'IFI.GG Android App', 'IFI.GG iOS App'] },
-  { title: 'Resources', links: ['Privacy Policy', 'Help', 'Feedback', 'Terms of Service'] },
-  { title: 'More', links: ['Business', 'Advertise'] },
+  {
+    title: 'Apps',
+    links: [
+      { label: 'OP.GG for Mobile', game: true },
+      { label: 'Gigs', game: true },
+      { label: 'Esports', game: true },
+      { label: 'TalkG', game: true },
+    ],
+  },
+  { title: 'Resources', links: [{ label: 'Privacy Policy' }, { label: 'Help' }, { label: 'Email Feedback' }, { label: 'FAQ/Feedback' }] },
+  { title: 'More', links: [{ label: 'Business' }, { label: 'Advertise' }, { label: 'Recruit' }] },
 ];
+
+const GameIcon = (
+  <svg className="footer-game" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <line x1="6" y1="11" x2="10" y2="11" />
+    <line x1="8" y1="9" x2="8" y2="13" />
+    <line x1="15" y1="12" x2="15.01" y2="12" />
+    <line x1="18" y1="10" x2="18.01" y2="10" />
+    <path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.59c-.08.72-.7 5.87-.7 7.41a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.41-1.41A2 2 0 0 1 9.83 16h4.34a2 2 0 0 1 1.41.59L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.54-.62-6.69-.7-7.41A4 4 0 0 0 17.32 5z" />
+  </svg>
+);
 
 const YouTubeIcon = (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +149,9 @@ export default function Footer() {
                 <h3 className="footer-col-title">{col.title}</h3>
                 <ul className="footer-links">
                   {col.links.map((link) => (
-                    <li key={link}><a href="#">{link}</a></li>
+                    <li key={link.label}>
+                      <a href="#">{link.label}{link.game && GameIcon}</a>
+                    </li>
                   ))}
                 </ul>
               </nav>
@@ -140,9 +163,10 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copy">
-            © 2012–2024 OP.GG. OP.GG isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the
-            views or opinions of Riot Games or anyone officially involved in producing or managing
-            League of Legends.
+            © 2012–2026 OP.GG. OP.GG is not endorsed by Riot Games and does not reflect the views or
+            opinions of Riot Games or anyone officially involved in producing or managing League of
+            Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot
+            Games, Inc. League of Legends © Riot Games, Inc.
           </p>
           <div className="footer-socials">
             {SOCIALS.map((s) => (
