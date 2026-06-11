@@ -54,7 +54,7 @@ export default function CoachSection() {
   const playerRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true); // 디폴트 음소거 (스피커 버튼으로 소리)
+  const [isMuted, setIsMuted] = useState(false); // 섹션 진입 시 소리 재생
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
@@ -143,13 +143,16 @@ export default function CoachSection() {
     };
   }, []);
 
-  // 재생/일시정지/음소거 + 화면 밖이면 정지
+  // 재생/일시정지/음소거 + 화면 밖이면 정지. 소리 재생이 막히면 음소거로라도 재생.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = isMuted;
-    if (isPlaying && inView) v.play().catch(() => {});
-    else v.pause();
+    if (isPlaying && inView) {
+      v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+    } else {
+      v.pause();
+    }
   }, [isMuted, isPlaying, inView]);
 
   // 영상이 없을 때만: 타이머 기반 게이지 + 자동 다음 탭
