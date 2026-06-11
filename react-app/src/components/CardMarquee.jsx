@@ -64,8 +64,8 @@ export default function CardMarquee() {
     if (!vp || !track) return undefined;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const BASE = 0.4; // 비호버 시 기본 자동 스크롤 속도(px/frame)
-    const BOOST = 3.2; // 가쪽으로 갈수록 빨라지는 정도
+    const BASE = 1.3; // 비호버 시 기본 자동 스크롤 속도(px/frame)
+    const BOOST = 4; // 가쪽으로 갈수록 빨라지는 정도
     const DEAD = 0.22; // 가운데 정지 구간(절반 폭 비율) → 카드 호버 시 멈춤
     let x = 0;
     let half = track.scrollWidth / 2;
