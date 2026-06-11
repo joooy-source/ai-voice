@@ -34,8 +34,8 @@ VOICES.forEach((v) => { if (v.thumb) v.priceImg = v.thumb.replace('detail/', 'pr
 const INTRO_VIDEO = 'https://s-agent-static.op.gg/videos/intro/index.m3u8';
 VOICES.forEach((v) => { if (!v.videos || !v.videos.length) v.videos = [INTRO_VIDEO]; });
 
-// 스토어/마퀴용 정사각 썸네일 (public/voice/) — 파일명이 제각각이라 명시 매핑
-const V = `${import.meta.env.BASE_URL}voice/`;
+// 스토어/마퀴용 정사각 썸네일 (public/store/) — 파일명이 제각각이라 명시 매핑
+const V = `${import.meta.env.BASE_URL}store/`;
 const STORE_FILES = {
   'drx-vincenzo': 'DRXVincenzo-upper_squared.png',
   'drx-ucal': 'DRXUcal-upper_squared.png',
