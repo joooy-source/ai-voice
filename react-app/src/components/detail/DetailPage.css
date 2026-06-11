@@ -421,7 +421,55 @@
 .dt-video-tab.is-active .dt-dot { background: var(--primary-400); }
 .dt-video-tab:not(.is-active) .dt-dot { background: var(--text-4); }
 .dt-video-tab-row { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; color: #fff; }
-.dt-video-bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--primary); }
+/* 재생에 맞춰 채워지는 게이지 (메인 코치 섹션과 동일) */
+.dt-video-gauge { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.dt-video-gauge-fill { display: block; height: 100%; background: var(--primary); transition: width 0.12s linear; }
+
+/* 영상 + 컨트롤 */
+.dt-video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+.dt-video-ctrls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+.dt-vctrl {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s var(--ease);
+}
+.dt-vctrl:hover { background: rgba(0, 0, 0, 0.72); }
+.dt-vvol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.dt-vvol .dt-vctrl { background: none; backdrop-filter: none; }
+.dt-vvol .dt-vctrl:hover { background: rgba(255, 255, 255, 0.12); }
+.dt-vvol.open { padding-right: 14px; }
+.dt-vslider {
+  width: 78px;
+  height: 4px;
+  accent-color: var(--primary-400);
+  cursor: pointer;
+}
 
 /* ===== Pricing — 홀로그래픽 글래스 카드 (포인터 추적 3D 틸트 + 포일) ===== */
 .price-tilt {
