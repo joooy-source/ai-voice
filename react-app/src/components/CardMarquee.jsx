@@ -1,9 +1,9 @@
+import { useEffect, useRef, useState } from 'react';
 import { useReveal } from '../hooks/useScrollAnimations';
 import './CardMarquee.css';
 
 // 카드 이미지 — Figma 디자인의 임시 에셋 URL (약 7일간 유효).
 // 영구적으로 쓰려면 public/ 에 이미지를 받아 경로를 교체하세요.
-// name 은 이미지에 맞게 수정하세요 (호버 시 표시).
 const VOICE_CARDS = [
   { id: 'drx-vincenzo', src: 'https://www.figma.com/api/mcp/asset/58f2f870-3760-4136-b212-75b49d12af49', bg: '#242430', name: 'DRX Vincenzo' },
   { id: 'drx-ucal', src: 'https://www.figma.com/api/mcp/asset/1ded3ce6-fd94-4961-8699-861b7f993332', bg: '#2a2a34', name: 'DRX Ucal' },
@@ -20,10 +20,20 @@ const VOICE_CARDS = [
   { id: 'neekolul', src: 'https://www.figma.com/api/mcp/asset/1dfeae40-58ba-491f-8feb-a95769e93a06', bg: '#2e2535', name: 'Neekolul' },
 ];
 
+const SAMPLE_AUDIO = `${import.meta.env.BASE_URL}voice/ai-voice.mp3`;
+
 function PlayIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
       <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function PauseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
     </svg>
   );
 }
@@ -41,6 +51,69 @@ export default function CardMarquee() {
   // 끊김 없는 무한 스크롤을 위해 카드 목록을 두 번 렌더링한다.
   const loop = [...VOICE_CARDS, ...VOICE_CARDS];
   const ref = useReveal();
+  const viewportRef = useRef(null);
+  const trackRef = useRef(null);
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(null);
+
+  // rAF 기반 스크롤 — 마우스가 가쪽일수록 그 방향으로 더 빠르게
+  useEffect(() => {
+    const vp = viewportRef.current;
+    const track = trackRef.current;
+    if (!vp || !track) return undefined;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const BASE = 0.4; // 기본 속도(px/frame, 왼쪽으로)
+    const BOOST = 2.6; // 가쪽으로 갈수록 추가되는 속도
+    let x = 0;
+    let half = track.scrollWidth / 2;
+    let factor = 0; // -1(왼쪽 끝)…0(가운데)…1(오른쪽 끝)
+    let raf = 0;
+
+    const measure = () => { half = track.scrollWidth / 2; };
+    const tick = () => {
+      const v = BASE + factor * BOOST; // +면 왼쪽으로 빠르게, -면 오른쪽으로
+      x -= v;
+      if (x <= -half) x += half;
+      else if (x > 0) x -= half;
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      raf = requestAnimationFrame(tick);
+    };
+    const onMove = (e) => {
+      const r = vp.getBoundingClientRect();
+      const p = (e.clientX - r.left) / r.width; // 0..1
+      factor = Math.max(-1, Math.min(1, (p - 0.5) * 2));
+    };
+    const onLeave = () => { factor = 0; };
+
+    measure();
+    raf = requestAnimationFrame(tick);
+    vp.addEventListener('mousemove', onMove);
+    vp.addEventListener('mouseleave', onLeave);
+    window.addEventListener('resize', measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      vp.removeEventListener('mousemove', onMove);
+      vp.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
+  // 가운데 재생 버튼 → 샘플 보이스 재생 (디테일 이동 X)
+  const playSample = (e, key) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const a = audioRef.current;
+    if (!a) return;
+    if (playing === key) {
+      a.pause();
+      setPlaying(null);
+      return;
+    }
+    a.currentTime = 0;
+    a.play().catch(() => {});
+    setPlaying(key);
+  };
 
   return (
     <section className="marquee-section" ref={ref}>
@@ -53,8 +126,8 @@ export default function CardMarquee() {
 
       <a href="#/store" className="marquee-cta reveal">Browse all voices</a>
 
-      <div className="marquee-viewport reveal">
-        <div className="marquee-track">
+      <div className="marquee-viewport reveal" ref={viewportRef}>
+        <div className="marquee-track" ref={trackRef}>
           {loop.map((card, i) => (
             <a
               key={i}
@@ -66,7 +139,14 @@ export default function CardMarquee() {
             >
               <img className="marquee-card-img" src={card.src} alt="" loading="lazy" />
               <div className="marquee-card-overlay">
-                <span className="marquee-card-play"><PlayIcon /></span>
+                <button
+                  type="button"
+                  className="marquee-card-play"
+                  onClick={(e) => playSample(e, i)}
+                  aria-label={playing === i ? 'Pause sample' : 'Play sample'}
+                >
+                  {playing === i ? <PauseIcon /> : <PlayIcon />}
+                </button>
                 <div className="marquee-card-bottom">
                   <span className="marquee-card-text">
                     <span className="marquee-card-name">{card.name}</span>
@@ -79,6 +159,8 @@ export default function CardMarquee() {
           ))}
         </div>
       </div>
+
+      <audio ref={audioRef} src={SAMPLE_AUDIO} onEnded={() => setPlaying(null)} preload="none" />
     </section>
   );
 }
