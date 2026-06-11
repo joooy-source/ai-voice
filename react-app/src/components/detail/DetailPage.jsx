@@ -487,7 +487,7 @@ export default function DetailPage({ id }) {
                 {others.map((v) => (
                   <a key={v.id} href={`#/voice/${v.id}`} className="dt-more-card">
                     <div className="dt-more-img" style={{ backgroundColor: v.bg }}>
-                      <img src={v.thumb || v.img} alt={v.name} loading="lazy" />
+                      <img src={v.storeImg || v.thumb || v.img} alt={v.name} loading="lazy" />
                     </div>
                     <div className="dt-more-foot">
                       <span className="dt-more-name">{v.name}</span>
