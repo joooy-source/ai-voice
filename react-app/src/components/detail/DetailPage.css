@@ -313,21 +313,22 @@
 .dt-voice { display: grid; grid-template-columns: 460px 1fr; gap: 24px; align-items: start; }
 .dt-voice-head .dt-sec-title { font-size: 44px; }
 .dt-cphrase { margin-top: 48px; }
-.dt-samples { display: flex; flex-direction: column; }
+.dt-samples { display: flex; flex-direction: column; gap: 12px; }
 .dt-sample {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   width: 100%;
-  padding: 18px 8px;
+  padding: 16px;
   border: none;
   background: none;
   cursor: pointer;
   text-align: left;
-  border-radius: 12px;
-  transition: background 0.2s var(--ease);
+  border-radius: 14px;
+  transition: background 0.25s var(--ease);
 }
-.dt-sample:hover { background: rgba(255, 255, 255, 0.03); }
+.dt-sample:hover { background: rgba(255, 255, 255, 0.035); }
+.dt-sample.is-active { background: rgba(255, 255, 255, 0.04); }
 .dt-sample-play {
   flex-shrink: 0;
   width: 44px;
@@ -346,8 +347,24 @@
 }
 .dt-sample-name { flex-shrink: 0; width: 120px; font-size: 14px; font-weight: 500; color: var(--text-2); }
 .dt-sample.is-active .dt-sample-name { color: #fff; }
-.dt-sample-wave { flex: 1; display: flex; align-items: center; gap: 3px; height: 30px; min-width: 0; }
-.dt-sample-wave i { width: 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.22); transition: background 0.1s linear; }
+.dt-sample-wave { flex: 1; display: flex; align-items: center; gap: 3px; height: 32px; min-width: 0; }
+.dt-sample-wave i {
+  width: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.18);
+  transform: scaleY(0.5);
+  transform-origin: center;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+/* 재생 중: 보라 그라데이션 바가 부드럽게 출렁이는 프리미엄 파형 */
+.dt-sample-wave.is-playing i {
+  background: linear-gradient(180deg, #9d80ff, var(--primary));
+  animation: dtWave 1.1s ease-in-out infinite;
+}
+@keyframes dtWave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
 .dt-sample-dur { flex-shrink: 0; font-size: 12px; color: var(--text-3); }
 
 /* In-game / Coach */
