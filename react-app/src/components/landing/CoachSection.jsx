@@ -60,7 +60,7 @@ export default function CoachSection() {
   const [hasVideo, setHasVideo] = useState(false);
   const userMutedRef = useRef(false); // 사용자가 직접 음소거했는지
 
-  // 첫 인터랙션(클릭/키/터치) 시 소리 자동 ON — 자동재생 정책 우회 (사용자 음소거는 존중)
+  // 첫 인터랙션(클릭/키/터치/휠/스크롤) 시 소리 자동 ON — 자동재생 정책 우회 (사용자 음소거는 존중)
   useEffect(() => {
     let done = false;
     const onGesture = () => {
@@ -69,14 +69,9 @@ export default function CoachSection() {
       if (!userMutedRef.current) setIsMuted(false);
       cleanup();
     };
-    const cleanup = () => {
-      window.removeEventListener('pointerdown', onGesture);
-      window.removeEventListener('keydown', onGesture);
-      window.removeEventListener('touchstart', onGesture);
-    };
-    window.addEventListener('pointerdown', onGesture);
-    window.addEventListener('keydown', onGesture);
-    window.addEventListener('touchstart', onGesture);
+    const evs = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
+    const cleanup = () => evs.forEach((e) => window.removeEventListener(e, onGesture));
+    evs.forEach((e) => window.addEventListener(e, onGesture, { passive: true }));
     return cleanup;
   }, []);
 
