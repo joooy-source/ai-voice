@@ -114,8 +114,8 @@ export default function DetailPage({ id }) {
     const py = (e.clientY - r.top) / r.height;
     el.style.setProperty('--mx', `${px * 100}%`);
     el.style.setProperty('--my', `${py * 100}%`);
-    el.style.setProperty('--rx', `${(px - 0.5) * 14}deg`);
-    el.style.setProperty('--ry', `${(0.5 - py) * 14}deg`);
+    el.style.setProperty('--rx', `${(px - 0.5) * 9}deg`);
+    el.style.setProperty('--ry', `${(0.5 - py) * 9}deg`);
   };
   const onCardLeave = () => {
     const el = cardRef.current;
@@ -310,9 +310,6 @@ export default function DetailPage({ id }) {
               <span className="price-glare" aria-hidden />
               <span className="price-glow price-glow-1" aria-hidden />
               <span className="price-glow price-glow-2" aria-hidden />
-              <span className="price-spark price-spark-1" aria-hidden />
-              <span className="price-spark price-spark-2" aria-hidden />
-              <span className="price-spark price-spark-3" aria-hidden />
               <div className="price-top">
                 <div className="price-id">
                   <img className="price-avatar" src={voice.img} alt="" style={{ backgroundColor: voice.bg }} />
