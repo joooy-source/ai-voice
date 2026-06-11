@@ -4,7 +4,8 @@ import './Hero.css';
 
 const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
 // 히어로 진입 시 자동 재생되는 보이스 (하단 스피커 버튼으로 on/off)
-const AUDIO = `${import.meta.env.BASE_URL}voice/hero-voice.mp3`;
+// ?v= : public 파일은 파일명이 그대로라 캐시가 남음 → 교체 시 버전 올려 캐시 무력화
+const AUDIO = `${import.meta.env.BASE_URL}voice/hero-voice.mp3?v=2`;
 const FADE = 0.7; // 루프 지점 크로스페이드 길이(초)
 
 export default function Hero() {
