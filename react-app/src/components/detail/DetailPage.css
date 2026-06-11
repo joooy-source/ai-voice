@@ -127,32 +127,35 @@
 .dt-hero-content { max-width: 680px; }
 .dt-hero-kicker {
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  color: var(--primary-400);
+  font-weight: 500;
+  color: #a072ff;
 }
 .dt-hero-duo {
   margin-top: 22px;
-  font-size: 30px;
-  font-weight: 600;
-  color: #fff;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 500;
+  color: #b7b7c9;
 }
 .dt-hero-name {
-  font-size: 96px;
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -3px;
+  margin-top: 4px;
+  font-size: 112px;
+  line-height: 116px;
+  font-weight: 500;
+  letter-spacing: -2.5px;
 }
 .dt-hero-role {
-  margin-top: 18px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-2);
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #b7b7c9;
 }
 .dt-hero-sub {
   margin-top: 8px;
-  font-size: 17px;
-  color: var(--text-3);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #9aa4af;
 }
 .dt-hero-cta {
   margin-top: 36px;
@@ -246,9 +249,9 @@
 }
 .dt-sec-title {
   font-size: 40px;
-  line-height: 1.12;
-  font-weight: 800;
-  letter-spacing: -1px;
+  line-height: 1.18;
+  font-weight: 500;
+  letter-spacing: -0.5px;
 }
 .dt-sec-sub {
   margin-top: 14px;
@@ -470,31 +473,30 @@
   border-radius: 24px;
   pointer-events: none;
   opacity: 0;
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: soft-light;
   background:
     repeating-linear-gradient(
       105deg,
-      rgba(255, 0, 132, 0.25) 0%,
-      rgba(0, 209, 255, 0.25) 12%,
-      rgba(120, 255, 90, 0.22) 22%,
-      rgba(255, 220, 0, 0.25) 32%,
-      rgba(255, 0, 132, 0.25) 42%
-    ),
-    radial-gradient(120% 120% at var(--mx) var(--my), rgba(255, 255, 255, 0.5), transparent 45%);
-  background-size: 220% 220%, 100% 100%;
-  background-position: var(--mx) var(--my), 0 0;
-  transition: opacity 0.3s var(--ease);
+      rgba(255, 0, 132, 0.18) 0%,
+      rgba(0, 209, 255, 0.18) 14%,
+      rgba(120, 255, 90, 0.16) 26%,
+      rgba(255, 220, 0, 0.18) 38%,
+      rgba(255, 0, 132, 0.18) 50%
+    );
+  background-size: 240% 240%;
+  background-position: var(--mx) var(--my);
+  transition: opacity 0.35s var(--ease);
 }
-.price-card:hover .price-foil { opacity: 0.55; }
-/* 포인터를 따라오는 하이라이트 광택 */
+.price-card:hover .price-foil { opacity: 0.4; }
+/* 포인터를 따라오는 은은한 하이라이트 */
 .price-glare {
   position: absolute;
   inset: 0;
   border-radius: 24px;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(380px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.22), transparent 60%);
-  transition: opacity 0.3s var(--ease);
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.1), transparent 60%);
+  transition: opacity 0.35s var(--ease);
 }
 .price-card:hover .price-glare { opacity: 1; }
 .price-glow {
@@ -509,30 +511,15 @@
 .price-glow-2 { bottom: -120px; left: -90px; background: radial-gradient(circle, rgba(1, 136, 255, 0.28), transparent 65%); animation: priceGlow2 13s ease-in-out infinite; }
 @keyframes priceGlow1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-40px, 30px); } }
 @keyframes priceGlow2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, -30px); } }
-.price-spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
-  opacity: 0;
-  pointer-events: none;
-}
-.price-spark-1 { top: 16%; left: 12%; animation: priceSpark 3.4s ease-in-out infinite 0.2s; }
-.price-spark-2 { top: 26%; right: 18%; animation: priceSpark 3.4s ease-in-out infinite 1.3s; }
-.price-spark-3 { bottom: 22%; left: 26%; animation: priceSpark 3.4s ease-in-out infinite 2.4s; }
-@keyframes priceSpark { 0%, 100% { opacity: 0; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.2); } }
-
 .price-top { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
 .price-id { display: flex; gap: 24px; }
 .price-avatar { width: 120px; height: 120px; border-radius: 14px; object-fit: cover; flex-shrink: 0; }
 .price-kicker { font-size: 14px; font-weight: 700; color: var(--primary-400); }
-.price-name { margin-top: 6px; font-size: 36px; font-weight: 800; letter-spacing: -1px; color: #fff; }
+.price-name { margin-top: 6px; font-size: 36px; font-weight: 500; letter-spacing: -0.5px; color: #fff; }
 .price-quote { margin-top: 14px; font-size: 16px; color: var(--text-2); }
 .price-amount-box { text-align: right; flex-shrink: 0; }
 .price-amount-label { font-size: 14px; color: var(--text-3); }
-.price-amount { margin-top: 6px; font-size: 44px; font-weight: 800; letter-spacing: -1px; color: #fff; }
+.price-amount { margin-top: 6px; font-size: 44px; font-weight: 500; letter-spacing: -0.5px; color: #fff; }
 .price-amount span { font-size: 16px; font-weight: 500; color: var(--text-3); }
 .price-divider { position: relative; height: 1px; background: rgba(255, 255, 255, 0.1); margin: 28px 0; }
 .price-lists { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
