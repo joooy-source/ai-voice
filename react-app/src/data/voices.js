@@ -30,6 +30,10 @@ export const VOICES = [
 // 구독카드/플로팅바용 정사각 썸네일은 public/pricing/ (파일명은 detail 썸네일과 동일)
 VOICES.forEach((v) => { if (v.thumb) v.priceImg = v.thumb.replace('detail/', 'pricing/'); });
 
+// In-game 영상: 보이스별 전용 영상이 없으면 공용 인트로 영상으로 채움
+const INTRO_VIDEO = 'https://s-agent-static.op.gg/videos/intro/index.m3u8';
+VOICES.forEach((v) => { if (!v.videos || !v.videos.length) v.videos = [INTRO_VIDEO]; });
+
 export const getVoice = (id) => VOICES.find((v) => v.id === id) || VOICES[0];
 
 // 보이스별 디테일 페이지 카피 (Figma 디자인 기준). 미지정 보이스는 기본값 사용.

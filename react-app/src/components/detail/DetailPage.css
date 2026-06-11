@@ -379,13 +379,14 @@
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   overflow: hidden;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
 .dt-video-tab:hover { border-color: var(--border-2); }
 .dt-video-tab.is-active { border-color: rgba(110, 79, 255, 0.5); background: rgba(95, 50, 230, 0.08); }
-.dt-video-tab-label { display: block; font-size: 16px; line-height: 24px; font-weight: 500; color: #fff; }
+.dt-video-tab-label { display: block; font-size: 16px; line-height: 24px; font-weight: 500; color: var(--text-3); }
+.dt-video-tab.is-active .dt-video-tab-label { color: #fff; }
 /* 재생에 맞춰 채워지는 게이지 (메인 코치 섹션과 동일) */
 .dt-video-gauge { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
 .dt-video-gauge-fill { display: block; height: 100%; background: var(--primary); transition: width 0.12s linear; }
