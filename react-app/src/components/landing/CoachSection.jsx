@@ -58,6 +58,27 @@ export default function CoachSection() {
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
+  const userMutedRef = useRef(false); // 사용자가 직접 음소거했는지
+
+  // 첫 인터랙션(클릭/키/터치) 시 소리 자동 ON — 자동재생 정책 우회 (사용자 음소거는 존중)
+  useEffect(() => {
+    let done = false;
+    const onGesture = () => {
+      if (done) return;
+      done = true;
+      if (!userMutedRef.current) setIsMuted(false);
+      cleanup();
+    };
+    const cleanup = () => {
+      window.removeEventListener('pointerdown', onGesture);
+      window.removeEventListener('keydown', onGesture);
+      window.removeEventListener('touchstart', onGesture);
+    };
+    window.addEventListener('pointerdown', onGesture);
+    window.addEventListener('keydown', onGesture);
+    window.addEventListener('touchstart', onGesture);
+    return cleanup;
+  }, []);
 
   // 볼륨 반영
   useEffect(() => {
@@ -82,7 +103,13 @@ export default function CoachSection() {
   const onVolume = (e) => {
     const val = Number(e.target.value);
     setVolume(val);
-    if (val > 0 && isMuted) setIsMuted(false);
+    if (val > 0 && isMuted) { setIsMuted(false); userMutedRef.current = false; }
+  };
+  const toggleMute = () => {
+    setIsMuted((m) => {
+      userMutedRef.current = !m; // 끄는 순간 = 사용자가 음소거 선택
+      return !m;
+    });
   };
 
   // 소스 연결 (HLS는 hls.js, Safari/일반 mp4는 직접)
@@ -232,7 +259,7 @@ export default function CoachSection() {
               <button
                 type="button"
                 className="coach-vol-btn"
-                onClick={() => setIsMuted((m) => !m)}
+                onClick={toggleMute}
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
                 {isMuted ? <MuteIcon width={18} height={18} /> : <VolumeIcon width={18} height={18} />}
