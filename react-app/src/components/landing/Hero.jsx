@@ -31,6 +31,8 @@ export default function Hero() {
     const el = audioRef.current;
     if (!el) return undefined;
     let started = false;
+    const EVENTS = ['pointerdown', 'pointermove', 'mousemove', 'keydown', 'touchstart', 'wheel', 'scroll'];
+    const cleanup = () => EVENTS.forEach((e) => window.removeEventListener(e, start));
     const start = () => {
       if (started) return;
       const p = el.play();
@@ -38,12 +40,9 @@ export default function Hero() {
         p.then(() => { started = true; setPlaying(true); cleanup(); }).catch(() => {});
       }
     };
-    const onGesture = () => { start(); };
-    const cleanup = () => {
-      ['pointerdown', 'keydown', 'touchstart'].forEach((e) => window.removeEventListener(e, onGesture));
-    };
-    start(); // 자동 재생 시도
-    ['pointerdown', 'keydown', 'touchstart'].forEach((e) => window.addEventListener(e, onGesture));
+    start(); // 진입 즉시 재생 시도
+    // 막혔다면 가능한 가장 이른 시점(첫 움직임/스크롤/클릭/키)에 즉시 재생
+    EVENTS.forEach((e) => window.addEventListener(e, start, { passive: true }));
     return cleanup;
   }, []);
 
