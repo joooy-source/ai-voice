@@ -165,30 +165,6 @@
   flex-wrap: wrap;
 }
 
-/* 떠다니는 보이스 노트 카드 */
-.dt-note-card {
-  position: absolute;
-  z-index: 3;
-  width: 300px;
-  max-width: 80vw;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(14, 14, 20, 0.62);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
-}
-/* 얼굴은 피하고 어깨/가슴 쪽에 글래스 카드로 (레퍼런스 위치) */
-.dt-note-a { top: 42%; right: 6%; width: auto; max-width: 280px; animation: dtNoteFloat 7s ease-in-out infinite; }
-.dt-note-b { top: 75%; right: 38%; width: auto; max-width: 360px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
-@keyframes dtNoteFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-.dt-note-name { font-size: 11px; font-weight: 500; color: var(--primary-400); }
-.dt-note-quote { margin-top: 6px; font-size: 15px; font-weight: 600; color: #fff; line-height: 1.35; }
-
 /* ===== 본문 ===== */
 .dt-body {
   position: relative;
@@ -709,7 +685,6 @@
   .dt-menu-item.is-active { color: #fff; background: rgba(95, 50, 230, 0.16); border-radius: 9999px; }
   .dt-sec { padding: 56px 0; }
   .dt-profile { grid-template-columns: 240px 1fr; gap: 36px; }
-  .dt-note-b { display: none; }
   .price-card { padding: 32px 24px; }
   .price-top { flex-direction: column; }
   .price-amount-box { text-align: left; }
@@ -720,7 +695,6 @@
   .dt-hero-fade-l { background: linear-gradient(0deg, var(--bg) 14%, rgba(6, 6, 8, 0.5) 52%, transparent 88%); }
   .dt-hero-name { font-size: 48px; }
   .dt-hero-duo { font-size: 22px; }
-  .dt-note-a { display: none; }
   .dt-sec-title, .dt-voice-head .dt-sec-title { font-size: 30px; }
   .dt-profile { grid-template-columns: 1fr; }
   .dt-profile-img { max-width: 280px; }

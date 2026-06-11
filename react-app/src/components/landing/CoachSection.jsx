@@ -54,7 +54,7 @@ export default function CoachSection() {
   const playerRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true); // 디폴트 음소거
+  const [isMuted, setIsMuted] = useState(false); // 디폴트: 소리 ON (섹션 진입 시 재생)
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
@@ -143,13 +143,23 @@ export default function CoachSection() {
     };
   }, []);
 
-  // 재생/일시정지/음소거 + 화면 밖이면 정지
+  // 재생/일시정지/음소거 + 화면 밖이면 정지 (진입 시 소리 시도, 막히면 음소거 폴백)
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = isMuted;
-    if (isPlaying && inView) v.play().catch(() => {});
-    else v.pause();
+    if (isPlaying && inView) {
+      const p = v.play();
+      if (p && p.catch) {
+        p.catch(() => {
+          v.muted = true;
+          setIsMuted(true);
+          v.play().catch(() => {});
+        });
+      }
+    } else {
+      v.pause();
+    }
   }, [isMuted, isPlaying, inView]);
 
   // 영상이 없을 때만: 타이머 기반 게이지 + 자동 다음 탭
@@ -193,14 +203,12 @@ export default function CoachSection() {
         <p className="section-sub">From lane coaching to real-time alerts, combat analysis, and build help.</p>
       </div>
 
-      <div className="coach-grid reveal" ref={gridRef}>
-        {/* 단일 영상 — 탭 클릭 시 해당 챕터로 seek */}
+      <div className="coach-media reveal" ref={gridRef}>
+        {/* 영상 — 풀폭, 탭 클릭 시 해당 챕터로 seek */}
         <div className="coach-player" ref={playerRef}>
           <video
             ref={videoRef}
             className="coach-video"
-            autoPlay
-            muted
             loop
             playsInline
             preload="metadata"
@@ -251,7 +259,7 @@ export default function CoachSection() {
           </div>
         </div>
 
-        {/* 우측 패널: 선택 시 보라 박스 + 게이지 바 */}
+        {/* 하단 탭 한 줄: 선택 시 보라 테두리 + 하단 게이지 */}
         <div className="coach-tabs">
           {TABS.map((tab, i) => {
             const isActive = i === active;
@@ -262,11 +270,7 @@ export default function CoachSection() {
                 className={`coach-tab ${isActive ? 'is-active' : ''}`}
                 onClick={() => selectTab(i)}
               >
-                <span className="coach-tab-head">
-                  <span className="coach-tab-dot" />
-                  {tab.title}
-                </span>
-                <span className="coach-tab-desc">{tab.desc}</span>
+                <span className="coach-tab-title">{tab.title}</span>
                 {isActive && (
                   <span className="coach-gauge">
                     <span className="coach-gauge-fill" style={{ width: `${progress * 100}%` }} />

@@ -92,15 +92,6 @@ const Chevron = (p) => (
   </svg>
 );
 
-function VoiceNote({ quote, className }) {
-  return (
-    <div className={`dt-note-card ${className}`}>
-      <p className="dt-note-name">{quote.name}</p>
-      <p className="dt-note-quote">{quote.text}</p>
-    </div>
-  );
-}
-
 export default function DetailPage({ id }) {
   const voice = getVoice(id);
   const d = getDetail(voice);
@@ -300,9 +291,6 @@ export default function DetailPage({ id }) {
             </div>
           </div>
         </div>
-
-        <VoiceNote className="dt-note-a" quote={{ name: voice.name, text: d.catchphrases[0], seed: 2 }} />
-        <VoiceNote className="dt-note-b" quote={{ name: voice.name, text: d.catchphrases[2], seed: 7 }} />
       </header>
 
       {/* Hero 위로 슉 올라와 덮는 콘텐츠 */}
