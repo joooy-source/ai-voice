@@ -26,7 +26,7 @@ const TABS = [
   {
     title: 'Lane Coaching',
     desc: 'Real-time advice on the laning tips that matter for your champion and role — last-hitting (CS), syncing skill combos with allies, managing mana, and preparing for the enemy jungler.',
-    start: 7,
+    start: 6,
   },
   {
     title: 'Real-Time Alerts',
@@ -52,7 +52,7 @@ export default function CoachSection() {
   const [gridRef, inView] = useInView();
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1); // -1 = 오프닝(어떤 탭도 활성 아님)
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true); // 음소거로 시작 → 첫 동작에 소리 켜짐
   const [volume, setVolume] = useState(1);
@@ -78,6 +78,13 @@ export default function CoachSection() {
     evs.forEach((e) => window.addEventListener(e, onAct));
     return cleanup;
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 위로가기 등으로 코치 영역을 떠날 때 소리 끄기
+  useEffect(() => {
+    const onSilence = () => setIsMuted(true);
+    window.addEventListener('coach-silence', onSilence);
+    return () => window.removeEventListener('coach-silence', onSilence);
   }, []);
 
   // 볼륨 반영
@@ -142,10 +149,11 @@ export default function CoachSection() {
       const t = v.currentTime;
       const dur = v.duration;
       const n = TABS.length;
-      // 현재 시간이 속한 챕터 (시작 전 0~7초는 첫 탭으로 간주)
-      let idx = 0;
+      // 오프닝(첫 챕터 시작 전)은 -1 → 어떤 탭도 활성화하지 않음
+      let idx = -1;
       for (let i = 0; i < n; i++) if (t + 0.05 >= TABS[i].start) idx = i;
       setActive(idx);
+      if (idx < 0) { setProgress(0); return; }
       const start = TABS[idx].start;
       const end = idx + 1 < n
         ? TABS[idx + 1].start
@@ -232,7 +240,7 @@ export default function CoachSection() {
 
           <div className="coach-nowplaying">
             <span className="coach-dot" />
-            Now playing: {TABS[active].title}
+            {active >= 0 ? `Now playing: ${TABS[active].title}` : 'Now playing'}
           </div>
 
           <div className="coach-controls">
