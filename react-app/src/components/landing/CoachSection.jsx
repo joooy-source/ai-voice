@@ -58,15 +58,27 @@ export default function CoachSection() {
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
+  const dirRef = useRef('down'); // 마지막 스크롤 방향
 
-  // 위로가기 시 코치 소리 끄기. 단, 섹션을 벗어나면 다시 소리 ON으로 재무장(다음 진입 시 소리)
+  // 스크롤 방향 추적
   useEffect(() => {
-    const onSilence = () => setIsMuted(true);
-    window.addEventListener('coach-silence', onSilence);
-    return () => window.removeEventListener('coach-silence', onSilence);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) > 2) dirRef.current = y > last ? 'down' : 'up';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // 내려오며 진입할 때만 소리 ON / 섹션 벗어나거나 올라가며 지나칠 땐 음소거
   useEffect(() => {
-    if (!inView) setIsMuted(false);
+    if (inView) {
+      if (dirRef.current === 'down') setIsMuted(false);
+    } else {
+      setIsMuted(true);
+    }
   }, [inView]);
 
   // 볼륨 반영
@@ -167,7 +179,7 @@ export default function CoachSection() {
     if (!v) return;
     v.muted = isMuted;
     if (isPlaying && inView) {
-      v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+      v.play().catch(() => { v.muted = true; setIsMuted(true); v.play().catch(() => {}); });
     } else {
       v.pause();
     }
