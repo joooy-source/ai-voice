@@ -24,7 +24,7 @@
 }
 .mtv-icon { align-self: flex-start; color: var(--primary-400); }
 .mtv-text { display: flex; flex-direction: column; gap: 8px; }
-.mtv-card-title { font-size: 18px; font-weight: 700; line-height: 24px; }
+.mtv-card-title { font-size: 18px; font-weight: 500; line-height: 24px; }
 .mtv-card-desc { font-size: 14px; line-height: 20px; color: var(--text-3); }
 
 @media (max-width: 1200px) { .mtv-grid { grid-template-columns: repeat(2, 1fr); } }

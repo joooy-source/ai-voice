@@ -34,7 +34,7 @@
   background: var(--primary-soft);
   color: var(--primary-400);
 }
-.withyou-card-title { font-size: 19px; font-weight: 700; line-height: 26px; }
+.withyou-card-title { font-size: 19px; font-weight: 500; line-height: 26px; }
 .withyou-card-desc { font-size: 14px; line-height: 20px; color: var(--text-3); }
 
 .withyou-cta {
