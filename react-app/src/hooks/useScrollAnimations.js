@@ -109,7 +109,7 @@ export function useScrollProgress() {
  * Hero가 sticky로 덮이는 구간(스냅 지점이 없는 영역)에서 스크롤이 멈추면
  * 가까운 쪽(Hero 전체 / 다음 섹션 전체)으로 자동 정렬해 "반쯤 걸림"을 방지한다.
  */
-export function useHeroSnap({ navHeight = 72, debounce = 140 } = {}) {
+export function useHeroSnap({ navHeight = 72, debounce = 140, selector = '.below-hero' } = {}) {
   useEffect(() => {
     if (prefersReduced()) return undefined;
     let timer = 0;
@@ -118,7 +118,7 @@ export function useHeroSnap({ navHeight = 72, debounce = 140 } = {}) {
       if (snapping) return;
       clearTimeout(timer);
       timer = setTimeout(() => {
-        const below = document.querySelector('.below-hero');
+        const below = document.querySelector(selector);
         if (!below) return;
         const target = below.offsetTop - navHeight; // 다음 섹션이 정렬되는 스크롤 위치
         const y = window.scrollY;
@@ -137,7 +137,7 @@ export function useHeroSnap({ navHeight = 72, debounce = 140 } = {}) {
       window.removeEventListener('scroll', onScroll);
       clearTimeout(timer);
     };
-  }, [navHeight, debounce]);
+  }, [navHeight, debounce, selector]);
 }
 
 /**
