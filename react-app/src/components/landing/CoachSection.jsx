@@ -52,7 +52,7 @@ export default function CoachSection() {
   const [gridRef, inView] = useInView();
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const [active, setActive] = useState(-1); // -1 = 오프닝(어떤 탭도 활성 아님)
+  const [active, setActive] = useState(0); // Lane부터 시작
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false); // 디테일과 동일: 바로 소리로 재생 시도
   const [volume, setVolume] = useState(1);
@@ -142,15 +142,22 @@ export default function CoachSection() {
         : (dur && isFinite(dur) ? dur : start + CLIP_SECONDS);
       setProgress(end > start ? Math.min(Math.max((t - start) / (end - start), 0), 1) : 0);
     };
-    const onReady = () => setHasVideo(true);
+    const onReady = () => {
+      setHasVideo(true);
+      // 오프닝 건너뛰고 Lane(첫 챕터)부터 시작
+      if (v.currentTime < TABS[0].start) v.currentTime = TABS[0].start;
+    };
     const onError = () => setHasVideo(false);
+    const onEnded = () => { v.currentTime = TABS[0].start; v.play().catch(() => {}); }; // Lane부터 루프
     v.addEventListener('timeupdate', onTime);
     v.addEventListener('loadeddata', onReady);
     v.addEventListener('error', onError);
+    v.addEventListener('ended', onEnded);
     return () => {
       v.removeEventListener('timeupdate', onTime);
       v.removeEventListener('loadeddata', onReady);
       v.removeEventListener('error', onError);
+      v.removeEventListener('ended', onEnded);
     };
   }, []);
 
@@ -215,7 +222,6 @@ export default function CoachSection() {
             className="coach-video"
             autoPlay
             muted
-            loop
             playsInline
             preload="metadata"
           />
