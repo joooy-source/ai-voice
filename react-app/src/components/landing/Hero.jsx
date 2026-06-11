@@ -3,8 +3,8 @@ import { DownloadIcon, ArrowDownIcon, VolumeIcon } from './icons';
 import './Hero.css';
 
 const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
-// 타이틀을 AI Voice로 재생할 오디오 — public/voice/ai-voice.mp3 에 넣으면 동작
-const AUDIO = `${import.meta.env.BASE_URL}voice/ai-voice.mp3`;
+// 히어로 진입 시 자동 재생되는 보이스 (하단 스피커 버튼으로 on/off)
+const AUDIO = `${import.meta.env.BASE_URL}voice/hero-voice.mp3`;
 const FADE = 0.7; // 루프 지점 크로스페이드 길이(초)
 
 export default function Hero() {
@@ -20,12 +20,32 @@ export default function Hero() {
     setPlaying(next);
     if (!el) return;
     if (next) {
-      el.currentTime = 0;
       el.play().catch(() => {});
     } else {
       el.pause();
     }
   };
+
+  // 히어로 진입 시 자동 재생 시도 — 막히면 첫 인터랙션(클릭/키/터치) 때 재생
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el) return undefined;
+    let started = false;
+    const start = () => {
+      if (started) return;
+      const p = el.play();
+      if (p && p.then) {
+        p.then(() => { started = true; setPlaying(true); cleanup(); }).catch(() => {});
+      }
+    };
+    const onGesture = () => { start(); };
+    const cleanup = () => {
+      ['pointerdown', 'keydown', 'touchstart'].forEach((e) => window.removeEventListener(e, onGesture));
+    };
+    start(); // 자동 재생 시도
+    ['pointerdown', 'keydown', 'touchstart'].forEach((e) => window.addEventListener(e, onGesture));
+    return cleanup;
+  }, []);
 
   // 영상 2개를 번갈아 재생하며 루프 이음새를 크로스페이드로 가린다 → 자연스러운 무한루프
   useEffect(() => {
@@ -119,7 +139,7 @@ export default function Hero() {
           <VolumeIcon width={22} height={22} />
         )}
       </button>
-      <audio ref={audioRef} src={AUDIO} preload="none" onEnded={() => setPlaying(false)} />
+      <audio ref={audioRef} src={AUDIO} preload="auto" onEnded={() => setPlaying(false)} />
 
       <a className="hero-scroll" href="#coach" aria-label="Scroll down">
         <ArrowDownIcon />
