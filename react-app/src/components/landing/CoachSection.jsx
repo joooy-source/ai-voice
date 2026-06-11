@@ -54,10 +54,31 @@ export default function CoachSection() {
   const playerRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false); // 섹션 진입 시 소리 재생
+  const [isMuted, setIsMuted] = useState(true); // 음소거로 시작 → 첫 동작에 소리 켜짐
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
+  const inViewRef = useRef(false);
+  useEffect(() => { inViewRef.current = inView; }, [inView]);
+
+  // 첫 사용자 동작(클릭/키/터치 — 히어로 아래 화살표 포함)에 소리 켜기.
+  // 스크롤만으론 브라우저가 소리 재생을 막아서, 동작 한 번이 필요.
+  useEffect(() => {
+    let done = false;
+    const onAct = () => {
+      if (done) return;
+      done = true;
+      setIsMuted(false);
+      const v = videoRef.current;
+      if (v && inViewRef.current && isPlaying) { v.muted = false; v.play().catch(() => {}); }
+      cleanup();
+    };
+    const evs = ['pointerdown', 'keydown', 'touchstart'];
+    const cleanup = () => evs.forEach((e) => window.removeEventListener(e, onAct));
+    evs.forEach((e) => window.addEventListener(e, onAct));
+    return cleanup;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 볼륨 반영
   useEffect(() => {
@@ -153,7 +174,7 @@ export default function CoachSection() {
     } else {
       v.pause();
     }
-  }, [isMuted, isPlaying, inView]);
+  }, [isMuted, isPlaying, inView, hasVideo]);
 
   // 영상이 없을 때만: 타이머 기반 게이지 + 자동 다음 탭
   useEffect(() => {
