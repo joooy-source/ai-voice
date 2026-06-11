@@ -100,7 +100,6 @@ export default function DetailPage({ id }) {
   const [playing, setPlaying] = useState(false);
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
-  const [nearFooter, setNearFooter] = useState(false);
   const cardRef = useRef(null);
 
   const others = VOICES.filter((v) => v.id !== voice.id).slice(0, 5);
@@ -252,18 +251,6 @@ export default function DetailPage({ id }) {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // 푸터가 보이면 플로팅 바 숨김 (푸터 가리지 않게)
-  useEffect(() => {
-    const footer = document.querySelector('.footer');
-    if (!footer) return undefined;
-    const io = new IntersectionObserver(
-      ([e]) => setNearFooter(e.isIntersecting),
-      { rootMargin: '0px 0px -80px 0px' }
-    );
-    io.observe(footer);
-    return () => io.disconnect();
   }, []);
 
   const go = (mid) => {
@@ -549,7 +536,7 @@ export default function DetailPage({ id }) {
       </div>
 
       {/* 플로팅 구독 바 */}
-      <div className={`dt-bar ${barShown && !nearFooter ? 'is-shown' : ''}`}>
+      <div className={`dt-bar ${barShown ? 'is-shown' : ''}`}>
         <div className="dt-shell dt-bar-inner">
           <div className="dt-bar-id">
             <img src={voice.priceImg || voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
