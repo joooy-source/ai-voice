@@ -1,7 +1,7 @@
 // 공용 보이스 데이터 (마퀴/스토어/디테일 공유)
 const A = 'https://www.figma.com/api/mcp/asset/';
-// 디테일 히어로 이미지는 public/voices/ 에 영구 저장 (GitHub Pages 서브경로 대응)
-const H = `${import.meta.env.BASE_URL}voices/`;
+// 디테일 히어로 이미지는 public/detail-hero/ 에 영구 저장 (GitHub Pages 서브경로 대응)
+const H = `${import.meta.env.BASE_URL}detail-hero/`;
 
 export const PRICE = '₩29,000';
 
