@@ -59,20 +59,22 @@ export default function CoachSection() {
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
   const userMutedRef = useRef(false); // 사용자가 직접 음소거했는지
+  const inViewRef = useRef(false);
+  useEffect(() => { inViewRef.current = inView; }, [inView]);
 
-  // 첫 인터랙션(클릭/키/터치/휠/스크롤) 시 소리 자동 ON — 자동재생 정책 우회 (사용자 음소거는 존중)
+  // 첫 실제 제스처(클릭/탭/키)에 소리 ON — 자동재생 정책상 클릭류만 활성화로 인정됨.
+  // 리스너를 페이지 수명동안 유지해 막혔던 경우에도 다음 클릭에 복구. (사용자 음소거는 존중)
   useEffect(() => {
-    let done = false;
-    const onGesture = () => {
-      if (done) return;
-      done = true;
-      if (!userMutedRef.current) setIsMuted(false);
-      cleanup();
+    const onAct = (e) => {
+      if (userMutedRef.current) return;
+      if (e.target?.closest?.('.coach-controls')) return; // 컨트롤 버튼은 자체 처리
+      const v = videoRef.current;
+      setIsMuted(false);
+      if (v && inViewRef.current) { v.muted = false; v.play().catch(() => {}); }
     };
-    const evs = ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll'];
-    const cleanup = () => evs.forEach((e) => window.removeEventListener(e, onGesture));
-    evs.forEach((e) => window.addEventListener(e, onGesture, { passive: true }));
-    return cleanup;
+    const evs = ['pointerdown', 'keydown', 'touchstart'];
+    evs.forEach((e) => window.addEventListener(e, onAct));
+    return () => evs.forEach((e) => window.removeEventListener(e, onAct));
   }, []);
 
   // 볼륨 반영
@@ -165,20 +167,17 @@ export default function CoachSection() {
     };
   }, []);
 
-  // 재생/일시정지/음소거 + 화면 밖이면 정지 (진입 시 소리 시도, 막히면 음소거 폴백)
+  // 재생/일시정지 + 화면 밖이면 정지. 진입 시 소리로 시도하고, 막히면 음소거로라도 재생(영상 표시).
+  // (isMuted 상태는 유지 → 이후 클릭 한 번에 소리 복구)
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = isMuted;
     if (isPlaying && inView) {
-      const p = v.play();
-      if (p && p.catch) {
-        p.catch(() => {
-          v.muted = true;
-          setIsMuted(true);
-          v.play().catch(() => {});
-        });
-      }
+      v.muted = isMuted;
+      v.play().catch(() => {
+        v.muted = true;
+        v.play().catch(() => {});
+      });
     } else {
       v.pause();
     }
