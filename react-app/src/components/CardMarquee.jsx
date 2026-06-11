@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useReveal } from '../hooks/useScrollAnimations';
+import { getVoice } from '../data/voices';
 import './CardMarquee.css';
 
 // 카드 이미지 — Figma 디자인의 임시 에셋 URL (약 7일간 유효).
@@ -63,16 +64,19 @@ export default function CardMarquee() {
     if (!vp || !track) return undefined;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const BASE = 0.4; // 기본 속도(px/frame, 왼쪽으로)
-    const BOOST = 2.6; // 가쪽으로 갈수록 추가되는 속도
+    const BASE = 0.4; // 비호버 시 기본 자동 스크롤 속도(px/frame)
+    const BOOST = 3.2; // 가쪽으로 갈수록 빨라지는 정도
+    const DEAD = 0.22; // 가운데 정지 구간(절반 폭 비율) → 카드 호버 시 멈춤
     let x = 0;
     let half = track.scrollWidth / 2;
-    let factor = 0; // -1(왼쪽 끝)…0(가운데)…1(오른쪽 끝)
+    let hovering = false;
+    let factor = 0; // -1(왼쪽)…0…1(오른쪽)
     let raf = 0;
 
     const measure = () => { half = track.scrollWidth / 2; };
     const tick = () => {
-      const v = BASE + factor * BOOST; // +면 왼쪽으로 빠르게, -면 오른쪽으로
+      // 비호버: 천천히 자동 스크롤 / 호버: 가운데 정지, 가쪽일수록 그 방향으로 빠르게
+      const v = hovering ? factor * BOOST : BASE;
       x -= v;
       if (x <= -half) x += half;
       else if (x > 0) x -= half;
@@ -81,10 +85,12 @@ export default function CardMarquee() {
     };
     const onMove = (e) => {
       const r = vp.getBoundingClientRect();
-      const p = (e.clientX - r.left) / r.width; // 0..1
-      factor = Math.max(-1, Math.min(1, (p - 0.5) * 2));
+      const s = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+      hovering = true;
+      if (Math.abs(s) < DEAD) factor = 0; // 가운데(카드 호버) → 정지
+      else factor = Math.sign(s) * ((Math.abs(s) - DEAD) / (0.5 - DEAD));
     };
-    const onLeave = () => { factor = 0; };
+    const onLeave = () => { hovering = false; factor = 0; };
 
     measure();
     raf = requestAnimationFrame(tick);
@@ -137,7 +143,7 @@ export default function CardMarquee() {
               aria-hidden={i >= VOICE_CARDS.length ? 'true' : undefined}
               tabIndex={i >= VOICE_CARDS.length ? -1 : undefined}
             >
-              <img className="marquee-card-img" src={card.src} alt="" loading="lazy" />
+              <img className="marquee-card-img" src={getVoice(card.id).storeImg || card.src} alt="" loading="lazy" />
               <div className="marquee-card-overlay">
                 <button
                   type="button"

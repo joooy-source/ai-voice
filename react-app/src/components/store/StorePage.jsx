@@ -1,6 +1,6 @@
 import Nav from '../landing/Nav';
 import Footer from '../landing/Footer';
-import { VOICES, PRICE } from '../../data/voices';
+import { VOICES, PRICE, COMING_SOON } from '../../data/voices';
 import './StorePage.css';
 
 function ArrowBtn() {
@@ -46,7 +46,7 @@ export default function StorePage() {
         {VOICES.map((v) => (
           <a key={v.id} className="store-card" href={`#/voice/${v.id}`}>
             <div className="store-card-img" style={{ backgroundColor: v.bg }}>
-              <img src={v.img} alt={v.name} loading="lazy" />
+              <img src={v.storeImg || v.img} alt={v.name} loading="lazy" />
             </div>
             <div className="store-card-foot">
               <div className="store-card-label">
@@ -62,8 +62,7 @@ export default function StorePage() {
       <div className="store-coming">
         {[0, 1].map((i) => (
           <div className="store-coming-card" key={i}>
-            <span className="store-coming-mark" aria-hidden><i /><i /><i /></span>
-            <span className="store-coming-text">Coming soon</span>
+            <img src={COMING_SOON} alt="Coming soon" loading="lazy" />
           </div>
         ))}
       </div>

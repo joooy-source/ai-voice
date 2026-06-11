@@ -34,6 +34,26 @@ VOICES.forEach((v) => { if (v.thumb) v.priceImg = v.thumb.replace('detail/', 'pr
 const INTRO_VIDEO = 'https://s-agent-static.op.gg/videos/intro/index.m3u8';
 VOICES.forEach((v) => { if (!v.videos || !v.videos.length) v.videos = [INTRO_VIDEO]; });
 
+// 스토어/마퀴용 정사각 썸네일 (public/voice/) — 파일명이 제각각이라 명시 매핑
+const V = `${import.meta.env.BASE_URL}voice/`;
+const STORE_FILES = {
+  'drx-vincenzo': 'DRXVincenzo-upper_squared.png',
+  'drx-ucal': 'DRXUcal-upper_squared.png',
+  'drx-willer': 'DRXWiller-upper_squared.png',
+  'drx-andil': 'DRXAndil-upper_squared.png',
+  'drx-lazyfeel': 'DRXLazyfeel-upper_squared.png',
+  'drx-rich': 'DRXRich-upper_squared.png',
+  doublelift: 'Doublelift-upper_squared.png',
+  jankos: 'Jankos-upper_squared.png',
+  noarmwhatley: 'NoArmWhatley-face_squared.png',
+  alois: 'Alois-upper_squared.png',
+  'typical-gamer': 'Typical Gamer-upper_squared.png',
+  neekolul: 'Neekolul-upper_squared.png',
+};
+VOICES.forEach((v) => { const f = STORE_FILES[v.id]; if (f) v.storeImg = V + encodeURI(f); });
+
+export const COMING_SOON = `${V}coming-soon.png`;
+
 export const getVoice = (id) => VOICES.find((v) => v.id === id) || VOICES[0];
 
 // 보이스별 디테일 페이지 카피 (Figma 디자인 기준). 미지정 보이스는 기본값 사용.
