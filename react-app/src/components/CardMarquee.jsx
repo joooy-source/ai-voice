@@ -5,19 +5,19 @@ import './CardMarquee.css';
 // 영구적으로 쓰려면 public/ 에 이미지를 받아 경로를 교체하세요.
 // name 은 이미지에 맞게 수정하세요 (호버 시 표시).
 const VOICE_CARDS = [
-  { src: 'https://www.figma.com/api/mcp/asset/58f2f870-3760-4136-b212-75b49d12af49', bg: '#242430', name: 'DRX Vincenzo' },
-  { src: 'https://www.figma.com/api/mcp/asset/1ded3ce6-fd94-4961-8699-861b7f993332', bg: '#2a2a34', name: 'DRX Ucal' },
-  { src: 'https://www.figma.com/api/mcp/asset/326fb409-5d8e-4c56-8554-dbe3c7d14038', bg: '#26222e', name: 'DRX Willer' },
-  { src: 'https://www.figma.com/api/mcp/asset/bcfc4a75-9cbe-4afc-9967-d31d249cf965', bg: '#2b2b36', name: 'DRX Andil' },
-  { src: 'https://www.figma.com/api/mcp/asset/6d419085-34a3-470b-8711-6ffc8e8683df', bg: '#26222e', name: 'DRXLazyfeel' },
-  { src: 'https://www.figma.com/api/mcp/asset/f588e805-c5af-47cc-949d-1f6e4e9e95ad', bg: '#2b2b36', name: 'DRXRich' },
-  { src: 'https://www.figma.com/api/mcp/asset/003c300c-6fb7-4cf3-9d2f-872b2c63afa3', bg: '#1f1f27', name: 'Doublelift' },
-  { src: 'https://www.figma.com/api/mcp/asset/e1c52722-d915-4886-98fc-c906507b3e15', bg: '#1f1f27', name: 'Jankos' },
-  { src: 'https://www.figma.com/api/mcp/asset/dc45b29c-1446-4672-bc54-faf12646b811', bg: '#242430', name: 'NoArmWhatley' },
-  { src: 'https://www.figma.com/api/mcp/asset/560fcc79-ff14-43ce-8122-f1b98b32a039', bg: '#2a2a34', name: 'Alois' },
-  { src: 'https://www.figma.com/api/mcp/asset/90169fa5-602b-49c7-b18d-89bcc2fb446d', bg: '#1f1f27', name: 'fanfan' },
-  { src: 'https://www.figma.com/api/mcp/asset/c564d3f6-ba86-47f4-8eb4-e4b99ca3374a', bg: '#2e2535', name: 'Typical Gamer' },
-  { src: 'https://www.figma.com/api/mcp/asset/1dfeae40-58ba-491f-8feb-a95769e93a06', bg: '#2e2535', name: 'Neekolul' },
+  { id: 'drx-vincenzo', src: 'https://www.figma.com/api/mcp/asset/58f2f870-3760-4136-b212-75b49d12af49', bg: '#242430', name: 'DRX Vincenzo' },
+  { id: 'drx-ucal', src: 'https://www.figma.com/api/mcp/asset/1ded3ce6-fd94-4961-8699-861b7f993332', bg: '#2a2a34', name: 'DRX Ucal' },
+  { id: 'drx-willer', src: 'https://www.figma.com/api/mcp/asset/326fb409-5d8e-4c56-8554-dbe3c7d14038', bg: '#26222e', name: 'DRX Willer' },
+  { id: 'drx-andil', src: 'https://www.figma.com/api/mcp/asset/bcfc4a75-9cbe-4afc-9967-d31d249cf965', bg: '#2b2b36', name: 'DRX Andil' },
+  { id: 'drx-lazyfeel', src: 'https://www.figma.com/api/mcp/asset/6d419085-34a3-470b-8711-6ffc8e8683df', bg: '#26222e', name: 'DRXLazyfeel' },
+  { id: 'drx-rich', src: 'https://www.figma.com/api/mcp/asset/f588e805-c5af-47cc-949d-1f6e4e9e95ad', bg: '#2b2b36', name: 'DRXRich' },
+  { id: 'doublelift', src: 'https://www.figma.com/api/mcp/asset/003c300c-6fb7-4cf3-9d2f-872b2c63afa3', bg: '#1f1f27', name: 'Doublelift' },
+  { id: 'jankos', src: 'https://www.figma.com/api/mcp/asset/e1c52722-d915-4886-98fc-c906507b3e15', bg: '#1f1f27', name: 'Jankos' },
+  { id: 'noarmwhatley', src: 'https://www.figma.com/api/mcp/asset/dc45b29c-1446-4672-bc54-faf12646b811', bg: '#242430', name: 'NoArmWhatley' },
+  { id: 'alois', src: 'https://www.figma.com/api/mcp/asset/560fcc79-ff14-43ce-8122-f1b98b32a039', bg: '#2a2a34', name: 'Alois' },
+  { id: 'fanfan', src: 'https://www.figma.com/api/mcp/asset/90169fa5-602b-49c7-b18d-89bcc2fb446d', bg: '#1f1f27', name: 'fanfan' },
+  { id: 'typical-gamer', src: 'https://www.figma.com/api/mcp/asset/c564d3f6-ba86-47f4-8eb4-e4b99ca3374a', bg: '#2e2535', name: 'Typical Gamer' },
+  { id: 'neekolul', src: 'https://www.figma.com/api/mcp/asset/1dfeae40-58ba-491f-8feb-a95769e93a06', bg: '#2e2535', name: 'Neekolul' },
 ];
 
 function PlayIcon() {
@@ -51,16 +51,18 @@ export default function CardMarquee() {
         </p>
       </div>
 
-      <button type="button" className="marquee-cta reveal">Browse all voices</button>
+      <a href="#/store" className="marquee-cta reveal">Browse all voices</a>
 
       <div className="marquee-viewport reveal">
         <div className="marquee-track">
           {loop.map((card, i) => (
-            <div
+            <a
               key={i}
+              href={`#/voice/${card.id}`}
               className="marquee-card"
               style={{ backgroundColor: card.bg }}
               aria-hidden={i >= VOICE_CARDS.length ? 'true' : undefined}
+              tabIndex={i >= VOICE_CARDS.length ? -1 : undefined}
             >
               <img className="marquee-card-img" src={card.src} alt="" loading="lazy" />
               <div className="marquee-card-overlay">
@@ -73,7 +75,7 @@ export default function CardMarquee() {
                   <span className="marquee-card-arrow"><ArrowIcon /></span>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
