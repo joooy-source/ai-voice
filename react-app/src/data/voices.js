@@ -10,7 +10,7 @@ export const VOICES = [
   { id: 'drx-andil', name: 'DRX Andil', team: 'DRX', img: `${A}bcfc4a75-9cbe-4afc-9967-d31d249cf965`, bg: '#2b2b36' },
   { id: 'drx-lazyfeel', name: 'DRX Lazyfeel', team: 'DRX', img: `${A}6d419085-34a3-470b-8711-6ffc8e8683df`, bg: '#26222e' },
   { id: 'drx-rich', name: 'DRX Rich', team: 'DRX', img: `${A}f588e805-c5af-47cc-949d-1f6e4e9e95ad`, bg: '#2b2b36' },
-  { id: 'doublelift', name: 'Doublelift', team: 'Creator', img: `${A}003c300c-6fb7-4cf3-9d2f-872b2c63afa3`, bg: '#1f1f27' },
+  { id: 'doublelift', name: 'Doublelift', team: 'Creator', img: `${A}003c300c-6fb7-4cf3-9d2f-872b2c63afa3`, hero: `${A}e03cdbdf-821b-4311-9cfd-36ddb87aad02`, bg: '#1f1f27' },
   { id: 'jankos', name: 'Jankos', team: 'Creator', img: `${A}e1c52722-d915-4886-98fc-c906507b3e15`, bg: '#1f1f27' },
   { id: 'noarmwhatley', name: 'NoArmWhatley', team: 'Creator', img: `${A}dc45b29c-1446-4672-bc54-faf12646b811`, bg: '#242430' },
   { id: 'alois', name: 'Alois', team: 'Creator', img: `${A}560fcc79-ff14-43ce-8122-f1b98b32a039`, bg: '#2a2a34' },

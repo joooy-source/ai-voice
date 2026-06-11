@@ -163,7 +163,7 @@ export default function DetailPage({ id }) {
       {/* ===== 01 Hero ===== */}
       <header className="dt-hero">
         <div className="dt-hero-portrait" style={{ backgroundColor: voice.bg }}>
-          <img src={voice.img} alt={voice.name} />
+          <img src={voice.hero || voice.img} alt={voice.name} />
         </div>
         <div className="dt-hero-fade-l" aria-hidden />
         <div className="dt-hero-fade-b" aria-hidden />
