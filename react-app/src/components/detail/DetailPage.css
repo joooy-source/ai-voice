@@ -8,6 +8,15 @@
   width: 100%;
   margin: 0 auto;
 }
+/* Hero 위로 슉 올라와 덮는 콘텐츠 */
+.dt-below {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  box-shadow: 0 -32px 64px rgba(0, 0, 0, 0.55);
+}
 
 /* 공용 버튼 */
 .dt-btn-primary {
@@ -59,35 +68,40 @@
   color: #fff;
 }
 
-/* ===== 01 Hero ===== */
+/* ===== 01 Hero (sticky로 고정, 본문이 위로 덮으며 올라옴) ===== */
 .dt-hero {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 0;
   width: 100%;
   min-height: calc(100dvh - 72px);
   display: flex;
   align-items: center;
   overflow: hidden;
 }
+/* 배경 인물을 전체에 풀블리드로 깔아 좌우 경계를 없앤다 */
 .dt-hero-portrait {
   position: absolute;
-  inset: 0 0 0 42%;
+  inset: 0;
   overflow: hidden;
 }
 .dt-hero-portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: 78% 16%;
   animation: dtHeroFloat 18s ease-in-out infinite;
 }
 @keyframes dtHeroFloat {
-  0%, 100% { transform: scale(1.03); }
-  50% { transform: scale(1.07); }
+  0%, 100% { transform: scale(1.04); }
+  50% { transform: scale(1.09); }
 }
 .dt-hero-fade-l {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--bg) 30%, rgba(6, 6, 8, 0.55) 50%, transparent 78%);
+  background:
+    linear-gradient(90deg, var(--bg) 20%, rgba(6, 6, 8, 0.82) 36%, rgba(6, 6, 8, 0.35) 56%, transparent 82%),
+    linear-gradient(0deg, rgba(6, 6, 8, 0.4), transparent 50%);
 }
 .dt-hero-fade-b {
   position: absolute;
@@ -120,7 +134,7 @@
 .dt-hero-duo {
   margin-top: 22px;
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
 }
 .dt-hero-name {
@@ -161,8 +175,8 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
 }
-.dt-note-a { top: 33%; right: 60px; width: 230px; animation: dtNoteFloat 7s ease-in-out infinite; }
-.dt-note-b { top: 56%; right: 230px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
+.dt-note-a { top: 22%; right: 5%; width: 244px; animation: dtNoteFloat 7s ease-in-out infinite; }
+.dt-note-b { top: 55%; right: 21%; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
 @keyframes dtNoteFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -233,7 +247,7 @@
 .dt-sec-title {
   font-size: 40px;
   line-height: 1.12;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -1px;
 }
 .dt-sec-sub {
@@ -406,10 +420,14 @@
 .dt-video-tab-row { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; color: #fff; }
 .dt-video-bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--primary); }
 
-/* ===== Pricing — 글래스 카드 ===== */
-.price-card {
-  position: relative;
+/* ===== Pricing — 홀로그래픽 글래스 카드 (포인터 추적 3D 틸트 + 포일) ===== */
+.price-tilt {
   margin-top: 40px;
+  perspective: 1200px;
+}
+.price-card {
+  --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%;
+  position: relative;
   padding: 48px;
   border-radius: 24px;
   overflow: hidden;
@@ -418,8 +436,16 @@
   -webkit-backdrop-filter: blur(22px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
+  transform: rotateX(var(--ry)) rotateY(var(--rx));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.25s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
+.price-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 50px 120px rgba(95, 50, 230, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+/* 움직이는 테두리 글로우 */
 .price-card::before {
   content: '';
   position: absolute;
@@ -436,12 +462,41 @@
   animation: priceBorder 6s linear infinite;
 }
 @keyframes priceBorder { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
-.price-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 40px 100px rgba(95, 50, 230, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
 .price-card:hover::before { opacity: 1; }
+/* 홀로그래픽 포일: 포인터 위치에 따라 무지개빛이 흐른다 */
+.price-foil {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: color-dodge;
+  background:
+    repeating-linear-gradient(
+      105deg,
+      rgba(255, 0, 132, 0.25) 0%,
+      rgba(0, 209, 255, 0.25) 12%,
+      rgba(120, 255, 90, 0.22) 22%,
+      rgba(255, 220, 0, 0.25) 32%,
+      rgba(255, 0, 132, 0.25) 42%
+    ),
+    radial-gradient(120% 120% at var(--mx) var(--my), rgba(255, 255, 255, 0.5), transparent 45%);
+  background-size: 220% 220%, 100% 100%;
+  background-position: var(--mx) var(--my), 0 0;
+  transition: opacity 0.3s var(--ease);
+}
+.price-card:hover .price-foil { opacity: 0.55; }
+/* 포인터를 따라오는 하이라이트 광택 */
+.price-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(380px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.22), transparent 60%);
+  transition: opacity 0.3s var(--ease);
+}
+.price-card:hover .price-glare { opacity: 1; }
 .price-glow {
   position: absolute;
   width: 400px;
@@ -650,4 +705,9 @@
   .price-lists, .price-actions { grid-template-columns: 1fr; }
   .dt-hero-cta { flex-direction: column; align-items: stretch; }
   .dt-bar-actions .dt-btn-ghost { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-hero { position: relative; }
+  .price-card { transform: none !important; }
 }

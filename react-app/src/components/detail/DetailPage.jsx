@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Nav from '../landing/Nav';
 import Footer from '../landing/Footer';
 import { PlayIcon, PauseIcon, DownloadIcon } from '../landing/icons';
 import { VOICES, getVoice, getDetail, PRICE } from '../../data/voices';
+import { useHeroSnap } from '../../hooks/useScrollAnimations';
 import './DetailPage.css';
 
 const MENU = [
@@ -97,8 +98,33 @@ export default function DetailPage({ id }) {
   const [video, setVideo] = useState(0);
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
+  const cardRef = useRef(null);
 
   const others = VOICES.filter((v) => v.id !== voice.id).slice(0, 5);
+
+  // Hero → 본문 자석 스냅 (다음 섹션이 위로 착 붙도록)
+  useHeroSnap({ selector: '.dt-below', debounce: 90 });
+
+  // 홀로그래픽 카드: 포인터를 따라 3D 틸트 + 포일 반사
+  const onCardMove = (e) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--mx', `${px * 100}%`);
+    el.style.setProperty('--my', `${py * 100}%`);
+    el.style.setProperty('--rx', `${(px - 0.5) * 14}deg`);
+    el.style.setProperty('--ry', `${(0.5 - py) * 14}deg`);
+  };
+  const onCardLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty('--rx', '0deg');
+    el.style.setProperty('--ry', '0deg');
+    el.style.setProperty('--mx', '50%');
+    el.style.setProperty('--my', '50%');
+  };
 
   useEffect(() => {
     const els = MENU.map((m) => document.getElementById(`sec-${m.id}`)).filter(Boolean);
@@ -164,6 +190,9 @@ export default function DetailPage({ id }) {
         <VoiceNote className="dt-note-a" quote={{ name: voice.name, text: d.catchphrases[0], seed: 2 }} />
         <VoiceNote className="dt-note-b" quote={{ name: voice.name, text: d.catchphrases[2], seed: 7 }} />
       </header>
+
+      {/* Hero 위로 슉 올라와 덮는 콘텐츠 */}
+      <div className="dt-below">
 
       {/* ===== 본문: 좌측 상단 고정 메뉴 + 우측 섹션 ===== */}
       <div className="dt-shell dt-body">
@@ -275,7 +304,10 @@ export default function DetailPage({ id }) {
           {/* 07 Pricing */}
           <section id="sec-pricing" className="dt-sec">
             <h2 className="dt-sec-title grad-text">Pricing</h2>
-            <div className="price-card">
+            <div className="price-tilt" onMouseMove={onCardMove} onMouseLeave={onCardLeave}>
+            <div className="price-card" ref={cardRef}>
+              <span className="price-foil" aria-hidden />
+              <span className="price-glare" aria-hidden />
               <span className="price-glow price-glow-1" aria-hidden />
               <span className="price-glow price-glow-2" aria-hidden />
               <span className="price-spark price-spark-1" aria-hidden />
@@ -312,6 +344,7 @@ export default function DetailPage({ id }) {
                 <button type="button" className="dt-btn-primary price-sub">Subscribe now <ArrowRight /></button>
               </div>
               <p className="price-foot">Free to download. Works inside OP.GG Desktop while you play League of Legends.</p>
+            </div>
             </div>
 
             <div className="dt-more">
@@ -369,6 +402,7 @@ export default function DetailPage({ id }) {
       </div>
 
       <Footer />
+      </div>
 
       {/* 플로팅 구독 바 */}
       <div className={`dt-bar ${barShown ? 'is-shown' : ''}`}>
