@@ -313,7 +313,7 @@ export default function DetailPage({ id }) {
           <section id="sec-profile" className="dt-sec">
             <div className="dt-profile">
               <div className="dt-profile-img" style={{ backgroundColor: voice.bg }}>
-                <img src={voice.img} alt={voice.name} />
+                <img src={voice.thumb || voice.img} alt={voice.name} />
               </div>
               <div className="dt-profile-main">
                 <h2 className="dt-sec-title grad-text">Meet your partner — {voice.name}</h2>
@@ -446,7 +446,7 @@ export default function DetailPage({ id }) {
               <span className="price-glow price-glow-2" aria-hidden />
               <div className="price-top">
                 <div className="price-id">
-                  <img className="price-avatar" src={voice.img} alt="" style={{ backgroundColor: voice.bg }} />
+                  <img className="price-avatar" src={voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
                   <div className="price-id-text">
                     <p className="price-kicker">Ready to play together?</p>
                     <p className="price-name">{voice.name}</p>
@@ -487,7 +487,7 @@ export default function DetailPage({ id }) {
                 {others.map((v) => (
                   <a key={v.id} href={`#/voice/${v.id}`} className="dt-more-card">
                     <div className="dt-more-img" style={{ backgroundColor: v.bg }}>
-                      <img src={v.img} alt={v.name} loading="lazy" />
+                      <img src={v.thumb || v.img} alt={v.name} loading="lazy" />
                     </div>
                     <div className="dt-more-foot">
                       <span className="dt-more-name">{v.name}</span>
@@ -539,7 +539,7 @@ export default function DetailPage({ id }) {
       <div className={`dt-bar ${barShown ? 'is-shown' : ''}`}>
         <div className="dt-shell dt-bar-inner">
           <div className="dt-bar-id">
-            <img src={voice.img} alt="" style={{ backgroundColor: voice.bg }} />
+            <img src={voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
             <div>
               <p className="dt-bar-name">{voice.name}</p>
               <p className="dt-bar-price">{PRICE} / month</p>
