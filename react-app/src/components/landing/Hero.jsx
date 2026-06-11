@@ -16,6 +16,7 @@ export default function Hero() {
   const [front, setFront] = useState('a');
   const [playing, setPlaying] = useState(false); // 소리 켜짐 의도
   const [inView, setInView] = useState(true);
+  const inViewRef = useRef(true);
 
   const toggleSound = () => setPlaying((p) => !p);
 
@@ -23,7 +24,7 @@ export default function Hero() {
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return undefined;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.35 });
+    const io = new IntersectionObserver(([e]) => { setInView(e.isIntersecting); inViewRef.current = e.isIntersecting; }, { threshold: 0.35 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -43,7 +44,7 @@ export default function Hero() {
     const EVENTS = ['pointerdown', 'pointermove', 'mousemove', 'keydown', 'touchstart', 'wheel', 'scroll'];
     const cleanup = () => EVENTS.forEach((e) => window.removeEventListener(e, enable));
     const enable = () => {
-      if (done) return;
+      if (done || !inViewRef.current) return; // 히어로 안 보이면 켜지 않음
       const p = el.play();
       if (p && p.then) {
         p.then(() => { done = true; setPlaying(true); cleanup(); }).catch(() => {});
