@@ -423,7 +423,7 @@ export default function DetailPage({ id }) {
               <div className="dt-video-tabs">
                 {VIDEOS.map((v, i) => (
                   <button key={v} type="button" className={`dt-video-tab ${vIdx === i ? 'is-active' : ''}`} onClick={() => selectVideo(i)}>
-                    <span className="dt-video-tab-row"><i className="dt-dot" /> {v}</span>
+                    <span className="dt-video-tab-label">{v}</span>
                     {vIdx === i && (
                       <span className="dt-video-gauge" aria-hidden>
                         <span className="dt-video-gauge-fill" style={{ width: `${(hasVids ? vProg : 0) * 100}%` }} />
