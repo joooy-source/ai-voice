@@ -26,7 +26,7 @@ export default function StorePage() {
 
       <div className="store-controls">
         <div className="store-count">
-          Pro Players <span className="store-count-badge">{VOICES.length}</span>
+          Partners <span className="store-count-badge">{VOICES.length}</span>
         </div>
         <div className="store-filters">
           <div className="store-search">
