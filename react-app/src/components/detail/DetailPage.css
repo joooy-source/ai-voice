@@ -178,9 +178,9 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
 }
-/* 모델을 가리지 않도록 좌측 하단 어두운 영역에 세로로 정렬 */
-.dt-note-a { left: 6%; bottom: 21%; width: auto; max-width: 300px; animation: dtNoteFloat 7s ease-in-out infinite; }
-.dt-note-b { left: 6%; bottom: 8%; width: auto; max-width: 340px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
+/* 얼굴은 피하고 어깨/가슴 쪽에 글래스 카드로 (레퍼런스 위치) */
+.dt-note-a { top: 42%; right: 6%; width: auto; max-width: 280px; animation: dtNoteFloat 7s ease-in-out infinite; }
+.dt-note-b { top: 76%; left: 40%; width: auto; max-width: 360px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
 @keyframes dtNoteFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
