@@ -36,6 +36,7 @@ const SAMPLES = [
   { label: 'Voice sample 03', dur: '0:06' },
 ];
 const WAVE_N = 40;
+const fmt = (sec) => { const s = Math.max(0, Math.floor(sec || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
 
 const videoLabel = (i) => `Live Play video 0${i + 1}`;
 const COACHING = ['Lane & build coaching', 'Combat analysis', 'Real-time alerts'];
@@ -99,6 +100,7 @@ export default function DetailPage({ id }) {
   const [active, setActive] = useState('profile');
   const [sample, setSample] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [elapsed, setElapsed] = useState(0); // 활성 샘플 재생 경과(초)
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
   const cardRef = useRef(null);
@@ -381,7 +383,7 @@ export default function DetailPage({ id }) {
                       key={s.label}
                       type="button"
                       className={`dt-sample ${isActive ? 'is-active' : ''}`}
-                      onClick={() => { if (isActive) { setPlaying((p) => !p); } else { setSample(i); setPlaying(true); } }}
+                      onClick={() => { if (isActive) { setPlaying((p) => !p); } else { setSample(i); setElapsed(0); setPlaying(true); } }}
                     >
                       <span className={`dt-sample-play ${on ? 'is-playing' : ''}`}>
                         {on ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
@@ -392,12 +394,17 @@ export default function DetailPage({ id }) {
                           <i key={j} style={{ height: `${h}px`, animationDelay: `${(j % 12) * 0.045}s` }} />
                         ))}
                       </span>
-                      <span className="dt-sample-dur">{s.dur}</span>
+                      <span className="dt-sample-dur">{isActive && (playing || elapsed > 0) ? fmt(elapsed) : s.dur}</span>
                     </button>
                   );
                 })}
               </div>
-              <audio ref={sampleAudioRef} preload="none" onEnded={() => setPlaying(false)} />
+              <audio
+                ref={sampleAudioRef}
+                preload="none"
+                onTimeUpdate={(e) => setElapsed(e.target.currentTime)}
+                onEnded={() => { setPlaying(false); setElapsed(0); }}
+              />
             </div>
           </section>
 
