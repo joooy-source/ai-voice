@@ -133,6 +133,10 @@
   transform: translateX(-50%);
   z-index: 2;
   color: var(--text-2);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
   animation: floatBob 1.8s ease-in-out infinite;
 }
 
