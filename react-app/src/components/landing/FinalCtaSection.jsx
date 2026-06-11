@@ -20,7 +20,7 @@ export default function FinalCtaSection() {
         </h2>
         <div className="fc-actions">
           <button type="button" className="btn btn-primary download-cta"><DownloadIcon /> Download Desktop App</button>
-          <button type="button" className="btn btn-ghost">Browse all voices</button>
+          <a href="#/store" className="btn btn-ghost">Browse all voices</a>
         </div>
       </div>
     </section>

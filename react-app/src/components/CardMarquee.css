@@ -45,6 +45,8 @@
   padding: 16px 24px;
   border-radius: 9999px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
   transition: border-color var(--transition), background var(--transition);
 }
 
@@ -79,6 +81,9 @@
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
   transition: transform 0.3s var(--ease, ease);
 }
 .marquee-card:hover {
