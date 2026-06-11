@@ -36,7 +36,7 @@ const SAMPLES = [
   { label: 'Voice sample 03', dur: '0:06' },
 ];
 
-const VIDEOS = ['Live Play video 01', 'Live Play video 02', 'Live Play video 03'];
+const videoLabel = (i) => `Live Play video 0${i + 1}`;
 const COACHING = ['Lane & build coaching', 'Combat analysis', 'Real-time alerts'];
 const MEMBERSHIP = ['Ad-free across OP.GG', 'Subscriber badge', 'Exclusive perks'];
 
@@ -100,6 +100,7 @@ export default function DetailPage({ id }) {
   const [playing, setPlaying] = useState(false);
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
+  const [nearFooter, setNearFooter] = useState(false);
   const cardRef = useRef(null);
 
   const others = VOICES.filter((v) => v.id !== voice.id).slice(0, 5);
@@ -253,6 +254,18 @@ export default function DetailPage({ id }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // 푸터가 보이면 플로팅 바 숨김 (푸터 가리지 않게)
+  useEffect(() => {
+    const footer = document.querySelector('.footer');
+    if (!footer) return undefined;
+    const io = new IntersectionObserver(
+      ([e]) => setNearFooter(e.isIntersecting),
+      { rootMargin: '0px 0px -80px 0px' }
+    );
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
+
   const go = (mid) => {
     const el = document.getElementById(`sec-${mid}`);
     if (el) {
@@ -392,7 +405,7 @@ export default function DetailPage({ id }) {
                 {hasVids ? (
                   <>
                     <video ref={videoRef} className="dt-video-el" autoPlay loop={false} playsInline preload="metadata" />
-                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {VIDEOS[vIdx]}</span>
+                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {videoLabel(vIdx)}</span>
                     <div className="dt-video-ctrls">
                       <button type="button" className="dt-vctrl" onClick={() => setVPlaying((p) => !p)} aria-label={vPlaying ? 'Pause' : 'Play'}>
                         {vPlaying ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
@@ -416,14 +429,14 @@ export default function DetailPage({ id }) {
                 ) : (
                   <>
                     <button type="button" className="dt-video-play" aria-label="Play"><PlayIcon width={26} height={26} /></button>
-                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {VIDEOS[vIdx]}</span>
+                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {videoLabel(vIdx)}</span>
                   </>
                 )}
               </div>
-              <div className="dt-video-tabs">
-                {VIDEOS.map((v, i) => (
-                  <button key={v} type="button" className={`dt-video-tab ${vIdx === i ? 'is-active' : ''}`} onClick={() => selectVideo(i)}>
-                    <span className="dt-video-tab-label">{v}</span>
+              <div className="dt-video-tabs" style={{ gridTemplateColumns: `repeat(${videos.length}, 1fr)` }}>
+                {videos.map((src, i) => (
+                  <button key={src + i} type="button" className={`dt-video-tab ${vIdx === i ? 'is-active' : ''}`} onClick={() => selectVideo(i)}>
+                    <span className="dt-video-tab-label">{videoLabel(i)}</span>
                     {vIdx === i && (
                       <span className="dt-video-gauge" aria-hidden>
                         <span className="dt-video-gauge-fill" style={{ width: `${(hasVids ? vProg : 0) * 100}%` }} />
@@ -536,7 +549,7 @@ export default function DetailPage({ id }) {
       </div>
 
       {/* 플로팅 구독 바 */}
-      <div className={`dt-bar ${barShown ? 'is-shown' : ''}`}>
+      <div className={`dt-bar ${barShown && !nearFooter ? 'is-shown' : ''}`}>
         <div className="dt-shell dt-bar-inner">
           <div className="dt-bar-id">
             <img src={voice.priceImg || voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
