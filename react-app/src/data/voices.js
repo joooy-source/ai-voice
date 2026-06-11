@@ -4,6 +4,8 @@ const A = 'https://www.figma.com/api/mcp/asset/';
 const H = `${import.meta.env.BASE_URL}detail-hero/`;
 // 디테일 프로필 썸네일은 public/detail/ 에 영구 저장
 const T = `${import.meta.env.BASE_URL}detail/`;
+// 보이스 샘플 오디오는 public/voice-samples/
+const S = `${import.meta.env.BASE_URL}voice-samples/`;
 
 export const PRICE = '₩29,000';
 
@@ -18,7 +20,7 @@ export const VOICES = [
     'https://s-agent-static.op.gg/videos/doublelift/d2edae93-d63a-4081-8471-cfdd27dbccfc/index.m3u8',
     'https://s-agent-static.op.gg/videos/doublelift/15c9bcd8-7b71-49b6-8a07-c317e1f73ba9/index.m3u8',
     'https://s-agent-static.op.gg/videos/doublelift/5f8fa3a8-cfb2-4644-8da2-f6a41a42d565/index.m3u8',
-  ] },
+  ], samples: [`${S}doublelift-samplevoice-01-improve.mp3`, `${S}doublelift-samplevoice-02.mp3`, `${S}doublelift-samplevoice-03.mp3`] },
   { id: 'jankos', name: 'Jankos', team: 'Creator', img: `${A}e1c52722-d915-4886-98fc-c906507b3e15`, hero: `${H}jankos-hero.png`, thumb: `${T}jankos-thumb.png`, bg: '#1f1f27' },
   { id: 'noarmwhatley', name: 'NoArmWhatley', team: 'Creator', img: `${A}dc45b29c-1446-4672-bc54-faf12646b811`, hero: `${H}noarmwhatley-hero.png`, thumb: `${T}noarmwhatley-thumb.png`, bg: '#242430' },
   { id: 'alois', name: 'Alois', team: 'Creator', img: `${A}560fcc79-ff14-43ce-8122-f1b98b32a039`, hero: `${H}alois-hero.png`, thumb: `${T}alois-thumb.png`, bg: '#2a2a34' },

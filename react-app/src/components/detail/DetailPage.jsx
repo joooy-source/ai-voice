@@ -35,7 +35,6 @@ const SAMPLES = [
   { label: 'Voice sample 02', dur: '0:11' },
   { label: 'Voice sample 03', dur: '0:06' },
 ];
-const durSec = (s) => { const [m, ss] = s.split(':').map(Number); return m * 60 + ss; };
 const WAVE_N = 40;
 
 const videoLabel = (i) => `Live Play video 0${i + 1}`;
@@ -100,7 +99,6 @@ export default function DetailPage({ id }) {
   const [active, setActive] = useState('profile');
   const [sample, setSample] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [prog, setProg] = useState(0); // 활성 샘플 재생 진행도 0~1
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
   const cardRef = useRef(null);
@@ -256,25 +254,17 @@ export default function DetailPage({ id }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // 보이스 샘플 진행도(파형 채움) — 재생 중 duration 동안 0→1, 끝나면 정지
-  const progRef = useRef(0);
+  // 보이스 샘플 오디오 재생/정지 (mp3 있는 보이스만 실제 재생)
+  const samples = voice.samples || EMPTY;
+  const hasSamples = samples.length > 0;
+  const sampleAudioRef = useRef(null);
   useEffect(() => {
-    if (!playing) return undefined;
-    const total = durSec(SAMPLES[sample].dur);
-    const startP = progRef.current;
-    let raf = 0;
-    let startT = null;
-    const tick = (now) => {
-      if (startT === null) startT = now;
-      const p = Math.min(startP + (now - startT) / 1000 / total, 1);
-      progRef.current = p >= 1 ? 0 : p;
-      setProg(progRef.current);
-      if (p >= 1) setPlaying(false);
-      else raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [playing, sample]);
+    const a = sampleAudioRef.current;
+    if (!a || !hasSamples) return;
+    if (a.dataset.idx !== String(sample)) { a.src = samples[sample]; a.dataset.idx = String(sample); }
+    if (playing) a.play().catch(() => {});
+    else a.pause();
+  }, [playing, sample, hasSamples, samples]);
 
   const go = (mid) => {
     const el = document.getElementById(`sec-${mid}`);
@@ -391,21 +381,15 @@ export default function DetailPage({ id }) {
                       key={s.label}
                       type="button"
                       className={`dt-sample ${isActive ? 'is-active' : ''}`}
-                      onClick={() => { if (isActive) { setPlaying((p) => !p); } else { setSample(i); progRef.current = 0; setProg(0); setPlaying(true); } }}
+                      onClick={() => { if (isActive) { setPlaying((p) => !p); } else { setSample(i); setPlaying(true); } }}
                     >
                       <span className={`dt-sample-play ${on ? 'is-playing' : ''}`}>
                         {on ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
                       </span>
                       <span className="dt-sample-name">{s.label}</span>
-                      <span className="dt-sample-wave">
+                      <span className={`dt-sample-wave ${on ? 'is-playing' : ''}`}>
                         {wave(i * 3, WAVE_N).map((h, j) => (
-                          <i
-                            key={j}
-                            style={{
-                              height: `${h}px`,
-                              background: isActive && j / WAVE_N <= prog ? 'var(--primary-400)' : 'rgba(255, 255, 255, 0.22)',
-                            }}
-                          />
+                          <i key={j} style={{ height: `${h}px`, animationDelay: `${(j % 12) * 0.045}s` }} />
                         ))}
                       </span>
                       <span className="dt-sample-dur">{s.dur}</span>
@@ -413,6 +397,7 @@ export default function DetailPage({ id }) {
                   );
                 })}
               </div>
+              <audio ref={sampleAudioRef} preload="none" onEnded={() => setPlaying(false)} />
             </div>
           </section>
 
