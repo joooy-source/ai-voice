@@ -80,11 +80,11 @@
   text-decoration: none;
   color: inherit;
   display: block;
-  transform-origin: center;
   transition: transform 0.3s var(--ease, ease), box-shadow 0.3s var(--ease, ease);
 }
 .marquee-card:hover {
-  transform: scale(1.05);
+  /* 카드 자체는 스케일하지 않음 → 라운딩 값 고정. 살짝 들어올리기만 */
+  transform: translateY(-6px);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
@@ -94,6 +94,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s var(--ease, ease);
+}
+/* 안쪽 이미지만 줌 (프레임 라운딩 안에서 클립) */
+.marquee-card:hover .marquee-card-img {
+  transform: scale(1.06);
 }
 
 /* 호버 오버레이 */
