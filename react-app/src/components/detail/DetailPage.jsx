@@ -256,7 +256,7 @@ export default function DetailPage({ id }) {
   const go = (mid) => {
     const el = document.getElementById(`sec-${mid}`);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 96;
+      const top = el.getBoundingClientRect().top + window.scrollY - 72;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
