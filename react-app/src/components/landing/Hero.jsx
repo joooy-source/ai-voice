@@ -1,67 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { DownloadIcon, ArrowDownIcon, MuteIcon } from './icons';
+import { DownloadIcon, ArrowDownIcon } from './icons';
 import './Hero.css';
 
 const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
-// 히어로 진입 시 자동 재생되는 보이스 (하단 스피커 버튼으로 on/off)
-// ?v= : public 파일은 파일명이 그대로라 캐시가 남음 → 교체 시 버전 올려 캐시 무력화
-const AUDIO = `${import.meta.env.BASE_URL}voice/hero-voice.mp3?v=2`;
 const FADE = 0.7; // 루프 지점 크로스페이드 길이(초)
 
 export default function Hero() {
   const aRef = useRef(null);
   const bRef = useRef(null);
-  const audioRef = useRef(null);
-  const heroRef = useRef(null);
   const [front, setFront] = useState('a');
-  const [playing, setPlaying] = useState(false); // 소리 켜짐 의도
-  const [inView, setInView] = useState(true);
-  const inViewRef = useRef(true);
 
-  const toggleSound = () => setPlaying((p) => !p);
-
-  // 히어로는 sticky라 IntersectionObserver로는 "항상 보임"으로 잡힘 →
-  // 스크롤 위치로 판단: 약 반 화면 이상 내려가면(콘텐츠가 덮으면) 음성 정지
-  useEffect(() => {
-    const update = () => {
-      const visible = window.scrollY < window.innerHeight * 0.55;
-      setInView(visible);
-      inViewRef.current = visible;
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = audioRef.current;
-    if (!el) return;
-    if (playing && inView) el.play().catch(() => {});
-    else el.pause();
-  }, [playing, inView]);
-
-  // 진입 즉시 재생 시도 — 막히면 첫 인터랙션(움직임/스크롤/클릭/키) 때 소리 켜기
-  useEffect(() => {
-    const el = audioRef.current;
-    if (!el) return undefined;
-    let done = false;
-    const EVENTS = ['pointerdown', 'pointermove', 'mousemove', 'keydown', 'touchstart', 'wheel', 'scroll'];
-    const cleanup = () => EVENTS.forEach((e) => window.removeEventListener(e, enable));
-    const enable = () => {
-      if (done || !inViewRef.current) return; // 히어로 안 보이면 켜지 않음
-      const p = el.play();
-      if (p && p.then) {
-        p.then(() => { done = true; setPlaying(true); cleanup(); }).catch(() => {});
-      }
-    };
-    enable();
-    EVENTS.forEach((e) => window.addEventListener(e, enable, { passive: true }));
-    return cleanup;
-  }, []);
+  const scrollToCoach = () => {
+    document.getElementById('coach')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   // 영상 2개를 번갈아 재생하며 루프 이음새를 크로스페이드로 가린다 → 자연스러운 무한루프
   useEffect(() => {
@@ -102,7 +53,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="hero" id="hero" ref={heroRef}>
+    <header className="hero" id="hero">
       <video
         ref={aRef}
         className={`hero-video ${front === 'a' ? 'is-front' : ''}`}
@@ -140,26 +91,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 우측 하단 사운드 버튼 (아이콘만) */}
-      <button
-        type="button"
-        className={`hero-sound ${playing ? 'is-playing' : ''}`}
-        onClick={toggleSound}
-        aria-label={playing ? 'Stop AI voice' : 'Play title in AI voice'}
-      >
-        {playing ? (
-          <span className="hero-sound-bars" aria-hidden>
-            <i /><i /><i /><i />
-          </span>
-        ) : (
-          <MuteIcon width={22} height={22} />
-        )}
-      </button>
-      <audio ref={audioRef} src={AUDIO} preload="auto" onEnded={() => setPlaying(false)} />
-
-      <a className="hero-scroll" href="#coach" aria-label="Scroll down">
+      <button type="button" className="hero-scroll" onClick={scrollToCoach} aria-label="Scroll to coach section">
         <ArrowDownIcon />
-      </a>
+      </button>
     </header>
   );
 }
