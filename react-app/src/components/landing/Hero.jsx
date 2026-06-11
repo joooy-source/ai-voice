@@ -12,38 +12,45 @@ export default function Hero() {
   const aRef = useRef(null);
   const bRef = useRef(null);
   const audioRef = useRef(null);
+  const heroRef = useRef(null);
   const [front, setFront] = useState('a');
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(false); // 소리 켜짐 의도
+  const [inView, setInView] = useState(true);
 
-  const toggleSound = () => {
+  const toggleSound = () => setPlaying((p) => !p);
+
+  // 히어로가 화면에 보일 때만 음성 재생 (벗어나면 정지 → 코치 섹션까지 안 따라감)
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return undefined;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     const el = audioRef.current;
-    const next = !playing;
-    setPlaying(next);
     if (!el) return;
-    if (next) {
-      el.play().catch(() => {});
-    } else {
-      el.pause();
-    }
-  };
+    if (playing && inView) el.play().catch(() => {});
+    else el.pause();
+  }, [playing, inView]);
 
-  // 히어로 진입 시 자동 재생 시도 — 막히면 첫 인터랙션(클릭/키/터치) 때 재생
+  // 진입 즉시 재생 시도 — 막히면 첫 인터랙션(움직임/스크롤/클릭/키) 때 소리 켜기
   useEffect(() => {
     const el = audioRef.current;
     if (!el) return undefined;
-    let started = false;
+    let done = false;
     const EVENTS = ['pointerdown', 'pointermove', 'mousemove', 'keydown', 'touchstart', 'wheel', 'scroll'];
-    const cleanup = () => EVENTS.forEach((e) => window.removeEventListener(e, start));
-    const start = () => {
-      if (started) return;
+    const cleanup = () => EVENTS.forEach((e) => window.removeEventListener(e, enable));
+    const enable = () => {
+      if (done) return;
       const p = el.play();
       if (p && p.then) {
-        p.then(() => { started = true; setPlaying(true); cleanup(); }).catch(() => {});
+        p.then(() => { done = true; setPlaying(true); cleanup(); }).catch(() => {});
       }
     };
-    start(); // 진입 즉시 재생 시도
-    // 막혔다면 가능한 가장 이른 시점(첫 움직임/스크롤/클릭/키)에 즉시 재생
-    EVENTS.forEach((e) => window.addEventListener(e, start, { passive: true }));
+    enable();
+    EVENTS.forEach((e) => window.addEventListener(e, enable, { passive: true }));
     return cleanup;
   }, []);
 
@@ -86,7 +93,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="hero" id="hero">
+    <header className="hero" id="hero" ref={heroRef}>
       <video
         ref={aRef}
         className={`hero-video ${front === 'a' ? 'is-front' : ''}`}
