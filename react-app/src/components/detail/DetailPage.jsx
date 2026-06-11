@@ -101,6 +101,7 @@ export default function DetailPage({ id }) {
   const [sample, setSample] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [elapsed, setElapsed] = useState(0); // 활성 샘플 재생 경과(초)
+  const [durs, setDurs] = useState({}); // {idx: 실제 길이(초)}
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
   const cardRef = useRef(null);
@@ -268,6 +269,20 @@ export default function DetailPage({ id }) {
     else a.pause();
   }, [playing, sample, hasSamples, samples]);
 
+  // 각 샘플 실제 길이(초) 측정 → 라벨에 표시
+  useEffect(() => {
+    if (!hasSamples) return undefined;
+    const probes = samples.map((src, i) => {
+      const a = new Audio();
+      a.preload = 'metadata';
+      const on = () => { if (isFinite(a.duration)) setDurs((d) => ({ ...d, [i]: a.duration })); };
+      a.addEventListener('loadedmetadata', on);
+      a.src = src;
+      return [a, on];
+    });
+    return () => probes.forEach(([a, on]) => { a.removeEventListener('loadedmetadata', on); a.src = ''; });
+  }, [hasSamples, samples]);
+
   const go = (mid) => {
     const el = document.getElementById(`sec-${mid}`);
     if (el) {
@@ -394,7 +409,7 @@ export default function DetailPage({ id }) {
                           <i key={j} style={{ height: `${h}px`, animationDelay: `${(j % 12) * 0.045}s` }} />
                         ))}
                       </span>
-                      <span className="dt-sample-dur">{isActive && (playing || elapsed > 0) ? fmt(elapsed) : s.dur}</span>
+                      <span className="dt-sample-dur">{isActive && (playing || elapsed > 0) ? fmt(elapsed) : (durs[i] != null ? fmt(durs[i]) : s.dur)}</span>
                     </button>
                   );
                 })}
