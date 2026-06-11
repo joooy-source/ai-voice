@@ -54,28 +54,10 @@ export default function CoachSection() {
   const playerRef = useRef(null);
   const [active, setActive] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false); // 디폴트: 소리 ON (섹션 진입 시 재생)
+  const [isMuted, setIsMuted] = useState(true); // 디폴트 음소거 (스피커 버튼으로 소리)
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
-  const userMutedRef = useRef(false); // 사용자가 직접 음소거했는지
-  const inViewRef = useRef(false);
-  useEffect(() => { inViewRef.current = inView; }, [inView]);
-
-  // 첫 실제 제스처(클릭/탭/키)에 소리 ON — 자동재생 정책상 클릭류만 활성화로 인정됨.
-  // 리스너를 페이지 수명동안 유지해 막혔던 경우에도 다음 클릭에 복구. (사용자 음소거는 존중)
-  useEffect(() => {
-    const onAct = (e) => {
-      if (userMutedRef.current) return;
-      if (e.target?.closest?.('.coach-controls')) return; // 컨트롤 버튼은 자체 처리
-      const v = videoRef.current;
-      setIsMuted(false);
-      if (v && inViewRef.current) { v.muted = false; v.play().catch(() => {}); }
-    };
-    const evs = ['pointerdown', 'keydown', 'touchstart'];
-    evs.forEach((e) => window.addEventListener(e, onAct));
-    return () => evs.forEach((e) => window.removeEventListener(e, onAct));
-  }, []);
 
   // 볼륨 반영
   useEffect(() => {
@@ -100,13 +82,7 @@ export default function CoachSection() {
   const onVolume = (e) => {
     const val = Number(e.target.value);
     setVolume(val);
-    if (val > 0 && isMuted) { setIsMuted(false); userMutedRef.current = false; }
-  };
-  const toggleMute = () => {
-    setIsMuted((m) => {
-      userMutedRef.current = !m; // 끄는 순간 = 사용자가 음소거 선택
-      return !m;
-    });
+    if (val > 0 && isMuted) setIsMuted(false);
   };
 
   // 소스 연결 (HLS는 hls.js, Safari/일반 mp4는 직접)
@@ -167,20 +143,13 @@ export default function CoachSection() {
     };
   }, []);
 
-  // 재생/일시정지 + 화면 밖이면 정지. 진입 시 소리로 시도하고, 막히면 음소거로라도 재생(영상 표시).
-  // (isMuted 상태는 유지 → 이후 클릭 한 번에 소리 복구)
+  // 재생/일시정지/음소거 + 화면 밖이면 정지
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (isPlaying && inView) {
-      v.muted = isMuted;
-      v.play().catch(() => {
-        v.muted = true;
-        v.play().catch(() => {});
-      });
-    } else {
-      v.pause();
-    }
+    v.muted = isMuted;
+    if (isPlaying && inView) v.play().catch(() => {});
+    else v.pause();
   }, [isMuted, isPlaying, inView]);
 
   // 영상이 없을 때만: 타이머 기반 게이지 + 자동 다음 탭
@@ -230,6 +199,8 @@ export default function CoachSection() {
           <video
             ref={videoRef}
             className="coach-video"
+            autoPlay
+            muted
             loop
             playsInline
             preload="metadata"
@@ -253,7 +224,7 @@ export default function CoachSection() {
               <button
                 type="button"
                 className="coach-vol-btn"
-                onClick={toggleMute}
+                onClick={() => setIsMuted((m) => !m)}
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
                 {isMuted ? <MuteIcon width={18} height={18} /> : <VolumeIcon width={18} height={18} />}
