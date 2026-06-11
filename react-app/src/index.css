@@ -89,6 +89,7 @@ body {
   border-radius: 9999px;
   padding: 16px 24px;
   cursor: pointer;
+  text-decoration: none;
   border: 1px solid transparent;
   transition: transform 0.2s var(--ease), background 0.2s var(--ease),
     border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
@@ -110,6 +111,7 @@ body {
   background: transparent;
   border-color: var(--border-pill);
   color: #fff;
+  font-weight: 400;
 }
 .btn-ghost:hover {
   border-color: #6a6a82;
