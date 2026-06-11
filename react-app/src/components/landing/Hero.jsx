@@ -20,13 +20,21 @@ export default function Hero() {
 
   const toggleSound = () => setPlaying((p) => !p);
 
-  // 히어로가 화면에 보일 때만 음성 재생 (벗어나면 정지 → 코치 섹션까지 안 따라감)
+  // 히어로는 sticky라 IntersectionObserver로는 "항상 보임"으로 잡힘 →
+  // 스크롤 위치로 판단: 약 반 화면 이상 내려가면(콘텐츠가 덮으면) 음성 정지
   useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return undefined;
-    const io = new IntersectionObserver(([e]) => { setInView(e.isIntersecting); inViewRef.current = e.isIntersecting; }, { threshold: 0.35 });
-    io.observe(el);
-    return () => io.disconnect();
+    const update = () => {
+      const visible = window.scrollY < window.innerHeight * 0.55;
+      setInView(visible);
+      inViewRef.current = visible;
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, []);
 
   useEffect(() => {
