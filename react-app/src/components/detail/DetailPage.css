@@ -178,28 +178,15 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
 }
-.dt-note-a { top: 22%; right: 5%; width: 244px; animation: dtNoteFloat 7s ease-in-out infinite; }
-.dt-note-b { top: 55%; right: 21%; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
+/* 모델을 가리지 않도록 좌측 하단 어두운 영역에 배치 */
+.dt-note-a { left: 6%; bottom: 17%; width: auto; max-width: 280px; animation: dtNoteFloat 7s ease-in-out infinite; }
+.dt-note-b { left: 30%; bottom: 5%; width: auto; max-width: 320px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
 @keyframes dtNoteFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
 .dt-note-name { font-size: 11px; font-weight: 700; color: var(--primary-400); }
 .dt-note-quote { margin-top: 6px; font-size: 15px; font-weight: 600; color: #fff; line-height: 1.35; }
-.dt-note-player { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
-.dt-note-play {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
-}
-.dt-note-wave { flex: 1; display: flex; align-items: center; gap: 2px; height: 18px; }
-.dt-note-wave i { width: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.5); }
-.dt-note-dur { font-size: 11px; color: var(--text-4); }
 
 /* ===== 본문 ===== */
 .dt-body {
@@ -732,7 +719,7 @@
   .dt-hero-fade-l { background: linear-gradient(0deg, var(--bg) 14%, rgba(6, 6, 8, 0.5) 52%, transparent 88%); }
   .dt-hero-name { font-size: 48px; }
   .dt-hero-duo { font-size: 22px; }
-  .dt-note-a { right: 16px; top: 26%; }
+  .dt-note-a { display: none; }
   .dt-sec-title, .dt-voice-head .dt-sec-title { font-size: 30px; }
   .dt-profile { grid-template-columns: 1fr; }
   .dt-profile-img { max-width: 280px; }

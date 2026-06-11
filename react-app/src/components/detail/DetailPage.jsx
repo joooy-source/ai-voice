@@ -97,11 +97,6 @@ function VoiceNote({ quote, className }) {
     <div className={`dt-note-card ${className}`}>
       <p className="dt-note-name">{quote.name}</p>
       <p className="dt-note-quote">{quote.text}</p>
-      <div className="dt-note-player">
-        <span className="dt-note-play"><PlayIcon width={12} height={12} /></span>
-        <span className="dt-note-wave">{wave(quote.seed, 18).map((h, i) => <i key={i} style={{ height: `${h * 0.5 + 3}px` }} />)}</span>
-        <span className="dt-note-dur">0:05</span>
-      </div>
     </div>
   );
 }
