@@ -26,8 +26,8 @@
 }
 .store-title {
   position: relative;
-  font-size: 56px;
-  line-height: 64px;
+  font-size: 64px;
+  line-height: 72px;
   font-weight: 700;
   letter-spacing: -1px;
 }
@@ -55,12 +55,12 @@
   align-items: center;
   gap: 10px;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 500;
   color: #fff;
 }
 .store-count-badge {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--primary-400);
   background: var(--primary-soft);
   border-radius: 9999px;
@@ -100,6 +100,7 @@
   background: var(--bg-card);
   color: var(--text-2);
   font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -148,8 +149,11 @@
   padding: 10px 16px;
 }
 .store-card-label { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.store-card-name { font-size: 16px; font-weight: 700; color: #fff; }
-.store-card-price { font-size: 13px; color: var(--text-3); }
+.store-card-name { font-size: 16px; font-weight: 500; color: #fff; }
+.store-card-price { font-size: 14px; color: var(--text-3); }
+.store-card-meet { display: none; font-size: 14px; color: var(--primary-400); }
+.store-card:hover .store-card-price { display: none; }
+.store-card:hover .store-card-meet { display: block; }
 .store-card-arrow {
   flex-shrink: 0;
   width: 32px;

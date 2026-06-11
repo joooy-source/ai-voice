@@ -73,7 +73,7 @@
 }
 
 .jl-head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
-.jl-title { font-size: 52px; line-height: 60px; font-weight: 700; letter-spacing: -0.52px; }
+.jl-title { font-size: 52px; line-height: 60px; font-weight: 500; letter-spacing: -0.52px; }
 .jl-sub { font-size: 24px; line-height: 32px; color: var(--text-2); }
 .jl-actions { position: relative; z-index: 1; display: flex; gap: 12px; }
 

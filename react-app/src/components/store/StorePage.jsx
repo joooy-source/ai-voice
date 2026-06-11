@@ -52,6 +52,7 @@ export default function StorePage() {
               <div className="store-card-label">
                 <span className="store-card-name">{v.name}</span>
                 <span className="store-card-price">{PRICE} / month</span>
+                <span className="store-card-meet">Meet this partner</span>
               </div>
               <ArrowBtn />
             </div>
