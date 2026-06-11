@@ -446,7 +446,7 @@ export default function DetailPage({ id }) {
               <span className="price-glow price-glow-2" aria-hidden />
               <div className="price-top">
                 <div className="price-id">
-                  <img className="price-avatar" src={voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
+                  <img className="price-avatar" src={voice.priceImg || voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
                   <div className="price-id-text">
                     <p className="price-kicker">Ready to play together?</p>
                     <p className="price-name">{voice.name}</p>
@@ -539,14 +539,14 @@ export default function DetailPage({ id }) {
       <div className={`dt-bar ${barShown ? 'is-shown' : ''}`}>
         <div className="dt-shell dt-bar-inner">
           <div className="dt-bar-id">
-            <img src={voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
+            <img src={voice.priceImg || voice.thumb || voice.img} alt="" style={{ backgroundColor: voice.bg }} />
             <div>
               <p className="dt-bar-name">{voice.name}</p>
               <p className="dt-bar-price">{PRICE} / month</p>
             </div>
           </div>
           <div className="dt-bar-actions">
-            <button type="button" className="dt-btn-ghost"><DownloadIcon width={16} height={16} /> Download Desktop App</button>
+            <button type="button" className="dt-btn-ghost">Download Desktop App</button>
             <button type="button" className="dt-btn-primary" onClick={() => go('pricing')}>Subscribe now</button>
           </div>
         </div>
