@@ -12,7 +12,11 @@ export const VOICES = [
   { id: 'drx-andil', name: 'DRX Andil', team: 'DRX', img: `${A}bcfc4a75-9cbe-4afc-9967-d31d249cf965`, hero: `${H}drx-andil-hero.png`, bg: '#2b2b36' },
   { id: 'drx-lazyfeel', name: 'DRX Lazyfeel', team: 'DRX', img: `${A}6d419085-34a3-470b-8711-6ffc8e8683df`, hero: `${H}drx-lazyfeel-hero.png`, bg: '#26222e' },
   { id: 'drx-rich', name: 'DRX Rich', team: 'DRX', img: `${A}f588e805-c5af-47cc-949d-1f6e4e9e95ad`, hero: `${H}drx-rich-hero.png`, bg: '#2b2b36' },
-  { id: 'doublelift', name: 'Doublelift', team: 'Creator', img: `${A}003c300c-6fb7-4cf3-9d2f-872b2c63afa3`, hero: `${H}doublelift-hero.png`, bg: '#1f1f27' },
+  { id: 'doublelift', name: 'Doublelift', team: 'Creator', img: `${A}003c300c-6fb7-4cf3-9d2f-872b2c63afa3`, hero: `${H}doublelift-hero.png`, bg: '#1f1f27', videos: [
+    'https://s-agent-static.op.gg/videos/doublelift/d2edae93-d63a-4081-8471-cfdd27dbccfc/index.m3u8',
+    'https://s-agent-static.op.gg/videos/doublelift/15c9bcd8-7b71-49b6-8a07-c317e1f73ba9/index.m3u8',
+    'https://s-agent-static.op.gg/videos/doublelift/5f8fa3a8-cfb2-4644-8da2-f6a41a42d565/index.m3u8',
+  ] },
   { id: 'jankos', name: 'Jankos', team: 'Creator', img: `${A}e1c52722-d915-4886-98fc-c906507b3e15`, hero: `${H}jankos-hero.png`, bg: '#1f1f27' },
   { id: 'noarmwhatley', name: 'NoArmWhatley', team: 'Creator', img: `${A}dc45b29c-1446-4672-bc54-faf12646b811`, hero: `${H}noarmwhatley-hero.png`, bg: '#242430' },
   { id: 'alois', name: 'Alois', team: 'Creator', img: `${A}560fcc79-ff14-43ce-8122-f1b98b32a039`, hero: `${H}alois-hero.png`, bg: '#2a2a34' },

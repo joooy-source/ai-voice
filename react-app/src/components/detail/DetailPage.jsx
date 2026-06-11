@@ -1,10 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import Nav from '../landing/Nav';
 import Footer from '../landing/Footer';
-import { PlayIcon, PauseIcon, DownloadIcon } from '../landing/icons';
+import { PlayIcon, PauseIcon, DownloadIcon, VolumeIcon, MuteIcon, MaximizeIcon, PipIcon } from '../landing/icons';
 import { VOICES, getVoice, getDetail, PRICE } from '../../data/voices';
-import { useHeroSnap } from '../../hooks/useScrollAnimations';
+import { useHeroSnap, useInView } from '../../hooks/useScrollAnimations';
 import './DetailPage.css';
+
+// hls.js 를 CDN 에서 1회 로드 (HLS 네이티브 미지원 브라우저용)
+function loadHls() {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+  if (window.Hls) return Promise.resolve(window.Hls);
+  if (window.__hlsPromise) return window.__hlsPromise;
+  window.__hlsPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js';
+    s.async = true;
+    s.onload = () => resolve(window.Hls);
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return window.__hlsPromise;
+}
 
 const MENU = [
   { id: 'profile', label: 'Profile' },
@@ -57,6 +73,7 @@ const NOTES = [
   },
 ];
 
+const EMPTY = [];
 const wave = (seed, n = 44) => Array.from({ length: n }, (_, i) => 4 + Math.abs(Math.sin((i + seed) * 0.6)) * 22);
 
 const ArrowRight = (p) => (
@@ -95,7 +112,6 @@ export default function DetailPage({ id }) {
   const [active, setActive] = useState('profile');
   const [sample, setSample] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [video, setVideo] = useState(0);
   const [openFaq, setOpenFaq] = useState(-1);
   const [barShown, setBarShown] = useState(false);
   const cardRef = useRef(null);
@@ -124,6 +140,109 @@ export default function DetailPage({ id }) {
     el.style.setProperty('--ry', '0deg');
     el.style.setProperty('--mx', '50%');
     el.style.setProperty('--my', '50%');
+  };
+
+  // ===== In-game 영상 (HLS, 섹션 진입 시 소리 재생 + 게이지) =====
+  const videos = voice.videos || EMPTY;
+  const hasVids = videos.length > 0;
+  const videoRef = useRef(null);
+  const playerRef = useRef(null);
+  const [stageRef, vInView] = useInView({ threshold: 0.4 });
+  const [vIdx, setVIdx] = useState(0);
+  const [vPlaying, setVPlaying] = useState(true);
+  const [vMuted, setVMuted] = useState(false); // 디폴트: 소리 ON
+  const [vVol, setVVol] = useState(1);
+  const [vProg, setVProg] = useState(0);
+
+  // 선택된 영상 소스 연결 (탭 변경 시 재연결)
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !hasVids) return undefined;
+    const src = videos[vIdx];
+    let hls;
+    if (v.canPlayType('application/vnd.apple.mpegurl')) {
+      v.src = src; // Safari 네이티브 HLS
+    } else {
+      loadHls()
+        .then((Hls) => {
+          if (Hls && Hls.isSupported()) {
+            hls = new Hls({ enableWorker: true });
+            hls.loadSource(src);
+            hls.attachMedia(v);
+          } else {
+            v.src = src;
+          }
+        })
+        .catch(() => {});
+    }
+    return () => { if (hls) hls.destroy(); };
+  }, [vIdx, hasVids, videos]);
+
+  // 볼륨 반영
+  useEffect(() => {
+    const v = videoRef.current;
+    if (v) v.volume = vVol;
+  }, [vVol]);
+
+  // 게이지(진행도) + 끝나면 다음 영상으로
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !hasVids) return undefined;
+    const onTime = () => {
+      const d = v.duration;
+      setVProg(d && isFinite(d) ? Math.min(v.currentTime / d, 1) : 0);
+    };
+    const onEnded = () => { setVProg(0); setVIdx((i) => (i + 1) % videos.length); };
+    v.addEventListener('timeupdate', onTime);
+    v.addEventListener('ended', onEnded);
+    return () => {
+      v.removeEventListener('timeupdate', onTime);
+      v.removeEventListener('ended', onEnded);
+    };
+  }, [hasVids, videos]);
+
+  // 재생/일시정지/음소거 + 화면 안에서만 재생 (진입 시 소리 시도, 막히면 음소거 폴백)
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !hasVids) return;
+    v.muted = vMuted;
+    if (vPlaying && vInView) {
+      const p = v.play();
+      if (p && p.catch) {
+        p.catch(() => {
+          v.muted = true;
+          setVMuted(true);
+          v.play().catch(() => {});
+        });
+      }
+    } else {
+      v.pause();
+    }
+  }, [vMuted, vPlaying, vInView, hasVids, vIdx]);
+
+  const selectVideo = (i) => {
+    setVIdx(i);
+    setVProg(0);
+    setVPlaying(true);
+  };
+  const toggleFullscreen = () => {
+    const el = playerRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else el.requestFullscreen?.();
+  };
+  const togglePip = async () => {
+    const v = videoRef.current;
+    if (!v) return;
+    try {
+      if (document.pictureInPictureElement) await document.exitPictureInPicture();
+      else await v.requestPictureInPicture?.();
+    } catch { /* 미지원/거부 무시 */ }
+  };
+  const onVol = (e) => {
+    const val = Number(e.target.value);
+    setVVol(val);
+    if (val > 0 && vMuted) setVMuted(false);
   };
 
   useEffect(() => {
@@ -286,15 +405,47 @@ export default function DetailPage({ id }) {
             <h2 className="dt-sec-title grad-text">Watch them play alongside a real match</h2>
             <p className="dt-sec-sub">Real in-game footage of the AI calling objectives, recalls, and fights as they happen.</p>
             <div className="dt-video">
-              <div className="dt-video-stage" style={{ backgroundColor: voice.bg }}>
-                <button type="button" className="dt-video-play" aria-label="Play"><PlayIcon width={26} height={26} /></button>
-                <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {VIDEOS[video]}</span>
+              <div className="dt-video-stage" ref={(el) => { playerRef.current = el; stageRef.current = el; }} style={{ backgroundColor: voice.bg }}>
+                {hasVids ? (
+                  <>
+                    <video ref={videoRef} className="dt-video-el" autoPlay loop={false} playsInline preload="metadata" />
+                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {VIDEOS[vIdx]}</span>
+                    <div className="dt-video-ctrls">
+                      <button type="button" className="dt-vctrl" onClick={() => setVPlaying((p) => !p)} aria-label={vPlaying ? 'Pause' : 'Play'}>
+                        {vPlaying ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
+                      </button>
+                      <div className={`dt-vvol ${vMuted ? '' : 'open'}`}>
+                        <button type="button" className="dt-vctrl" onClick={() => setVMuted((m) => !m)} aria-label={vMuted ? 'Unmute' : 'Mute'}>
+                          {vMuted ? <MuteIcon width={18} height={18} /> : <VolumeIcon width={18} height={18} />}
+                        </button>
+                        {!vMuted && (
+                          <input type="range" className="dt-vslider" min="0" max="1" step="0.05" value={vVol} onChange={onVol} aria-label="Volume" />
+                        )}
+                      </div>
+                      <button type="button" className="dt-vctrl" onClick={togglePip} aria-label="Picture in picture">
+                        <PipIcon width={18} height={18} />
+                      </button>
+                      <button type="button" className="dt-vctrl" onClick={toggleFullscreen} aria-label="Fullscreen">
+                        <MaximizeIcon width={18} height={18} />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <button type="button" className="dt-video-play" aria-label="Play"><PlayIcon width={26} height={26} /></button>
+                    <span className="dt-video-caption"><i className="dt-dot" /> Now showing: {VIDEOS[vIdx]}</span>
+                  </>
+                )}
               </div>
               <div className="dt-video-tabs">
                 {VIDEOS.map((v, i) => (
-                  <button key={v} type="button" className={`dt-video-tab ${video === i ? 'is-active' : ''}`} onClick={() => setVideo(i)}>
+                  <button key={v} type="button" className={`dt-video-tab ${vIdx === i ? 'is-active' : ''}`} onClick={() => selectVideo(i)}>
                     <span className="dt-video-tab-row"><i className="dt-dot" /> {v}</span>
-                    {video === i && <span className="dt-video-bar" aria-hidden />}
+                    {vIdx === i && (
+                      <span className="dt-video-gauge" aria-hidden>
+                        <span className="dt-video-gauge-fill" style={{ width: `${(hasVids ? vProg : 0) * 100}%` }} />
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
