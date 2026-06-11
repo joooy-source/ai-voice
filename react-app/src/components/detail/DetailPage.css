@@ -114,20 +114,37 @@
   inset: 0;
   background: linear-gradient(0deg, var(--bg) 1%, transparent 34%);
 }
+/* 히어로 배경 글로우 — 크고 은은하게, 보라+블루 다른 위치에서 천천히 부유 */
 .dt-hero-glow {
   position: absolute;
-  left: -12%;
-  top: 30%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle at 50% 50%, rgba(95, 50, 230, 0.34), transparent 62%);
-  filter: blur(10px);
+  left: -18%;
+  top: 18%;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(95, 50, 230, 0.18), transparent 65%);
+  filter: blur(60px);
   pointer-events: none;
-  animation: dtGlowDrift 16s ease-in-out infinite;
+  will-change: transform;
+  animation: dtGlowDrift 22s ease-in-out infinite;
+}
+.dt-hero-glow-b {
+  left: auto;
+  right: -14%;
+  top: 42%;
+  width: 880px;
+  height: 880px;
+  background: radial-gradient(circle at 50% 50%, rgba(1, 136, 255, 0.12), transparent 65%);
+  filter: blur(70px);
+  animation: dtGlowDriftB 26s ease-in-out infinite;
 }
 @keyframes dtGlowDrift {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(50px, -40px); }
+  50% { transform: translate(60px, -50px); }
+}
+@keyframes dtGlowDriftB {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-55px, 45px); }
 }
 .dt-hero-shell { position: relative; padding: 0 80px; }
 .dt-hero-content { max-width: 680px; }
