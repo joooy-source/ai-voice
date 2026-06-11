@@ -643,42 +643,59 @@
   right: 0;
   bottom: 0;
   z-index: 60;
-  background: rgba(11, 11, 16, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.45);
-  transform: translateY(110%);
+  padding: 0 16px 16px;
+  pointer-events: none;
+  transform: translateY(130%);
   opacity: 0;
   transition: transform 0.45s var(--ease), opacity 0.45s var(--ease);
 }
 .dt-bar.is-shown { transform: translateY(0); opacity: 1; }
-/* 상단에 숨쉬는 브랜드 컬러 라인 (흐르며 은은하게 명멸) */
-.dt-bar::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #6e4fff 25%, #0188ff 50%, #6e4fff 75%, transparent 100%);
-  background-size: 200% 100%;
-  box-shadow: 0 0 14px rgba(110, 79, 255, 0.7);
-  animation: dtBarFlow 7s linear infinite, dtBarBreath 3.2s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes dtBarFlow { to { background-position: 200% 0; } }
-@keyframes dtBarBreath { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  .dt-bar::before { animation: none; opacity: 0.8; }
-}
+/* 떠 있는 글래스 카드 */
 .dt-bar-inner {
+  position: relative;
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   max-width: 1080px;
-  padding: 16px 24px;
+  padding: 14px 22px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(20, 20, 28, 0.5);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+/* 카드 상단 브랜드 라인 — 가운데가 가장 밝고 가장자리로 은은하게 사라짐 (숨쉬듯) */
+.dt-bar-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(110, 79, 255, 0.85) 50%, transparent 90%);
+  animation: dtBarBreath 4s ease-in-out infinite;
+  pointer-events: none;
+}
+.dt-bar-inner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44%;
+  height: 5px;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(110, 79, 255, 0.4), transparent 70%);
+  filter: blur(2px);
+  animation: dtBarBreath 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes dtBarBreath { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.95; } }
+@media (prefers-reduced-motion: reduce) {
+  .dt-bar-inner::before, .dt-bar-inner::after { animation: none; opacity: 0.8; }
 }
 .dt-bar-id { display: flex; align-items: center; gap: 14px; min-width: 0; }
 .dt-bar-id img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
