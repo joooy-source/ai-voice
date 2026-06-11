@@ -273,6 +273,7 @@ export default function DetailPage({ id }) {
         <div className="dt-hero-fade-l" aria-hidden />
         <div className="dt-hero-fade-b" aria-hidden />
         <div className="dt-hero-glow" aria-hidden />
+        <div className="dt-hero-glow dt-hero-glow-b" aria-hidden />
 
         <div className="dt-shell dt-hero-shell">
           <div className="dt-hero-content">
