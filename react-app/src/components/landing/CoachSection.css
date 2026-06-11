@@ -150,7 +150,7 @@ section.coach {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 24px;
+  padding: 16px 24px;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: transparent;
@@ -165,7 +165,8 @@ section.coach {
   background: rgba(42, 35, 83, 0.4);
 }
 .coach-tab-title {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 500;
   color: #fff;
 }
