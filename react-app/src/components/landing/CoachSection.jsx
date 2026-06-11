@@ -54,38 +54,20 @@ export default function CoachSection() {
   const playerRef = useRef(null);
   const [active, setActive] = useState(-1); // -1 = 오프닝(어떤 탭도 활성 아님)
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true); // 음소거로 시작 → 첫 동작에 소리 켜짐
+  const [isMuted, setIsMuted] = useState(false); // 디테일과 동일: 바로 소리로 재생 시도
   const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0); // 0~1 현재 챕터 진행도
   const [hasVideo, setHasVideo] = useState(false);
-  const inViewRef = useRef(false);
-  useEffect(() => { inViewRef.current = inView; }, [inView]);
 
-  // 첫 사용자 동작(클릭/키/터치 — 히어로 아래 화살표 포함)에 소리 켜기.
-  // 스크롤만으론 브라우저가 소리 재생을 막아서, 동작 한 번이 필요.
-  useEffect(() => {
-    let done = false;
-    const onAct = () => {
-      if (done) return;
-      done = true;
-      setIsMuted(false);
-      const v = videoRef.current;
-      if (v && inViewRef.current && isPlaying) { v.muted = false; v.play().catch(() => {}); }
-      cleanup();
-    };
-    const evs = ['pointerdown', 'keydown', 'touchstart'];
-    const cleanup = () => evs.forEach((e) => window.removeEventListener(e, onAct));
-    evs.forEach((e) => window.addEventListener(e, onAct));
-    return cleanup;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // 위로가기 등으로 코치 영역을 떠날 때 소리 끄기
+  // 위로가기 시 코치 소리 끄기. 단, 섹션을 벗어나면 다시 소리 ON으로 재무장(다음 진입 시 소리)
   useEffect(() => {
     const onSilence = () => setIsMuted(true);
     window.addEventListener('coach-silence', onSilence);
     return () => window.removeEventListener('coach-silence', onSilence);
   }, []);
+  useEffect(() => {
+    if (!inView) setIsMuted(false);
+  }, [inView]);
 
   // 볼륨 반영
   useEffect(() => {
