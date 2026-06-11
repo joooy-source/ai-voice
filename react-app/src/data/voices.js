@@ -20,3 +20,38 @@ export const VOICES = [
 ];
 
 export const getVoice = (id) => VOICES.find((v) => v.id === id) || VOICES[0];
+
+// 보이스별 디테일 페이지 카피 (Figma 디자인 기준). 미지정 보이스는 기본값 사용.
+const DETAILS = {
+  doublelift: {
+    duo: 'Your new duo,',
+    role: 'NA LCS legend · AD Carry · Bottom lane (Marksman)',
+    heroSub: 'His voice in your headset — coaching every game you queue.',
+    language: 'English',
+    bio: [
+      'Born in California, Yiliang "Peter" Peng is one of the greatest AD carries in North American League history. A multi-time LCS champion and Split MVP, he defined an era with one legendary line — "Everyone else is trash." The arrogance was always half a joke aimed at himself, and fans fell in love with the blend of swagger, self-deprecation, and razor-sharp game sense.',
+      'This AI voice persona brings that signature Doublelift energy straight into your games. Relaxed Californian confidence, dry-but-warm humor, and decisive shotcalls that drop in the half-second before a teamfight. It reads your Baron timer, catches the enemy ADC’s recall to whisper "next wave is free," nails your Infinity Edge spike, and when you throw a fight it steadies your mental with a casual "I’ve griefed worse, believe me."',
+    ],
+    personality: ['Unshakable confidence', 'Cocky but warm', 'Sharp macro brain', 'Dry, warm humor', 'Underdog grit'],
+    why: 'If solo queue feels lonely, this isn’t just a voice-alert pack — it’s bringing a friend to the next seat. The confidence of one of NA’s best ADCs nudges you forward every round with "that’s free, let’s go," handles your timers, enemy recall windows, and item builds, and when you throw, it steadies your mental with a joke instead of a flame.',
+    catchphrases: ['"Everyone else is trash."', '"Trust me — that’s free."', '"Hold your spacing. This game is ours."'],
+    panelQuote: '"Everyone else is trash. But you? You’re the exception."',
+  },
+};
+
+const DEFAULTS = (v) => ({
+  duo: 'Your new duo,',
+  role: `${v.team} · AI Voice partner`,
+  heroSub: `${v.name}’s voice in your headset — coaching every game you queue.`,
+  language: 'English',
+  bio: [
+    `${v.name} brings their signature energy to every match — hype on plays, calm reads under pressure, and the personality fans know and love.`,
+    `This AI voice persona drops decisive shotcalls in the half-second before a teamfight, reads your objective timers, catches enemy recalls, and steadies your mental when a game goes sideways.`,
+  ],
+  personality: ['Confident', 'Sharp game sense', 'Warm humor', 'Clutch under pressure'],
+  why: `Solo queue feels less lonely with ${v.name} in the next seat — nudging you forward, handling your timers and item builds, and keeping your mental in check round after round.`,
+  catchphrases: ['"Let’s run it."', '"That’s free — go."', '"Hold your spacing."'],
+  panelQuote: `"Bring ${v.name} into your next game."`,
+});
+
+export const getDetail = (v) => ({ ...DEFAULTS(v), ...(DETAILS[v.id] || {}) });
