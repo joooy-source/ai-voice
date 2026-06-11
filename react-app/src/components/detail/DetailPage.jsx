@@ -3,7 +3,7 @@ import Nav from '../landing/Nav';
 import Footer from '../landing/Footer';
 import { PlayIcon, PauseIcon, DownloadIcon, VolumeIcon, MuteIcon, MaximizeIcon, PipIcon } from '../landing/icons';
 import { VOICES, getVoice, getDetail, PRICE } from '../../data/voices';
-import { useHeroSnap, useInView } from '../../hooks/useScrollAnimations';
+import { useHeroSnap } from '../../hooks/useScrollAnimations';
 import './DetailPage.css';
 
 // hls.js 를 CDN 에서 1회 로드 (HLS 네이티브 미지원 브라우저용)
@@ -147,7 +147,7 @@ export default function DetailPage({ id }) {
   const hasVids = videos.length > 0;
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const [stageRef, vInView] = useInView({ threshold: 0.4 });
+  const ingameActive = active === 'ingame'; // in-game 섹션이 활성일 때만 재생/소리
   const [vIdx, setVIdx] = useState(0);
   const [vPlaying, setVPlaying] = useState(true);
   const [vMuted, setVMuted] = useState(false); // 디폴트: 소리 ON
@@ -206,7 +206,7 @@ export default function DetailPage({ id }) {
     const v = videoRef.current;
     if (!v || !hasVids) return;
     v.muted = vMuted;
-    if (vPlaying && vInView) {
+    if (vPlaying && ingameActive) {
       const p = v.play();
       if (p && p.catch) {
         p.catch(() => {
@@ -218,7 +218,7 @@ export default function DetailPage({ id }) {
     } else {
       v.pause();
     }
-  }, [vMuted, vPlaying, vInView, hasVids, vIdx]);
+  }, [vMuted, vPlaying, ingameActive, hasVids, vIdx]);
 
   const selectVideo = (i) => {
     setVIdx(i);
@@ -270,7 +270,7 @@ export default function DetailPage({ id }) {
   const go = (mid) => {
     const el = document.getElementById(`sec-${mid}`);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 88;
+      const top = el.getBoundingClientRect().top + window.scrollY - 96;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
@@ -405,7 +405,7 @@ export default function DetailPage({ id }) {
             <h2 className="dt-sec-title grad-text">Watch them play alongside a real match</h2>
             <p className="dt-sec-sub">Real in-game footage of the AI calling objectives, recalls, and fights as they happen.</p>
             <div className="dt-video">
-              <div className="dt-video-stage" ref={(el) => { playerRef.current = el; stageRef.current = el; }} style={{ backgroundColor: voice.bg }}>
+              <div className="dt-video-stage" ref={playerRef} style={{ backgroundColor: voice.bg }}>
                 {hasVids ? (
                   <>
                     <video ref={videoRef} className="dt-video-el" autoPlay loop={false} playsInline preload="metadata" />
