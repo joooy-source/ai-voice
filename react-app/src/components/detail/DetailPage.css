@@ -178,9 +178,9 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
 }
-/* 모델을 가리지 않도록 좌측 하단 어두운 영역에 배치 */
-.dt-note-a { left: 6%; bottom: 17%; width: auto; max-width: 280px; animation: dtNoteFloat 7s ease-in-out infinite; }
-.dt-note-b { left: 30%; bottom: 5%; width: auto; max-width: 320px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
+/* 모델을 가리지 않도록 좌측 하단 어두운 영역에 세로로 정렬 */
+.dt-note-a { left: 6%; bottom: 21%; width: auto; max-width: 300px; animation: dtNoteFloat 7s ease-in-out infinite; }
+.dt-note-b { left: 6%; bottom: 8%; width: auto; max-width: 340px; animation: dtNoteFloat 8s ease-in-out infinite 1s; }
 @keyframes dtNoteFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
