@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { DownloadIcon, ArrowDownIcon, VolumeIcon } from './icons';
+import { DownloadIcon, ArrowDownIcon, MuteIcon } from './icons';
 import './Hero.css';
 
 const SRC = `${import.meta.env.BASE_URL}hero-orb.mp4`;
@@ -136,7 +136,7 @@ export default function Hero() {
             <i /><i /><i /><i />
           </span>
         ) : (
-          <VolumeIcon width={22} height={22} />
+          <MuteIcon width={22} height={22} />
         )}
       </button>
       <audio ref={audioRef} src={AUDIO} preload="auto" onEnded={() => setPlaying(false)} />
